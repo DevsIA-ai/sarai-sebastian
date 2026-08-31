@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generar Invitación · Sebastián &amp; Saraí</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Parisienne&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold:#8a9a62; --gold-dark:#5d6b3e; --gold-light:#dcc7c2;
+    --olive:#6e7f52; --cream:#fbf8f4; --dark:#1c2415; --text:#3a3b30;
+    --text-muted:#7f7a70; --serif:'Cormorant Garamond',serif;
+    --script:'Parisienne',cursive; --sans:'Montserrat',sans-serif;
+  }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+
+  body {
+    font-family:var(--sans);
+    background:linear-gradient(155deg,#1c2415 0%,#3d4a2e 55%,#161d10 100%);
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:2rem 1rem;
+  }
+
+  .card {
+    background:var(--cream);
+    border-radius:12px;
+    padding:2.8rem 2.4rem 2.4rem;
+    width:100%; max-width:460px;
+    box-shadow:0 32px 80px rgba(0,0,0,.55);
+    text-align:center;
+  }
+
+  .card-eyebrow {
+    font-size:.52rem; letter-spacing:.44em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:.6rem;
+  }
+  .card-hr {
+    width:40px; height:1px; margin:.6rem auto;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  }
+  .card-title {
+    font-family:var(--script);
+    font-size:clamp(2.2rem,7vw,3.1rem);
+    color:var(--text); line-height:1.1;
+    margin-bottom:.2rem;
+  }
+  .card-sub {
+    font-size:.52rem; letter-spacing:.38em; text-transform:uppercase;
+    color:var(--text-muted); margin-bottom:2rem;
+  }
+
+  /* FORM */
+  .form-group { text-align:left; margin-bottom:1.2rem; }
+  .form-group label {
+    display:block;
+    font-size:.55rem; letter-spacing:.3em; text-transform:uppercase;
+    color:var(--gold-dark); margin-bottom:.45rem;
+  }
+  .form-group label small { text-transform:none; letter-spacing:0; color:var(--text-muted); }
+  .form-group input, .form-group select {
+    width:100%;
+    padding:.72rem 1rem;
+    border:1px solid rgba(138,154,98,.45);
+    border-radius:8px;
+    font-family:var(--serif); font-size:1rem;
+    color:var(--text);
+    background:#fff;
+    outline:none;
+    transition:border-color .25s;
+    appearance:auto;
+  }
+  .form-group input:focus, .form-group select:focus {
+    border-color:var(--gold);
+  }
+  .form-group input::placeholder { color:#bba990; }
+
+  .btn-generar {
+    width:100%; padding:.85rem;
+    background:var(--gold);
+    border:none; border-radius:50px;
+    color:#fff; font-family:var(--sans);
+    font-size:.6rem; letter-spacing:.3em; text-transform:uppercase;
+    cursor:pointer; margin-top:.4rem;
+    transition:background .3s, transform .15s;
+  }
+  .btn-generar:hover { background:var(--gold-dark); }
+  .btn-generar:active { transform:scale(.98); }
+
+  .btn-outline-link {
+    display:block; width:100%; margin-top:.85rem;
+    padding:.8rem; background:none;
+    border:1px solid var(--gold); border-radius:50px;
+    color:var(--gold-dark); font-family:var(--sans);
+    font-size:.58rem; letter-spacing:.24em; text-transform:uppercase;
+    text-align:center; text-decoration:none; cursor:pointer;
+    transition:background .3s;
+  }
+  .btn-outline-link:hover { background:rgba(138,154,98,.1); }
+  .btn-hint {
+    font-family:var(--serif); font-style:italic; font-size:.78rem;
+    color:var(--text-muted); margin-top:.6rem; line-height:1.5;
+  }
+
+  /* RESULTADO */
+  #resultado {
+    display:none;
+    margin-top:1.8rem;
+    border-top:1px solid rgba(138,154,98,.25);
+    padding-top:1.6rem;
+    text-align:left;
+  }
+  #resultado.visible { display:block; }
+
+  .res-label {
+    font-size:.52rem; letter-spacing:.3em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:.75rem; text-align:center;
+  }
+  .res-family {
+    font-family:var(--script);
+    font-size:clamp(1.6rem,6vw,2.1rem);
+    color:var(--text); margin-bottom:.2rem;
+    text-align:center;
+  }
+  .res-boletos {
+    font-size:.58rem; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--text-muted); margin-bottom:1.1rem;
+    text-align:center;
+  }
+
+  .url-box {
+    background:#fff;
+    border:1px solid rgba(138,154,98,.35);
+    border-radius:8px;
+    padding:.75rem 1rem;
+    font-family:var(--serif); font-size:.82rem;
+    color:var(--text-muted);
+    word-break:break-all;
+    margin-bottom:1.4rem;
+    user-select:all;
+  }
+
+  .msg-label {
+    font-size:.52rem; letter-spacing:.3em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:.6rem;
+  }
+  .msg-box {
+    width:100%; resize:vertical; min-height:170px;
+    background:#fff; border:1px solid rgba(138,154,98,.35);
+    border-radius:8px; padding:.9rem 1rem;
+    font-family:var(--sans); font-size:.82rem; line-height:1.6;
+    color:var(--text); margin-bottom:1rem;
+  }
+
+  .btn-row {
+    display:flex; gap:.75rem; margin-bottom:1rem;
+  }
+  .btn-copy, .btn-open {
+    flex:1; padding:.7rem;
+    border:none; border-radius:50px;
+    font-family:var(--sans);
+    font-size:.58rem; letter-spacing:.2em; text-transform:uppercase;
+    cursor:pointer;
+    transition:background .3s, transform .15s;
+  }
+  .btn-copy {
+    background:transparent;
+    border:1px solid var(--gold);
+    color:var(--gold-dark);
+  }
+  .btn-copy:hover { background:rgba(138,154,98,.1); }
+  .btn-copy.copied { background:rgba(138,154,98,.15); color:var(--gold); }
+  .btn-open {
+    background:var(--gold); color:#fff;
+    text-align:center; text-decoration:none;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .btn-open:hover { background:var(--gold-dark); }
+  .btn-copy:active, .btn-open:active { transform:scale(.97); }
+
+  .btn-reset {
+    display:block; width:100%; padding:.75rem;
+    background:none; border:1px dashed rgba(138,154,98,.5); border-radius:50px;
+    color:var(--text-muted); font-family:var(--sans);
+    font-size:.58rem; letter-spacing:.2em; text-transform:uppercase;
+    cursor:pointer; transition:border-color .3s,color .3s;
+  }
+  .btn-reset:hover { border-color:var(--gold); color:var(--gold-dark); }
+
+  @media(max-width:480px){
+    .card { padding:2rem 1.4rem 1.8rem; }
+    .btn-row { flex-direction:column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <p class="card-eyebrow">✦ &nbsp;Generador de Invitaciones &nbsp;✦</p>
+  <div class="card-hr"></div>
+  <h1 class="card-title">Sebastián &amp; Saraí</h1>
+  <p class="card-sub">28 · 11 · 2026</p>
+
+  <div class="form-group">
+    <label>Tipo de saludo</label>
+    <select id="inputTipo">
+      <option value="familia">Familia</option>
+      <option value="estimado">Estimado</option>
+      <option value="estimada">Estimada</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Nombre de la familia / invitado</label>
+    <input type="text" id="inputFamilia" placeholder="Ej: García López" autocomplete="off">
+  </div>
+
+  <div class="form-group">
+    <label>Número de boletos</label>
+    <select id="inputBoletos">
+      <option value="1">1 boleto</option>
+      <option value="2">2 boletos</option>
+      <option value="3" selected>3 boletos</option>
+      <option value="4">4 boletos</option>
+      <option value="5">5 boletos</option>
+      <option value="6">6 boletos</option>
+      <option value="7">7 boletos</option>
+      <option value="8">8 boletos</option>
+      <option value="9">9 boletos</option>
+      <option value="10">10 boletos</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Mesa <small>(opcional)</small></label>
+    <input type="text" id="inputMesa" placeholder="Ej: 5" autocomplete="off">
+  </div>
+
+  <button class="btn-generar" onclick="generar()">Generar Invitación &nbsp;✦</button>
+
+  <a class="btn-outline-link" href="https://docs.google.com/spreadsheets/d/1IsrBpJxEXxILcqEZ1Frtaj68gPRhocrWmzZcxIHYrJ4/edit?usp=sharing" target="_blank" rel="noopener">Ver Confirmaciones &nbsp;↗</a>
+
+  <a class="btn-outline-link" id="adminGalleryLink" style="margin-top:.85rem" href="galeria-fotos/index.html?admin=29d8a90b10c08742d6158eae5020d2e8829fa0b9" target="_blank" rel="noopener">Administrar Galería de Fotos &nbsp;↗</a>
+  <p class="btn-hint">Abre la galería de fotos de la boda con permisos para borrar cualquier foto.</p>
+
+  <!-- Resultado -->
+  <div id="resultado">
+    <p class="res-label" id="resLabel">Enlace generado para:</p>
+    <p class="res-family" id="resFamilyName"></p>
+    <p class="res-boletos" id="resBoletosText"></p>
+    <div class="url-box" id="resUrl"></div>
+
+    <p class="msg-label">Mensaje listo para enviar:</p>
+    <textarea class="msg-box" id="resMensaje" readonly></textarea>
+
+    <div class="btn-row">
+      <button class="btn-copy" id="btnCopy" onclick="copiarMensaje()">Copiar Mensaje</button>
+      <a class="btn-open" id="btnAbrir" href="#" target="_blank" rel="noopener">Abrir ✦</a>
+    </div>
+
+    <button class="btn-reset" onclick="reiniciar()">↺ Generar otra invitación</button>
+  </div>
+</div>
+
+<script>
+  var urlGenerada = '';
+  var mensajeGenerado = '';
+
+  function generar(){
+    var tipoSel = document.getElementById('inputTipo');
+    var tipo = tipoSel.value;
+    var tipoTexto = tipoSel.options[tipoSel.selectedIndex].text;
+    var familia = document.getElementById('inputFamilia').value.trim();
+    var boletos = document.getElementById('inputBoletos').value;
+    var mesa = document.getElementById('inputMesa').value.trim();
+
+    if(!familia){
+      document.getElementById('inputFamilia').focus();
+      document.getElementById('inputFamilia').style.borderColor = '#c97a6e';
+      setTimeout(function(){ document.getElementById('inputFamilia').style.borderColor = ''; }, 1500);
+      return;
+    }
+
+    var base;
+    if(window.location.href.indexOf('generar.html') !== -1){
+      base = window.location.href.replace('generar.html','index.html');
+    } else {
+      base = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/index.html');
+    }
+    urlGenerada = base + '?f=' + encodeURIComponent(familia) + '&t=' + tipo + '&b=' + boletos;
+    if(mesa) urlGenerada += '&m=' + encodeURIComponent(mesa);
+
+    var n = parseInt(boletos, 10);
+
+    document.getElementById('resLabel').textContent = 'Enlace generado para (' + tipoTexto.toUpperCase() + '):';
+    document.getElementById('resFamilyName').textContent = familia;
+    document.getElementById('resBoletosText').textContent = n + (n === 1 ? ' boleto' : ' boletos') + (mesa ? ' · Mesa ' + mesa : '');
+    document.getElementById('resUrl').textContent = urlGenerada;
+
+    mensajeGenerado = '¡Hola! ✨ ' + tipoTexto + ' ' + familia + '\n' +
+      'Nos casamos y queremos invitarte a celebrar con nosotros. 💍\n' +
+      'Esperamos poder contar con tu presencia. 🥂\n\n' +
+      'PASE PARA ' + n + (n === 1 ? ' PERSONA' : ' PERSONAS') + ' 💌\n' +
+      (mesa ? 'MESA #' + mesa + ' 🍽️\n' : '') +
+      'Click para ver la invitación. 💌\n' +
+      urlGenerada + '\n\n' +
+      'Por favor confirma tu asistencia antes del 30 de Octubre de 2026. 🙏';
+
+    document.getElementById('resMensaje').value = mensajeGenerado;
+    document.getElementById('btnAbrir').href = urlGenerada;
+
+    var res = document.getElementById('resultado');
+    res.classList.add('visible');
+    res.scrollIntoView({ behavior:'smooth', block:'nearest' });
+
+    var btn = document.getElementById('btnCopy');
+    btn.textContent = 'Copiar Mensaje';
+    btn.classList.remove('copied');
+  }
+
+  function copiarMensaje(){
+    if(!mensajeGenerado) return;
+    navigator.clipboard.writeText(mensajeGenerado).then(function(){
+      var btn = document.getElementById('btnCopy');
+      btn.textContent = '¡Copiado! ✓';
+      btn.classList.add('copied');
+      setTimeout(function(){ btn.textContent = 'Copiar Mensaje'; btn.classList.remove('copied'); }, 2500);
+    });
+  }
+
+  function reiniciar(){
+    document.getElementById('inputFamilia').value = '';
+    document.getElementById('inputMesa').value = '';
+    document.getElementById('inputBoletos').value = '3';
+    document.getElementById('inputTipo').value = 'familia';
+    document.getElementById('resultado').classList.remove('visible');
+    document.getElementById('inputFamilia').focus();
+    window.scrollTo({ top:0, behavior:'smooth' });
+  }
+
+  // Permitir Enter en el campo de familia
+  document.getElementById('inputFamilia').addEventListener('keydown', function(e){
+    if(e.key === 'Enter') generar();
+  });
+</script>
+</body>
+</html>

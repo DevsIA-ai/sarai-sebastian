@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR Galería · Sebastián & Saraí</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root {
+  --dark:       #2f3a24;
+  --dark-warm:  #46543a;
+  --gold:       #8a9a62;
+  --gold-light: #dcc7c2;
+  --gold-dark:  #5d6b3e;
+  --cream:      #fbf8f4;
+  --text-muted: #7f7a70;
+  --serif:      'Cormorant Garamond', Georgia, serif;
+  --script:     'Parisienne', cursive;
+  --sans:       'Montserrat', sans-serif;
+}
+
+html, body {
+  background: #dbd8c6;
+}
+
+body {
+  font-family: var(--sans);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+/* ---- TARJETA (5in x 7in a 96dpi de referencia en pantalla) ---- */
+.card {
+  width: 480px;
+  height: 672px;
+  position: relative;
+  background: linear-gradient(160deg, var(--dark) 0%, var(--dark-warm) 100%);
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2.4rem 2rem 2.2rem;
+  text-align: center;
+  box-shadow: 0 30px 80px rgba(0,0,0,.35);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.card::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background: radial-gradient(circle at 15% 15%, rgba(138,154,98,.14) 0%, transparent 45%),
+              radial-gradient(circle at 85% 85%, rgba(138,154,98,.1) 0%, transparent 45%);
+}
+.card-frame {
+  position: absolute; inset: 16px;
+  border: 1px solid rgba(236,217,198,.55);
+  pointer-events: none;
+}
+.card-frame::before {
+  content: ''; position: absolute; inset: 6px;
+  border: 1px solid rgba(236,217,198,.35);
+}
+.corner {
+  position: absolute; font-size: .8rem; color: var(--gold);
+  text-shadow: 0 1px 4px rgba(0,0,0,.4);
+}
+.corner.tl { top: 6px; left: 6px; }
+.corner.tr { top: 6px; right: 6px; }
+.corner.bl { bottom: 6px; left: 6px; }
+.corner.br { bottom: 6px; right: 6px; }
+
+.top-block, .bottom-block {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center;
+}
+
+.seal {
+  width: 56px; height: auto; margin-bottom: .9rem;
+  filter: drop-shadow(0 4px 14px rgba(0,0,0,.35));
+}
+.eyebrow {
+  font-size: .58rem; letter-spacing: .42em; text-transform: uppercase;
+  color: var(--gold-light); margin-bottom: .9rem;
+}
+.names {
+  font-family: var(--script);
+  font-size: 3.2rem;
+  color: #fff;
+  line-height: 1;
+  text-shadow: 0 2px 20px rgba(0,0,0,.4);
+}
+.date {
+  font-family: var(--serif);
+  font-size: .85rem; letter-spacing: .25em;
+  color: rgba(255,255,255,.75);
+  margin-top: .6rem;
+}
+
+.orn {
+  display: flex; align-items: center; gap: .8rem;
+  color: var(--gold-light); margin: .9rem 0;
+}
+.orn::before, .orn::after {
+  content: ''; height: 1px; width: 44px;
+  background: linear-gradient(90deg, transparent, rgba(138,154,98,.6));
+}
+.orn::after { background: linear-gradient(90deg, rgba(138,154,98,.6), transparent); }
+
+.instruction {
+  font-family: var(--serif); font-style: italic;
+  font-size: 1.05rem; color: var(--gold-light);
+  max-width: 320px; line-height: 1.6; margin-bottom: 1.2rem;
+}
+
+.qr-box {
+  background: #fff;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(236,217,198,.5);
+  box-shadow: 0 12px 30px rgba(0,0,0,.3);
+}
+.qr-box img { display: block; width: 178px; height: 178px; }
+
+.url-caption {
+  font-size: .62rem; letter-spacing: .06em;
+  color: rgba(255,255,255,.55); margin-top: .9rem;
+  word-break: break-all; max-width: 320px;
+}
+
+.footer-gem {
+  color: var(--gold); font-size: .8rem; margin-top: .3rem;
+}
+
+/* ---- IMPRESIÓN ---- */
+@media print {
+  html, body { background: #fff; }
+  body { padding: 0; min-height: auto; }
+  .card {
+    box-shadow: none;
+    width: 5in;
+    height: 7in;
+  }
+  @page {
+    size: 5in 7in;
+    margin: 0;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="card-frame">
+    <span class="corner tl">✿</span>
+    <span class="corner tr">✿</span>
+    <span class="corner bl">✿</span>
+    <span class="corner br">✿</span>
+  </div>
+
+  <div class="top-block">
+    <img class="seal" src="sello.png" alt="">
+    <span class="eyebrow">Nuestra Boda</span>
+    <h1 class="names">Sebastián &amp; Saraí</h1>
+    <p class="date">28 · 11 · 2026</p>
+  </div>
+
+  <div class="bottom-block">
+    <div class="orn">✦</div>
+    <p class="instruction">Escanea el código para subir y ver<br>las fotos de nuestra boda</p>
+    <div class="qr-box">
+      <img src="qr-galeria-raw.png" alt="Código QR galería de fotos">
+    </div>
+    <p class="url-caption">michel-asael.netlify.app/galeria-fotos</p>
+    <div class="footer-gem">✦</div>
+  </div>
+</div>
+
+</body>
+</html>

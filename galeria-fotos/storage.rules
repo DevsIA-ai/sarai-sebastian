@@ -1,0 +1,28 @@
+rules_version = '2';
+
+// ============================================================
+// Reglas de Storage — Galería de fotos, Boda Michel & Asael
+// Pega este contenido en: Firebase Console > Storage > Reglas,
+// y publica.
+// ============================================================
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    match /photos/{photoId}/{fileName} {
+      allow read: if true;
+
+      allow create: if request.auth != null
+                    && request.resource.size < 10 * 1024 * 1024
+                    && request.resource.contentType.matches('image/.*');
+
+      // Solo puede borrar el archivo quien sea dueño del documento
+      // de Firestore correspondiente, o una administradora activa.
+      allow delete: if request.auth != null && (
+        firestore.get(/databases/(default)/documents/photos/$(photoId)).data.ownerUid == request.auth.uid ||
+        firestore.exists(/databases/(default)/documents/adminSessions/$(request.auth.uid))
+      );
+
+      allow update: if false;
+    }
+  }
+}

@@ -1,0 +1,42 @@
+rules_version = '2';
+
+// ============================================================
+// Reglas de Firestore — Galería de fotos, Boda Michel & Asael
+// Pega este contenido en: Firebase Console > Firestore Database
+// > Reglas, y publica.
+// ============================================================
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Se crea automáticamente cuando alguien abre la app con el link
+    // secreto de administradores (?admin=... revisado en app.js). Solo
+    // puede crear su propia sesión.
+    match /adminSessions/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow create: if request.auth != null && request.auth.uid == uid;
+      allow update, delete: if false;
+    }
+
+    // Fotos de la galería.
+    match /photos/{photoId} {
+      allow read: if true;
+
+      allow create: if request.auth != null
+                    && request.resource.data.ownerUid == request.auth.uid
+                    && request.resource.data.guestName is string
+                    && request.resource.data.guestName.size() > 0
+                    && request.resource.data.guestName.size() < 60
+                    && request.resource.data.keys().hasAll(
+                         ['ownerUid','guestName','url','storagePath','createdAt']);
+
+      // Solo la persona dueña de la foto o una administradora activa
+      // pueden borrarla.
+      allow delete: if request.auth != null && (
+                      resource.data.ownerUid == request.auth.uid ||
+                      exists(/databases/$(database)/documents/adminSessions/$(request.auth.uid))
+                    );
+
+      allow update: if false;
+    }
+  }
+}

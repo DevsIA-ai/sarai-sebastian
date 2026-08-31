@@ -1,0 +1,15 @@
+# Carpeta de otro cliente (Katia & Francisco) — contiene sus credenciales
+# reales de Firebase, nunca debe subirse a este repositorio.
+no tocar/
+
+# Videos originales — hero.mp4 (usado en el sitio) ya está derivado de estos,
+# no hace falta duplicarlos en el repositorio.
+video hero .mov
+estevideosi.mp4
+
+# Basura común del sistema operativo
+Thumbs.db
+.DS_Store
+
+# Canción anterior (ya no se usa en el sitio, se reemplazó por Zoé - Luna)
+Vamos bien - Majo y Dan (Letra).mp3
