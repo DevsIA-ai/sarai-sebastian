@@ -22,6 +22,7 @@
   --warm:       #f4ece7;   /* beige rosado */
   --rose:       #d9b3ac;   /* rosa palo */
   --rose-deep:  #c0968f;   /* rosa palo profundo */
+  --rose-ink:   #ad8078;   /* rosa palo para texto sobre fondo claro */
   --forest:     #6e7f52;   /* verde olivo — detalles sueltos */
   --dark:       #2f3a24;   /* olivo muy profundo */
   --dark-mid:   #3a4630;
@@ -49,14 +50,21 @@ body { font-family: var(--sans); background: var(--cream); color: var(--text); o
   font-size: clamp(2.2rem,5vw,3.5rem);
   font-weight: 300; line-height: 1.15; color: var(--text);
 }
-.section-title em { font-style: italic; color: var(--gold-dark); }
+.section-title em { font-style: italic; color: var(--rose-ink); }
 .container { max-width: 900px; margin: 0 auto; padding: 5rem 2.5rem; }
 .container--wide { max-width: 1100px; margin: 0 auto; padding: 5rem 2.5rem; }
-.divider-line { width: 60px; height: 1px; background: linear-gradient(90deg,transparent,var(--gold),transparent); margin: 1.25rem auto; position:relative; }
+.divider-line {
+  width: 158px; height: 12px; margin: 1.3rem auto; position:relative;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 12'%3E%3Cpath d='M2 6 Q9 1.6 16 6 T30 6 T44 6 T58 6 T72 6' fill='none' stroke='%23c0968f' stroke-width='1.1' stroke-linecap='round'/%3E%3C/svg%3E") left center / 62px 12px no-repeat,
+              url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 12'%3E%3Cpath d='M2 6 Q9 1.6 16 6 T30 6 T44 6 T58 6 T72 6' fill='none' stroke='%23c0968f' stroke-width='1.1' stroke-linecap='round'/%3E%3C/svg%3E") right center / 62px 12px no-repeat;
+  opacity:.9;
+}
+/* sobre fondo oscuro la onda se aclara */
+.divider-line.on-dark { filter:brightness(1.5) saturate(.55); opacity:.75; }
 .divider-line::before {
   content:'❦'; position:absolute; left:50%; top:50%;
   transform:translate(-50%,-50%); font-size:.95rem;
-  color:var(--gold); line-height:1;
+  color:var(--rose-ink); line-height:1;
 }
 .divider-line.leaf-accent::before { color:var(--forest); }
 .divider-orn {
@@ -119,6 +127,13 @@ body { font-family: var(--sans); background: var(--cream); color: var(--text); o
   transition:all .35s;
 }
 .nav-dot.active { background:var(--gold); height:20px; border-radius:4px; }
+
+/* MARCO interior sutil en las secciones de fondo verde olivo */
+#countdown::after, #live-gallery::after, #rsvp::after {
+  content:''; position:absolute; inset:clamp(11px,2.6vw,24px);
+  border:1px solid rgba(220,199,194,.16);
+  pointer-events:none; z-index:0;
+}
 
 /* FOLLAJE decorativo (solo en secciones de fondo verde olivo) */
 .foliage {
@@ -310,7 +325,7 @@ body { font-family: var(--sans); background: var(--cream); color: var(--text); o
 /* ==============================
    STORY
    ============================== */
-#story { background:var(--white); }
+#story { background:linear-gradient(160deg,#fbf8f4,var(--warm)); }
 .story-grid {
   display:grid; grid-template-columns:1fr 1fr;
   gap:3.5rem; align-items:center; margin-top:3rem;
@@ -330,6 +345,8 @@ body { font-family: var(--sans); background: var(--cream); color: var(--text); o
   display:flex; align-items:center; justify-content:center;
   font-family:var(--serif); font-size:.95rem; color:var(--gold); font-style:italic;
 }
+.story-photos { display:flex; flex-direction:column; gap:1.4rem; }
+.story-photos .story-img:last-child { aspect-ratio:4/5; }
 .story-year { font-size:.58rem; letter-spacing:.45em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:1rem; }
 .story-sub { font-family:var(--serif); font-size:clamp(1.4rem,3vw,2rem); font-weight:300; color:var(--text); margin-bottom:1.25rem; }
 .story-body { font-family:var(--serif); font-size:1.1rem; color:var(--text-muted); line-height:1.9; }
@@ -337,7 +354,7 @@ body { font-family: var(--sans); background: var(--cream); color: var(--text); o
 /* ==============================
    LA PROPUESTA — foto enmarcada
    ============================== */
-#propuesta { background:var(--cream); }
+#propuesta { background:linear-gradient(160deg,#fbf8f4,var(--warm)); }
 .photo-frame {
   max-width:430px; margin:0 auto;
   background:#fffdf9;
@@ -355,11 +372,18 @@ body { font-family: var(--sans); background: var(--cream); color: var(--text); o
   display:block; width:100%; height:auto;
   aspect-ratio:3/4; object-fit:cover;
 }
+.photo-pair {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:clamp(.7rem,3vw,1.1rem);
+  max-width:430px; margin:clamp(.9rem,3vw,1.3rem) auto 0;
+}
+.photo-pair .photo-frame { max-width:none; margin:0; padding:clamp(.5rem,2vw,.7rem); }
+.photo-pair .photo-frame-inner img { aspect-ratio:4/5; }
 .photo-caption { display:block; margin-top:1.4rem; }
 .photo-quote {
   display:block; font-family:var(--script);
   font-size:clamp(1.7rem,6vw,2.4rem);
-  color:var(--gold-dark); line-height:1.25;
+  color:var(--rose-ink); line-height:1.25;
 }
 .photo-sub {
   display:block; margin-top:.7rem;
@@ -443,14 +467,14 @@ body { font-family: var(--sans); background: var(--cream); color: var(--text); o
   text-transform:uppercase; color:var(--gold); margin-bottom:.6rem;
 }
 .venue-name { font-family:var(--serif); font-size:1.6rem; font-weight:300; color:var(--text); line-height:1.25; }
-.venue-time { font-family:var(--serif); font-style:italic; font-size:1rem; color:var(--gold-dark); margin-top:.35rem; }
+.venue-time { font-family:var(--serif); font-style:italic; font-size:1rem; color:var(--rose-ink); margin-top:.35rem; }
 .venue-addr { font-size:.75rem; color:var(--text-muted); line-height:1.6; margin-top:.35rem; }
 .venue .btn-pill { margin-top:1.25rem; }
 
 /* ==============================
    ITINERARY — clean left timeline
    ============================== */
-#itinerary { background:var(--white); }
+#itinerary { background:linear-gradient(160deg,#fbf8f4,var(--warm)); }
 .timeline {
   max-width:580px; margin:3.5rem auto 0;
   padding-left:2rem; position:relative;
@@ -549,7 +573,7 @@ body { font-family: var(--sans); background: var(--cream); color: var(--text); o
 /* ==============================
    DRESS CODE
    ============================== */
-#dresscode { background:var(--white); text-align:center; }
+#dresscode { background:linear-gradient(160deg,#fbf8f4,var(--warm)); text-align:center; }
 .dress-badge {
   display:inline-block; padding:.5rem 1.75rem;
   border:1px solid var(--gold); border-radius:50px;
@@ -742,7 +766,7 @@ body { font-family: var(--sans); background: var(--cream); color: var(--text); o
 /* ==============================
    CONTACT
    ============================== */
-#contact { background:var(--cream); text-align:center; }
+#contact { background:linear-gradient(160deg,#fbf8f4,var(--warm)); text-align:center; }
 .contact-grid { display:flex; gap:3.5rem; justify-content:center; flex-wrap:wrap; margin-top:2.75rem; }
 .contact-lbl { font-size:.56rem; letter-spacing:.42em; text-transform:uppercase; color:var(--gold); margin-bottom:.4rem; }
 .contact-name { font-family:var(--serif); font-size:1.25rem; color:var(--text); margin-bottom:.25rem; }
@@ -851,7 +875,7 @@ body.env-open { overflow:hidden; }
 .env-family-name {
   font-family:var(--script);
   font-size:clamp(1.55rem,5.5vw,2.2rem);
-  color:var(--gold-dark); line-height:1.15;
+  color:var(--rose-ink); line-height:1.15;
   margin-bottom:.2rem;
 }
 .env-card-text {
@@ -1254,8 +1278,9 @@ body.env-open { overflow:hidden; }
     <div class="divider-line leaf-accent"></div>
 
     <div class="story-grid">
-      <div class="reveal">
-        <div class="story-img" style="background:url('historia.jpeg') center/cover no-repeat">
+      <div class="reveal story-photos">
+        <div class="story-img" style="background:url('historia.jpeg') center/cover no-repeat"></div>
+        <div class="story-img" style="background:url('beso.jpeg') center 30%/cover no-repeat">
           <div class="story-img-badge">✿</div>
         </div>
       </div>
@@ -1283,8 +1308,8 @@ body.env-open { overflow:hidden; }
           amamos, damos el siguiente paso.
         </p>
         <br>
-        <p class="story-body" style="font-style:italic;color:var(--gold-dark)">
-          Y hoy, delante de Dios, comenzamos nuestra vida juntos.  1F90D
+        <p class="story-body" style="font-style:italic;color:var(--rose-ink)">
+          Y hoy, delante de Dios, comenzamos nuestra vida juntos.
         </p>
       </div>
     </div>
@@ -1298,6 +1323,19 @@ body.env-open { overflow:hidden; }
       <div class="photo-frame-inner">
         <img src="hero1.jpeg" alt="La propuesta en la playa" loading="lazy">
       </div>
+      <div class="photo-pair">
+        <div class="photo-frame reveal d1">
+          <div class="photo-frame-inner">
+            <img src="playa1.jpeg" alt="La propuesta al atardecer" loading="lazy">
+          </div>
+        </div>
+        <div class="photo-frame reveal d2">
+          <div class="photo-frame-inner">
+            <img src="playa2.jpeg" alt="El sí" loading="lazy">
+          </div>
+        </div>
+      </div>
+
       <figcaption class="photo-caption">
         <span class="photo-quote">«¿Te quieres casar conmigo?»</span>
         <span class="photo-sub">Y dijo que sí</span>
@@ -1313,21 +1351,11 @@ body.env-open { overflow:hidden; }
     <h2 class="section-title reveal">Fecha, hora <em>y lugar</em></h2>
     <div class="divider-line"></div>
 
-    <div class="detail-cards">
+    <div class="detail-cards" style="max-width:340px;margin-left:auto;margin-right:auto">
       <div class="detail-card reveal">
         <div class="detail-card-icon">◎</div>
         <p class="detail-card-lbl">Fecha</p>
         <p class="detail-card-val">Sábado<br>28 de Noviembre de 2026</p>
-      </div>
-      <div class="detail-card reveal d1">
-        <div class="detail-card-icon">✝</div>
-        <p class="detail-card-lbl">Ceremonia Religiosa</p>
-        <p class="detail-card-val">4:45 PM<br><span style="font-size:.85rem">Templo Expiatorio</span></p>
-      </div>
-      <div class="detail-card reveal d2">
-        <div class="detail-card-icon">✦</div>
-        <p class="detail-card-lbl">Recepción</p>
-        <p class="detail-card-val">7:00 PM<br><span style="font-size:.85rem">Casa Balche</span></p>
       </div>
     </div>
 
@@ -1420,7 +1448,7 @@ body.env-open { overflow:hidden; }
   <div class="container--wide" style="text-align:center">
     <span class="eyebrow reveal">Nuestra Galería</span>
     <h2 class="section-title reveal">Momentos <em>juntos</em></h2>
-    <div class="divider-line" style="background:linear-gradient(90deg,transparent,rgba(138,154,98,.4),transparent)"></div>
+    <div class="divider-line on-dark"></div>
 
     <div class="gallery-grid reveal">
       <div class="g-cell" onclick="openLightbox(0)"><div class="g-inner"><img src="galeria/g1.jpeg" loading="lazy" alt="Sebastián y Saraí" style="width:100%;height:100%;object-fit:cover"></div></div>
@@ -1465,7 +1493,7 @@ body.env-open { overflow:hidden; }
           <img class="dress-card-img" src="traje.png" alt="Traje formal">
         </div>
         <h3 class="dress-card-name">Caballeros</h3>
-        <p class="dress-card-desc">Esmoquin o traje<br>formal oscuro</p>
+        <p class="dress-card-desc">Esmoquin o traje<br>formal</p>
       </div>
     </div>
 
@@ -1490,7 +1518,7 @@ body.env-open { overflow:hidden; }
   <div class="container" style="text-align:center">
     <span class="eyebrow reveal">El Día del Evento</span>
     <h2 class="section-title reveal">Galería <em>en vivo</em></h2>
-    <div class="divider-line" style="background:linear-gradient(90deg,transparent,rgba(138,154,98,.4),transparent)"></div>
+    <div class="divider-line on-dark"></div>
     <p class="live-gallery-note reveal">La galería se abre <strong>2 semanas antes del evento</strong>. ¡Vuelvan pronto para subir y ver las fotos!</p>
     <a href="galeria-fotos/index.html" id="livePhotosLink" target="_blank" rel="noopener" class="btn-pill-light reveal">Sube tus Fotos Aquí &nbsp;↗</a>
   </div>
@@ -1539,7 +1567,7 @@ body.env-open { overflow:hidden; }
   <div class="container">
     <span class="eyebrow reveal">Confirmación de Asistencia</span>
     <h2 class="section-title reveal">¿Nos <em style="color:var(--gold-light)">acompañas?</em></h2>
-    <div class="divider-line" style="background:linear-gradient(90deg,transparent,rgba(138,154,98,.35),transparent)"></div>
+    <div class="divider-line on-dark"></div>
     <span class="rsvp-deadline reveal">Confirma antes del 31 de Octubre de 2026</span>
 
     <form id="rsvpForm" class="rsvp-form-embed reveal">
