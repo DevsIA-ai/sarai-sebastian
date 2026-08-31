@@ -120,6 +120,34 @@ body { font-family: var(--sans); background: var(--cream); color: var(--text); o
 }
 .nav-dot.active { background:var(--gold); height:20px; border-radius:4px; }
 
+/* ===== SELECTOR DE PORTADA — TEMPORAL, BORRAR ANTES DE PUBLICAR ===== */
+#hero-switch {
+  position:absolute; left:1.1rem; bottom:4.6rem; z-index:6;
+  display:flex; align-items:center; gap:.6rem;
+  background:rgba(28,36,21,.72); backdrop-filter:blur(10px);
+  border:1px solid rgba(220,199,194,.35); border-radius:50px;
+  padding:.42rem .5rem .42rem .95rem;
+  font-family:var(--sans); cursor:pointer;
+  transition:background .25s, transform .15s;
+}
+#hero-switch:hover { background:rgba(28,36,21,.9); }
+#hero-switch:active { transform:scale(.96); }
+#hero-switch .hs-label {
+  font-size:.54rem; letter-spacing:.2em; text-transform:uppercase;
+  color:rgba(220,199,194,.75); line-height:1;
+}
+#hero-switch .hs-name {
+  font-size:.72rem; letter-spacing:.12em; color:#fff; line-height:1;
+  margin-top:.2rem; font-weight:500;
+}
+#hero-switch .hs-icon {
+  width:26px; height:26px; border-radius:50%;
+  background:var(--gold); color:#fff; font-size:.8rem;
+  display:flex; align-items:center; justify-content:center; flex:0 0 auto;
+}
+@media(max-width:480px){ #hero-switch { left:.8rem; bottom:4.2rem; } }
+/* ===== FIN SELECTOR DE PORTADA ===== */
+
 /* FOLLAJE decorativo (solo en secciones de fondo verde olivo) */
 .foliage {
   position:absolute; pointer-events:none; user-select:none;
@@ -158,7 +186,7 @@ body { font-family: var(--sans); background: var(--cream); color: var(--text); o
     radial-gradient(circle at 85% 80%,rgba(138,154,98,.08) 0%,transparent 45%),
     linear-gradient(180deg,rgba(10,10,4,.72) 0%,rgba(15,14,6,.35) 30%,rgba(20,20,10,.18) 50%,rgba(15,14,6,.4) 75%,rgba(10,10,4,.62) 100%);
 }
-#hero > *:not(#hero-video):not(#hero-overlay):not(.hero-scroll):not(.petal-float):not(.leaf-deco):not(.hero-frame) { position:relative; z-index:2; }
+#hero > *:not(#hero-video):not(#hero-overlay):not(.hero-scroll):not(.petal-float):not(.leaf-deco):not(.hero-frame):not(#hero-switch) { position:relative; z-index:2; }
 .hero-frame {
   position:absolute; inset:18px;
   border:1px solid rgba(220,199,194,.65);
@@ -1050,7 +1078,7 @@ body.env-open { overflow:hidden; }
 
 <!-- ======================== HERO ======================== -->
 <section id="hero">
-  <img id="hero-video" src="hero.jpeg" alt="Sebastián y Saraí">
+  <img id="hero-video" src="hero1.jpeg" alt="Sebastián y Saraí">
   <div id="hero-overlay"></div>
   <div class="hero-frame">
     <span class="hero-frame-flower tl">✿</span>
@@ -1096,6 +1124,16 @@ body.env-open { overflow:hidden; }
     <div class="scroll-line"></div>
     <span>Desplázate</span>
   </div>
+
+  <!-- ===== SELECTOR DE PORTADA — TEMPORAL, BORRAR ANTES DE PUBLICAR ===== -->
+  <button id="hero-switch" type="button" onclick="cambiarPortada()" aria-label="Cambiar foto de portada">
+    <span>
+      <span class="hs-label">Portada</span>
+      <span class="hs-name" id="hsName">hero1</span>
+    </span>
+    <span class="hs-icon">⇄</span>
+  </button>
+  <!-- ===== FIN SELECTOR DE PORTADA ===== -->
 </section>
 
 <!-- ======================== COUNTDOWN ======================== -->
@@ -1641,6 +1679,27 @@ function cerrarSobre(){
   setTimeout(function(){ ov.remove(); }, 750);
   if(!playing) toggleMusic();
 }
+
+/* ===== SELECTOR DE PORTADA — TEMPORAL, BORRAR ANTES DE PUBLICAR =====
+   Deja elegir entre hero1.jpeg y hero2.jpeg para comparar cuál se ve mejor.
+   Recuerda la elección en el navegador. Para dejar una fija: pon esa foto en
+   el <img id="hero-video"> y borra los tres bloques marcados como SELECTOR. */
+(function(){
+  const OPCIONES = ['hero1.jpeg', 'hero2.jpeg'];
+  OPCIONES.forEach(function(f){ const i = new Image(); i.src = f; }); // precarga
+  let idx = Math.max(0, OPCIONES.indexOf(localStorage.getItem('portada') || ''));
+  window.aplicarPortada = function(){
+    document.getElementById('hero-video').src = OPCIONES[idx];
+    document.getElementById('hsName').textContent = OPCIONES[idx].replace('.jpeg','');
+    try { localStorage.setItem('portada', OPCIONES[idx]); } catch(e){}
+  };
+  window.cambiarPortada = function(){
+    idx = (idx + 1) % OPCIONES.length;
+    aplicarPortada();
+  };
+  aplicarPortada();
+})();
+/* ===== FIN SELECTOR DE PORTADA ===== */
 
 /* ---- COUNTDOWN ---- */
 const CIRC = 276.46; // 2π × 44
