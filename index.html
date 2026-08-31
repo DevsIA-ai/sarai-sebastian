@@ -132,10 +132,11 @@ body { font-family: var(--sans); background: var(--cream); color: var(--text); o
 #story, #propuesta, #details, #fotos-uno, #itinerary,
 #dresscode, #gifts, #fotos-dos, #fotos-tres, #contact { position:relative; }
 
+/* Sin marco de sección donde la foto ya trae su propio marco
+   (propuesta, fotos-uno, fotos-dos, fotos-tres): se encimaban dos marcos. */
 #countdown::after, #gallery::after, #live-gallery::after, #rsvp::after,
-#story::after, #propuesta::after, #details::after, #fotos-uno::after,
-#itinerary::after, #dresscode::after, #gifts::after, #fotos-dos::after,
-#fotos-tres::after, #contact::after {
+#story::after, #details::after, #itinerary::after,
+#dresscode::after, #gifts::after, #contact::after {
   content:''; position:absolute; inset:clamp(11px,2.6vw,24px);
   border:1px solid rgba(192,150,143,.28);
   pointer-events:none; z-index:0;
