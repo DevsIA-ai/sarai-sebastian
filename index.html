@@ -175,8 +175,18 @@ body { font-family: var(--sans); background: var(--cream); color: var(--text); o
 .hero-top, .hero-bottom {
   display:flex; flex-direction:column; align-items:center;
 }
-/* sube el bloque de nombres para que no quede pegado al borde inferior */
-.hero-bottom { margin-bottom: clamp(4.5rem, 18vh, 11rem); }
+/* Nombres anclados a su altura; fecha y versiculo al pie.
+   Ambos van absolutos para que no se empujen entre si. */
+.hero-bottom {
+  position:absolute; left:0; right:0; top:36%; z-index:2;
+  padding:0 2rem;
+}
+.hero-foot {
+  position:absolute; left:0; right:0; bottom:7.5rem; z-index:2;
+  display:flex; flex-direction:column; align-items:center;
+  padding:0 2rem;
+}
+@media(min-width:900px){ .hero-bottom { top:20%; } }
 #hero-overlay {
   position:absolute; inset:0; z-index:1; pointer-events:none;
   background:
@@ -184,7 +194,7 @@ body { font-family: var(--sans); background: var(--cream); color: var(--text); o
     radial-gradient(circle at 85% 80%,rgba(138,154,98,.08) 0%,transparent 45%),
     linear-gradient(180deg,rgba(10,10,4,.72) 0%,rgba(15,14,6,.35) 30%,rgba(20,20,10,.18) 50%,rgba(15,14,6,.4) 75%,rgba(10,10,4,.62) 100%);
 }
-#hero > *:not(#hero-video):not(#hero-overlay):not(.hero-scroll):not(.petal-float):not(.leaf-deco):not(.hero-frame) { position:relative; z-index:2; }
+#hero > *:not(#hero-video):not(#hero-overlay):not(.hero-scroll):not(.petal-float):not(.leaf-deco):not(.hero-frame):not(.hero-foot):not(.hero-bottom) { position:relative; z-index:2; }
 .hero-frame {
   position:absolute; inset:18px;
   border:1px solid rgba(220,199,194,.65);
@@ -1149,6 +1159,9 @@ body.env-open { overflow:hidden; }
       Saraí
     </h1>
 
+  </div>
+
+  <div class="hero-foot">
     <div class="divider-orn" style="margin:.4rem auto">✦</div>
 
     <p class="hero-date">Sábado · 28 de Noviembre de 2026 · 4:45 PM</p>
@@ -1629,7 +1642,7 @@ body.env-open { overflow:hidden; }
 <section id="contact">
   <div class="container">
     <span class="eyebrow reveal">¿Tienes dudas?</span>
-    <h2 class="section-title reveal">Con<em>tacto</em></h2>
+    <h2 class="section-title reveal" style="color:var(--rose-ink)">Con<em>tacto</em></h2>
     <div class="divider-line"></div>
     <p class="reveal" style="color:var(--text-muted);max-width:460px;margin:.5rem auto 0;font-size:.85rem;line-height:1.8">
       Para confirmar tu asistencia o resolver cualquier duda, escríbenos directamente.
