@@ -129,9 +129,9 @@ body { font-family: var(--sans); background: var(--cream); color: var(--text); o
 .nav-dot.active { background:var(--gold); height:20px; border-radius:4px; }
 
 /* MARCO interior sutil en las secciones de fondo verde olivo */
-#countdown::after, #live-gallery::after, #rsvp::after {
+#countdown::after {
   content:''; position:absolute; inset:clamp(11px,2.6vw,24px);
-  border:1px solid rgba(220,199,194,.16);
+  border:1px solid rgba(220,199,194,.22);
   pointer-events:none; z-index:0;
 }
 
@@ -345,8 +345,6 @@ body { font-family: var(--sans); background: var(--cream); color: var(--text); o
   display:flex; align-items:center; justify-content:center;
   font-family:var(--serif); font-size:.95rem; color:var(--gold); font-style:italic;
 }
-.story-photos { display:flex; flex-direction:column; gap:1.4rem; }
-.story-photos .story-img:last-child { aspect-ratio:4/5; }
 .story-year { font-size:.58rem; letter-spacing:.45em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:1rem; }
 .story-sub { font-family:var(--serif); font-size:clamp(1.4rem,3vw,2rem); font-weight:300; color:var(--text); margin-bottom:1.25rem; }
 .story-body { font-family:var(--serif); font-size:1.1rem; color:var(--text-muted); line-height:1.9; }
@@ -372,13 +370,15 @@ body { font-family: var(--sans); background: var(--cream); color: var(--text); o
   display:block; width:100%; height:auto;
   aspect-ratio:3/4; object-fit:cover;
 }
-.photo-pair {
+.photo-duo {
   display:grid; grid-template-columns:1fr 1fr;
-  gap:clamp(.7rem,3vw,1.1rem);
-  max-width:430px; margin:clamp(.9rem,3vw,1.3rem) auto 0;
+  gap:clamp(.8rem,3vw,1.4rem);
+  max-width:640px; margin:0 auto;
 }
-.photo-pair .photo-frame { max-width:none; margin:0; padding:clamp(.5rem,2vw,.7rem); }
-.photo-pair .photo-frame-inner img { aspect-ratio:4/5; }
+.photo-duo .photo-frame { max-width:none; margin:0; padding:clamp(.55rem,2.2vw,.9rem); }
+.photo-duo .photo-frame-inner img { aspect-ratio:4/5; }
+#fotos-uno, #fotos-dos { background:linear-gradient(160deg,#fbf8f4,var(--warm)); }
+#fotos-uno .container, #fotos-dos .container { padding-top:clamp(2.2rem,7vw,3.2rem); }
 .photo-caption { display:block; margin-top:1.4rem; }
 .photo-quote {
   display:block; font-family:var(--script);
@@ -1278,9 +1278,8 @@ body.env-open { overflow:hidden; }
     <div class="divider-line leaf-accent"></div>
 
     <div class="story-grid">
-      <div class="reveal story-photos">
-        <div class="story-img" style="background:url('historia.jpeg') center/cover no-repeat"></div>
-        <div class="story-img" style="background:url('beso.jpeg') center 30%/cover no-repeat">
+      <div class="reveal">
+        <div class="story-img" style="background:url('historia.jpeg') center/cover no-repeat">
           <div class="story-img-badge">✿</div>
         </div>
       </div>
@@ -1323,19 +1322,6 @@ body.env-open { overflow:hidden; }
       <div class="photo-frame-inner">
         <img src="hero1.jpeg" alt="La propuesta en la playa" loading="lazy">
       </div>
-      <div class="photo-pair">
-        <div class="photo-frame reveal d1">
-          <div class="photo-frame-inner">
-            <img src="playa1.jpeg" alt="La propuesta al atardecer" loading="lazy">
-          </div>
-        </div>
-        <div class="photo-frame reveal d2">
-          <div class="photo-frame-inner">
-            <img src="playa2.jpeg" alt="El sí" loading="lazy">
-          </div>
-        </div>
-      </div>
-
       <figcaption class="photo-caption">
         <span class="photo-quote">«¿Te quieres casar conmigo?»</span>
         <span class="photo-sub">Y dijo que sí</span>
@@ -1385,6 +1371,24 @@ body.env-open { overflow:hidden; }
           <a class="btn-pill" href="https://maps.app.goo.gl/JF9rQ9qGrrHmTjHT7" target="_blank" rel="noopener">Cómo llegar ↗</a>
         </div>
       </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== FOTOS (antes del itinerario) ======================== -->
+<section id="fotos-uno">
+  <div class="container" style="text-align:center">
+    <div class="photo-duo">
+      <div class="photo-frame reveal">
+        <div class="photo-frame-inner">
+          <img src="beso.jpeg" alt="Sebastián y Saraí" loading="lazy">
+        </div>
+      </div>
+      <div class="photo-frame reveal d2">
+        <div class="photo-frame-inner">
+          <img src="playa1.jpeg" alt="La propuesta al atardecer" loading="lazy">
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1555,6 +1559,17 @@ body.env-open { overflow:hidden; }
           A nombre de: <strong>Alejandra Saraí Aparicio Lozano</strong>
         </p>
         <button class="btn-pill" id="copyAccountBtn" onclick="copiarCuenta(this)" style="margin-top:.5rem">Copiar CLABE</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== FOTO (después de Regalos) ======================== -->
+<section id="fotos-dos">
+  <div class="container" style="text-align:center">
+    <div class="photo-frame reveal" style="max-width:390px">
+      <div class="photo-frame-inner">
+        <img src="playa2.jpeg" alt="Sebastián y Saraí en la playa" loading="lazy">
       </div>
     </div>
   </div>
