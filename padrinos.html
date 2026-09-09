@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Padrinos · Sebastián &amp; Saraí</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Parisienne&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --gold:       #8a9a62;   /* verde olivo — acento principal */
+  --gold-light: #dcc7c2;   /* rosa palo claro */
+  --gold-dark:  #5d6b3e;   /* olivo profundo */
+  --olive:      #6e7f52;
+  --olive-dark: #4a563a;
+  --sage:       #a8b78c;
+  --cream:      #fbf8f4;
+  --warm:       #f4ece7;
+  --rose:       #d9b3ac;
+  --rose-deep:  #c0968f;
+  --rose-ink:   #ad8078;
+  --dark:       #2f3a24;
+  --dark-mid:   #3a4630;
+  --dark-warm:  #46543a;
+  --text:       #3a3b30;
+  --text-muted: #7f7a70;
+  --white:      #ffffff;
+  --serif:      'Cormorant Garamond', Georgia, serif;
+  --script:     'Parisienne', cursive;
+  --sans:       'Montserrat', sans-serif;
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans); color:var(--text); line-height:1.6;
+  background:linear-gradient(160deg,#fbf8f4,var(--warm));
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ============================================================
+   PANEL DE LOS NOVIOS (no lo ve el invitado)
+   ============================================================ */
+#panel{
+  max-width:820px; margin:0 auto; padding:2.5rem 1.5rem 0;
+}
+.panel-card{
+  background:var(--white); border:1px solid var(--gold-light);
+  border-radius:14px; padding:1.9rem 1.6rem;
+  box-shadow:0 14px 40px rgba(110,127,82,.10);
+}
+.panel-eyebrow{
+  font-size:.55rem; letter-spacing:.42em; text-transform:uppercase;
+  color:var(--gold); text-align:center; display:block; margin-bottom:.5rem;
+}
+.panel-title{
+  font-family:var(--serif); font-size:clamp(1.6rem,5vw,2.2rem);
+  font-weight:300; text-align:center; line-height:1.2; margin-bottom:.4rem;
+}
+.panel-title em{font-style:italic; color:var(--rose-ink)}
+.panel-hint{
+  text-align:center; font-size:.8rem; color:var(--text-muted);
+  max-width:460px; margin:0 auto 1.6rem; line-height:1.7;
+}
+.field{margin-bottom:1.1rem}
+.field label{
+  display:block; font-size:.56rem; letter-spacing:.24em;
+  text-transform:uppercase; color:var(--gold-dark); margin-bottom:.45rem;
+}
+.field input, .field select{
+  width:100%; padding:.8rem 1rem;
+  border:1px solid rgba(138,154,98,.4); border-radius:9px;
+  font-family:var(--serif); font-size:1rem; color:var(--text);
+  background:var(--cream); outline:none; transition:border-color .25s;
+}
+.field input:focus, .field select:focus{border-color:var(--gold)}
+.field-row{display:grid; grid-template-columns:1fr 1fr; gap:1rem}
+@media(max-width:560px){.field-row{grid-template-columns:1fr; gap:0}}
+
+/* ============================================================
+   BOTONES
+   ============================================================ */
+.btn-pill{
+  display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+  padding:.62rem 1.5rem; border:1px solid var(--gold); border-radius:50px;
+  font-family:var(--sans); font-size:.6rem; letter-spacing:.24em;
+  text-transform:uppercase; color:var(--gold-dark);
+  background:none; cursor:pointer; text-decoration:none;
+  transition:background .3s, color .3s, transform .15s;
+}
+.btn-pill:hover{background:var(--gold); color:#fff}
+.btn-pill:active{transform:scale(.97)}
+.btn-pill.solid{background:var(--gold); color:#fff}
+.btn-pill.solid:hover{background:var(--gold-dark)}
+.btn-pill.light{border-color:rgba(220,199,194,.6); color:var(--gold-light)}
+.btn-pill.light:hover{background:var(--gold-light); color:var(--dark)}
+.btn-pill.rose{border-color:var(--rose-deep); color:var(--rose-ink)}
+.btn-pill.rose:hover{background:var(--rose-deep); color:#fff}
+
+/* ============================================================
+   ZONA DE PROPUESTAS
+   ============================================================ */
+#propuestas{max-width:820px; margin:0 auto; padding:2.5rem 1.5rem 4rem}
+.prop-head{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:1rem; flex-wrap:wrap; margin:2.6rem 0 .9rem;
+}
+.prop-name{
+  font-size:.58rem; letter-spacing:.34em; text-transform:uppercase;
+  color:var(--gold-dark);
+}
+.prop-name b{color:var(--rose-ink); font-weight:500}
+.prop-actions{display:flex; gap:.5rem; flex-wrap:wrap}
+.prop-actions .btn-pill{padding:.45rem 1rem; font-size:.52rem}
+
+/* la tarjeta de cada propuesta */
+.prop{
+  border-radius:14px; overflow:hidden;
+  box-shadow:0 16px 46px rgba(47,58,36,.13);
+}
+
+/* ============================================================
+   PROPUESTA 1 — SOBRE Y SELLO
+   ============================================================ */
+.p1{
+  position:relative; padding:4.6rem 1.5rem 3.2rem; text-align:center;
+  background:linear-gradient(160deg,#3d4a2e 0%,#2f3a24 48%,#1c2415 100%);
+}
+.p1::after{
+  content:''; position:absolute; inset:14px;
+  border:1px solid rgba(220,199,194,.22); pointer-events:none;
+}
+.p1 .leaf{
+  position:absolute; width:150px; opacity:.16; pointer-events:none;
+  filter:brightness(1.4) saturate(.7);
+}
+.p1 .leaf.a{top:-14px; left:-24px; transform:rotate(14deg)}
+.p1 .leaf.b{bottom:-18px; right:-26px; transform:scaleX(-1) rotate(14deg)}
+.p1-card{
+  position:relative; z-index:2;
+  max-width:390px; margin:0 auto;
+  background:#fffdf9; border-radius:8px;
+  padding:3.6rem 1.7rem 2.1rem;
+  box-shadow:0 26px 60px rgba(0,0,0,.42);
+}
+.p1-seal{
+  position:absolute; top:0; left:50%;
+  transform:translate(-50%,-52%);
+  width:88px; height:88px;
+}
+.p1-seal img{width:100%; height:100%; object-fit:contain; display:block;
+  filter:drop-shadow(0 5px 14px rgba(0,0,0,.32))}
+.p1-eyebrow{
+  font-size:.5rem; letter-spacing:.42em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:.7rem;
+}
+.p1-to{
+  font-size:.5rem; letter-spacing:.38em; text-transform:uppercase;
+  color:var(--text-muted); margin-bottom:.15rem;
+}
+.p1-name{
+  font-family:var(--script); font-size:clamp(1.7rem,6vw,2.2rem);
+  color:var(--rose-ink); line-height:1.2; margin-bottom:.9rem;
+}
+.p1-text{
+  font-family:var(--serif); font-size:.95rem; color:var(--text-muted);
+  line-height:1.8; margin-bottom:1.1rem;
+}
+.p1-role{
+  display:inline-block; padding:.5rem 1.4rem; margin-bottom:1.1rem;
+  border:1px solid var(--rose-deep); border-radius:50px;
+  font-family:var(--serif); font-size:1.1rem; color:var(--rose-ink);
+  background:rgba(217,179,172,.10);
+}
+.p1-ask{
+  font-family:var(--script); font-size:clamp(1.35rem,5vw,1.7rem);
+  color:var(--gold-dark); line-height:1.3; margin-bottom:1.3rem;
+}
+.p1-meta{
+  font-size:.54rem; letter-spacing:.26em; text-transform:uppercase;
+  color:var(--text-muted); line-height:2;
+  border-top:1px solid var(--gold-light); padding-top:1rem; margin-top:.3rem;
+}
+.p1-couple{
+  font-family:var(--script); font-size:1.6rem;
+  color:var(--gold-dark); margin-top:1.2rem; line-height:1;
+}
+
+/* ============================================================
+   PROPUESTA 2 — MARFIL BOTÁNICO
+   ============================================================ */
+.p2{
+  position:relative; padding:3.6rem 1.6rem; text-align:center;
+  background:linear-gradient(155deg,#fdfbf7,#f4ece7);
+}
+.p2::after{
+  content:''; position:absolute; inset:18px;
+  border:1px solid rgba(192,150,143,.42); pointer-events:none;
+}
+.p2::before{
+  content:''; position:absolute; inset:24px;
+  border:1px solid rgba(138,154,98,.20); pointer-events:none;
+}
+.p2 .leaf{position:absolute; width:135px; opacity:.5; pointer-events:none}
+.p2 .leaf.a{top:-10px; left:-18px; transform:rotate(10deg)}
+.p2 .leaf.b{bottom:-12px; right:-20px; transform:scaleX(-1) rotate(10deg)}
+.p2-inner{position:relative; z-index:2; max-width:420px; margin:0 auto}
+.p2-eyebrow{
+  font-size:.53rem; letter-spacing:.44em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:1.4rem;
+}
+.p2-to{
+  font-size:.5rem; letter-spacing:.38em; text-transform:uppercase;
+  color:var(--text-muted); margin-bottom:.2rem;
+}
+.p2-name{
+  font-family:var(--script); font-size:clamp(2rem,7.5vw,2.9rem);
+  color:var(--rose-ink); line-height:1.15; margin-bottom:1.5rem;
+}
+.p2-text{
+  font-family:var(--serif); font-size:1.02rem; color:var(--text-muted);
+  line-height:1.9; margin-bottom:1.5rem;
+}
+.p2-rolebox{margin:1.7rem auto}
+.p2-rolelbl{
+  font-size:.5rem; letter-spacing:.4em; text-transform:uppercase;
+  color:var(--gold-dark); margin-bottom:.4rem;
+}
+.p2-role{
+  font-family:var(--serif); font-size:clamp(1.7rem,6.5vw,2.4rem);
+  font-weight:300; font-style:italic; color:var(--rose-ink); line-height:1.2;
+}
+.p2-ask{
+  font-family:var(--script); font-size:clamp(1.5rem,5.5vw,2rem);
+  color:var(--gold-dark); margin:1.5rem 0 1.4rem;
+}
+.p2-meta{
+  font-size:.55rem; letter-spacing:.26em; text-transform:uppercase;
+  color:var(--text-muted); line-height:2.1; margin-top:1.4rem;
+}
+.p2-couple{
+  font-family:var(--script); font-size:1.75rem;
+  color:var(--gold-dark); margin-top:1rem; line-height:1;
+}
+
+/* onda decorativa reutilizable */
+.wave{
+  width:158px; height:12px; margin:1.2rem auto; position:relative;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 12'%3E%3Cpath d='M2 6 Q9 1.6 16 6 T30 6 T44 6 T58 6 T72 6' fill='none' stroke='%23c0968f' stroke-width='1.1' stroke-linecap='round'/%3E%3C/svg%3E") left center/62px 12px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 12'%3E%3Cpath d='M2 6 Q9 1.6 16 6 T30 6 T44 6 T58 6 T72 6' fill='none' stroke='%23c0968f' stroke-width='1.1' stroke-linecap='round'/%3E%3C/svg%3E") right center/62px 12px no-repeat;
+}
+.wave::before{
+  content:'\2766'; position:absolute; left:50%; top:50%;
+  transform:translate(-50%,-50%); font-size:.9rem;
+  color:var(--rose-ink); line-height:1;
+}
+.wave.on-dark{filter:brightness(1.5) saturate(.55); opacity:.8}
+
+/* ============================================================
+   PROPUESTA 3 — TARJETA OLIVO
+   ============================================================ */
+.p3{
+  position:relative; padding:3rem 1.5rem; text-align:center;
+  background:linear-gradient(150deg,#f6f2ea,#eee7dc);
+}
+.p3-card{
+  position:relative; max-width:380px; margin:0 auto;
+  background:linear-gradient(165deg,#46543a 0%,#33402a 55%,#25301c 100%);
+  border-radius:6px; padding:2.9rem 1.6rem 2.3rem;
+  box-shadow:0 22px 54px rgba(37,48,28,.4);
+  overflow:hidden;
+}
+.p3-card::after{
+  content:''; position:absolute; inset:11px;
+  border:1px solid rgba(220,199,194,.35); pointer-events:none;
+}
+.p3 .leaf{
+  position:absolute; width:120px; opacity:.17; pointer-events:none;
+  filter:brightness(1.5) saturate(.6);
+}
+.p3 .leaf.a{top:-16px; right:-20px; transform:scaleX(-1) rotate(-8deg)}
+.p3-in{position:relative; z-index:2}
+.p3-eyebrow{
+  font-size:.5rem; letter-spacing:.44em; text-transform:uppercase;
+  color:var(--gold-light); margin-bottom:1.1rem;
+}
+.p3-to{
+  font-size:.48rem; letter-spacing:.38em; text-transform:uppercase;
+  color:rgba(255,255,255,.5); margin-bottom:.2rem;
+}
+.p3-name{
+  font-family:var(--script); font-size:clamp(1.6rem,6vw,2.1rem);
+  color:#fff; line-height:1.2; margin-bottom:1.2rem;
+}
+.p3-rule{
+  width:100%; height:1px; margin:1.2rem 0;
+  background:linear-gradient(90deg,transparent,rgba(220,199,194,.45),transparent);
+}
+.p3-rolelbl{
+  font-size:.48rem; letter-spacing:.42em; text-transform:uppercase;
+  color:var(--gold-light); margin-bottom:.5rem;
+}
+.p3-role{
+  font-family:var(--serif); font-size:clamp(1.6rem,6vw,2.2rem);
+  font-weight:300; color:#fff; line-height:1.25;
+}
+.p3-text{
+  font-family:var(--serif); font-style:italic; font-size:.95rem;
+  color:rgba(255,255,255,.78); line-height:1.85; margin:1.2rem 0;
+}
+.p3-seal{width:62px; height:62px; margin:1.3rem auto .5rem; display:block}
+.p3-meta{
+  font-size:.52rem; letter-spacing:.26em; text-transform:uppercase;
+  color:rgba(255,255,255,.45); line-height:2;
+}
+.p3-couple{
+  font-family:var(--script); font-size:1.5rem;
+  color:var(--gold-light); margin-top:.7rem; line-height:1;
+}
+
+/* respuesta (botones al pie de cada propuesta) */
+.reply{
+  display:flex; gap:.7rem; justify-content:center; flex-wrap:wrap;
+  margin-top:1.5rem; position:relative; z-index:3;
+}
+
+/* ============================================================
+   MODO INVITACIÓN (cuando se abre con ?d=)
+   ============================================================ */
+body.solo #panel{display:none}
+body.solo #propuestas{padding:0; max-width:none}
+body.solo .prop-head{display:none}
+body.solo .prop{border-radius:0; box-shadow:none; min-height:100vh;
+  display:flex; align-items:center; justify-content:center}
+body.solo .prop > *{width:100%}
+body.solo .p1, body.solo .p2, body.solo .p3{
+  min-height:100vh; display:flex; flex-direction:column; justify-content:center;
+}
+
+/* aviso de copiado */
+#toast{
+  position:fixed; left:50%; bottom:1.6rem; transform:translate(-50%,140%);
+  background:var(--dark); color:var(--gold-light);
+  padding:.7rem 1.4rem; border-radius:50px;
+  font-size:.6rem; letter-spacing:.22em; text-transform:uppercase;
+  box-shadow:0 10px 30px rgba(0,0,0,.3); z-index:99;
+  transition:transform .35s ease;
+}
+#toast.show{transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+
+<!-- ==================== PANEL DE LOS NOVIOS ==================== -->
+<div id="panel">
+  <div class="panel-card">
+    <span class="panel-eyebrow">Sebastián &amp; Saraí · 28.11.2026</span>
+    <h1 class="panel-title">Invitación de <em>padrinos</em></h1>
+    <p class="panel-hint">
+      Llena los datos, elige la propuesta que más les guste y copia el link
+      para enviárselo por WhatsApp. Quien lo reciba solo verá la invitación.
+    </p>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="fTrato">Tratamiento</label>
+        <select id="fTrato">
+          <option value="padrinos">Padrinos (pareja)</option>
+          <option value="padrino">Padrino</option>
+          <option value="madrina">Madrina</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="fNombre">Nombre(s)</label>
+        <input type="text" id="fNombre" placeholder="Ej: Juan y Ana" value="">
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="fRol">Padrinos de…</label>
+        <select id="fRol">
+          <option>Velación</option>
+          <option>Anillos</option>
+          <option>Arras</option>
+          <option>Lazo</option>
+          <option>Cojines</option>
+          <option>Biblia y Rosario</option>
+          <option>Ramo</option>
+          <option>Pastel</option>
+          <option>Brindis</option>
+          <option>Música</option>
+          <option>Honor</option>
+          <option value="__otro">Otro (escribir)…</option>
+        </select>
+      </div>
+      <div class="field" id="wrapOtro" style="display:none">
+        <label for="fOtro">Escribe el rol</label>
+        <input type="text" id="fOtro" placeholder="Ej: Recuerdos">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== LAS TRES PROPUESTAS ==================== -->
+<div id="propuestas">
+
+  <!-- ---------- PROPUESTA 1 ---------- -->
+  <div class="prop-head" data-for="1">
+    <span class="prop-name">Propuesta 1 · <b>Sobre y sello</b></span>
+    <span class="prop-actions">
+      <button class="btn-pill" onclick="copiarLink(1)">Copiar link</button>
+      <button class="btn-pill rose" onclick="abrir(1)">Abrir ↗</button>
+    </span>
+  </div>
+  <section class="prop" id="prop1">
+    <div class="p1">
+      <img src="follaje.png" class="leaf a" alt="">
+      <img src="follaje.png" class="leaf b" alt="">
+      <div class="p1-card">
+        <div class="p1-seal"><img src="sello.png" alt="Sello Sebastián y Saraí"></div>
+        <p class="p1-eyebrow">✦&nbsp; Con todo cariño &nbsp;✦</p>
+        <p class="p1-to" data-to>Estimados</p>
+        <p class="p1-name" data-nombre>Familia</p>
+        <p class="p1-text" data-intro>
+          Queremos que este día esté rodeado de las personas que más queremos.
+        </p>
+        <div class="p1-role" data-rol>Padrinos de Velación</div>
+        <p class="p1-ask" data-ask>¿Nos harían el honor?</p>
+        <p class="p1-meta">
+          Sábado 28 de Noviembre de 2026<br>
+          Templo Expiatorio · 4:45 pm
+        </p>
+        <p class="p1-couple">Sebastián &amp; Saraí</p>
+        <div class="reply" data-reply></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- PROPUESTA 2 ---------- -->
+  <div class="prop-head" data-for="2">
+    <span class="prop-name">Propuesta 2 · <b>Marfil botánico</b></span>
+    <span class="prop-actions">
+      <button class="btn-pill" onclick="copiarLink(2)">Copiar link</button>
+      <button class="btn-pill rose" onclick="abrir(2)">Abrir ↗</button>
+    </span>
+  </div>
+  <section class="prop" id="prop2">
+    <div class="p2">
+      <img src="follaje.png" class="leaf a" alt="">
+      <img src="follaje.png" class="leaf b" alt="">
+      <div class="p2-inner">
+        <p class="p2-eyebrow">Sebastián &amp; Saraí · 28.11.2026</p>
+        <p class="p2-to" data-to>Estimados</p>
+        <p class="p2-name" data-nombre>Familia</p>
+        <div class="wave"></div>
+        <p class="p2-text" data-intro>
+          Queremos que este día esté rodeado de las personas que más queremos.
+        </p>
+        <div class="p2-rolebox">
+          <p class="p2-rolelbl" data-rollbl>Padrinos de</p>
+          <p class="p2-role" data-rolsolo>Velación</p>
+        </div>
+        <p class="p2-ask" data-ask>¿Nos harían el honor?</p>
+        <div class="reply" data-reply></div>
+        <p class="p2-meta">
+          Sábado 28 de Noviembre de 2026<br>
+          Templo Expiatorio · 4:45 pm
+        </p>
+        <p class="p2-couple">Sebastián &amp; Saraí</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- PROPUESTA 3 ---------- -->
+  <div class="prop-head" data-for="3">
+    <span class="prop-name">Propuesta 3 · <b>Tarjeta olivo</b></span>
+    <span class="prop-actions">
+      <button class="btn-pill" onclick="copiarLink(3)">Copiar link</button>
+      <button class="btn-pill rose" onclick="abrir(3)">Abrir ↗</button>
+    </span>
+  </div>
+  <section class="prop" id="prop3">
+    <div class="p3">
+      <div class="p3-card">
+        <img src="follaje.png" class="leaf a" alt="">
+        <div class="p3-in">
+          <p class="p3-eyebrow">Con todo cariño</p>
+          <p class="p3-to" data-to>Estimados</p>
+          <p class="p3-name" data-nombre>Familia</p>
+          <div class="p3-rule"></div>
+          <p class="p3-rolelbl" data-rollbl>Padrinos de</p>
+          <p class="p3-role" data-rolsolo>Velación</p>
+          <div class="p3-rule"></div>
+          <p class="p3-text" data-ask>¿Nos harían el honor?</p>
+          <img src="sello.png" class="p3-seal" alt="Sello Sebastián y Saraí">
+          <p class="p3-meta">
+            Sábado 28 de Noviembre de 2026<br>
+            Templo Expiatorio · 4:45 pm
+          </p>
+          <p class="p3-couple">Sebastián &amp; Saraí</p>
+          <div class="reply" data-reply></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div id="toast">Link copiado ✓</div>
+
+<script>
+/* ------------------------------------------------------------
+   Datos de la boda
+   ------------------------------------------------------------ */
+var WA = '524626059866';           // WhatsApp de Saraí (respuestas)
+var INVITACION = 'index.html';     // la invitación completa
+
+/* ------------------------------------------------------------
+   Estado
+   ------------------------------------------------------------ */
+function params(){ return new URLSearchParams(location.search); }
+
+function estado(){
+  var p = params();
+  var trato  = (p.get('t') || document.getElementById('fTrato').value || 'padrinos').toLowerCase();
+  var nombre = p.get('n');
+  var rol    = p.get('r');
+
+  if (nombre === null) nombre = document.getElementById('fNombre').value;
+  if (rol === null) {
+    var sel = document.getElementById('fRol').value;
+    rol = (sel === '__otro') ? document.getElementById('fOtro').value : sel;
+  }
+  if (!nombre) nombre = (trato === 'padrinos') ? 'Estimados amigos' : 'Estimado amigo';
+  if (!rol) rol = 'Velación';
+  return { trato: trato, nombre: nombre, rol: rol };
+}
+
+/* textos según el tratamiento */
+function textos(e){
+  var plural = (e.trato === 'padrinos');
+  var titulo = plural ? 'Padrinos de' : (e.trato === 'madrina' ? 'Madrina de' : 'Padrino de');
+  var saludo = plural ? 'Estimados' : (e.trato === 'madrina' ? 'Estimada' : 'Estimado');
+  var intro  = plural
+    ? 'Queremos que este día esté rodeado de las personas que más queremos, y ustedes son parte importante de nuestra historia. Por eso nos encantaría pedirles que nos acompañen como'
+    : 'Queremos que este día esté rodeado de las personas que más queremos, y tú eres parte importante de nuestra historia. Por eso nos encantaría pedirte que nos acompañes como';
+  var ask = plural ? '¿Nos harían el honor?' : '¿Nos harías el honor?';
+  return { titulo: titulo, saludo: saludo, intro: intro, ask: ask,
+           rolCompleto: titulo + ' ' + e.rol };
+}
+
+/* ------------------------------------------------------------
+   Pintar las tres propuestas
+   ------------------------------------------------------------ */
+function pintar(){
+  var e = estado(), t = textos(e);
+
+  document.querySelectorAll('[data-to]').forEach(function(el){ el.textContent = t.saludo; });
+  document.querySelectorAll('[data-nombre]').forEach(function(el){ el.textContent = e.nombre; });
+  document.querySelectorAll('[data-intro]').forEach(function(el){ el.textContent = t.intro; });
+  document.querySelectorAll('[data-rol]').forEach(function(el){ el.textContent = t.rolCompleto; });
+  document.querySelectorAll('[data-rollbl]').forEach(function(el){ el.textContent = t.titulo; });
+  document.querySelectorAll('[data-rolsolo]').forEach(function(el){ el.textContent = e.rol; });
+  document.querySelectorAll('[data-ask]').forEach(function(el){ el.textContent = t.ask; });
+
+  var msg = encodeURIComponent('¡Hola! Con mucho gusto aceptamos ser ' + t.rolCompleto +
+                               ' en su boda. ¡Felicidades! 🤍');
+  document.querySelectorAll('[data-reply]').forEach(function(el){
+    var claro = el.closest('.p3') !== null;
+    el.innerHTML =
+      '<a class="btn-pill ' + (claro ? 'light' : 'solid') + '" target="_blank" rel="noopener" ' +
+      'href="https://wa.me/' + WA + '?text=' + msg + '">Sí, aceptamos 🤍</a>' +
+      '<a class="btn-pill ' + (claro ? 'light' : '') + '" href="' + INVITACION + '">Ver la invitación</a>';
+  });
+}
+
+/* ------------------------------------------------------------
+   Links
+   ------------------------------------------------------------ */
+function linkDe(n){
+  var e = estado();
+  var u = location.href.split('?')[0].split('#')[0] +
+          '?d=' + n +
+          '&t=' + encodeURIComponent(e.trato) +
+          '&n=' + encodeURIComponent(e.nombre) +
+          '&r=' + encodeURIComponent(e.rol);
+  return u;
+}
+function copiarLink(n){
+  var u = linkDe(n);
+  navigator.clipboard.writeText(u).then(mostrarToast, function(){ prompt('Copia el link:', u); });
+}
+function abrir(n){ window.open(linkDe(n), '_blank'); }
+
+var toastT;
+function mostrarToast(){
+  var t = document.getElementById('toast');
+  t.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(function(){ t.classList.remove('show'); }, 2200);
+}
+
+/* ------------------------------------------------------------
+   Arranque
+   ------------------------------------------------------------ */
+(function(){
+  var p = params();
+  var d = p.get('d');
+
+  if (d === '1' || d === '2' || d === '3') {
+    /* modo invitación: solo se ve la propuesta elegida */
+    document.body.classList.add('solo');
+    [1,2,3].forEach(function(n){
+      if (String(n) !== d) document.getElementById('prop' + n).remove();
+    });
+    pintar();
+    return;
+  }
+
+  /* modo panel: los campos actualizan las tres propuestas en vivo */
+  var rol = document.getElementById('fRol');
+  var otro = document.getElementById('fOtro');
+  rol.addEventListener('change', function(){
+    document.getElementById('wrapOtro').style.display =
+      (rol.value === '__otro') ? 'block' : 'none';
+    pintar();
+  });
+  ['fTrato','fNombre'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', pintar);
+    document.getElementById(id).addEventListener('change', pintar);
+  });
+  otro.addEventListener('input', pintar);
+
+  pintar();
+})();
+</script>
+</body>
+</html>
