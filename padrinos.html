@@ -12,357 +12,361 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
 :root{
-  --gold:       #8a9a62;   /* verde olivo — acento principal */
-  --gold-light: #dcc7c2;   /* rosa palo claro */
-  --gold-dark:  #5d6b3e;   /* olivo profundo */
-  --olive:      #6e7f52;
-  --olive-dark: #4a563a;
-  --sage:       #a8b78c;
-  --cream:      #fbf8f4;
-  --warm:       #f4ece7;
-  --rose:       #d9b3ac;
-  --rose-deep:  #c0968f;
-  --rose-ink:   #ad8078;
-  --dark:       #2f3a24;
-  --dark-mid:   #3a4630;
-  --dark-warm:  #46543a;
-  --text:       #3a3b30;
-  --text-muted: #7f7a70;
-  --white:      #ffffff;
-  --serif:      'Cormorant Garamond', Georgia, serif;
-  --script:     'Parisienne', cursive;
-  --sans:       'Montserrat', sans-serif;
+  --gold:#8a9a62; --gold-light:#dcc7c2; --gold-dark:#5d6b3e;
+  --olive:#6e7f52; --sage:#a8b78c;
+  --cream:#fbf8f4; --warm:#f4ece7;
+  --rose:#d9b3ac; --rose-deep:#c0968f; --rose-ink:#ad8078;
+  --dark:#2f3a24; --dark-warm:#46543a;
+  --text:#3a3b30; --text-muted:#7f7a70; --white:#fff;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --script:'Parisienne',cursive;
+  --sans:'Montserrat',sans-serif;
 }
+body{font-family:var(--sans);color:var(--text);line-height:1.6;
+  background:linear-gradient(160deg,#fbf8f4,var(--warm));-webkit-font-smoothing:antialiased}
+body.locked{overflow:hidden}
 
-html{scroll-behavior:smooth}
-body{
-  font-family:var(--sans); color:var(--text); line-height:1.6;
-  background:linear-gradient(160deg,#fbf8f4,var(--warm));
-  -webkit-font-smoothing:antialiased;
-}
-
-/* ============================================================
-   PANEL DE LOS NOVIOS (no lo ve el invitado)
-   ============================================================ */
-#panel{
-  max-width:820px; margin:0 auto; padding:2.5rem 1.5rem 0;
-}
-.panel-card{
-  background:var(--white); border:1px solid var(--gold-light);
-  border-radius:14px; padding:1.9rem 1.6rem;
-  box-shadow:0 14px 40px rgba(110,127,82,.10);
-}
-.panel-eyebrow{
-  font-size:.55rem; letter-spacing:.42em; text-transform:uppercase;
-  color:var(--gold); text-align:center; display:block; margin-bottom:.5rem;
-}
-.panel-title{
-  font-family:var(--serif); font-size:clamp(1.6rem,5vw,2.2rem);
-  font-weight:300; text-align:center; line-height:1.2; margin-bottom:.4rem;
-}
-.panel-title em{font-style:italic; color:var(--rose-ink)}
-.panel-hint{
-  text-align:center; font-size:.8rem; color:var(--text-muted);
-  max-width:460px; margin:0 auto 1.6rem; line-height:1.7;
-}
-.field{margin-bottom:1.1rem}
-.field label{
-  display:block; font-size:.56rem; letter-spacing:.24em;
-  text-transform:uppercase; color:var(--gold-dark); margin-bottom:.45rem;
-}
-.field input, .field select{
-  width:100%; padding:.8rem 1rem;
-  border:1px solid rgba(138,154,98,.4); border-radius:9px;
-  font-family:var(--serif); font-size:1rem; color:var(--text);
-  background:var(--cream); outline:none; transition:border-color .25s;
-}
-.field input:focus, .field select:focus{border-color:var(--gold)}
-.field-row{display:grid; grid-template-columns:1fr 1fr; gap:1rem}
-@media(max-width:560px){.field-row{grid-template-columns:1fr; gap:0}}
-
-/* ============================================================
-   BOTONES
-   ============================================================ */
-.btn-pill{
-  display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
-  padding:.62rem 1.5rem; border:1px solid var(--gold); border-radius:50px;
-  font-family:var(--sans); font-size:.6rem; letter-spacing:.24em;
-  text-transform:uppercase; color:var(--gold-dark);
-  background:none; cursor:pointer; text-decoration:none;
-  transition:background .3s, color .3s, transform .15s;
-}
-.btn-pill:hover{background:var(--gold); color:#fff}
+/* ============================== BOTONES ============================== */
+.btn-pill{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  padding:.62rem 1.5rem;border:1px solid var(--gold);border-radius:50px;
+  font-family:var(--sans);font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--gold-dark);background:none;cursor:pointer;text-decoration:none;
+  transition:background .3s,color .3s,transform .15s}
+.btn-pill:hover{background:var(--gold);color:#fff}
 .btn-pill:active{transform:scale(.97)}
-.btn-pill.solid{background:var(--gold); color:#fff}
+.btn-pill.solid{background:var(--gold);color:#fff;border-color:var(--gold)}
 .btn-pill.solid:hover{background:var(--gold-dark)}
-.btn-pill.light{border-color:rgba(220,199,194,.6); color:var(--gold-light)}
-.btn-pill.light:hover{background:var(--gold-light); color:var(--dark)}
-.btn-pill.rose{border-color:var(--rose-deep); color:var(--rose-ink)}
-.btn-pill.rose:hover{background:var(--rose-deep); color:#fff}
+.btn-pill.light{border-color:rgba(220,199,194,.55);color:var(--gold-light)}
+.btn-pill.light:hover{background:var(--gold-light);color:var(--dark)}
+.btn-pill.rose{border-color:var(--rose-deep);color:var(--rose-ink)}
+.btn-pill.rose:hover{background:var(--rose-deep);color:#fff}
+
+/* ============================== PANEL ============================== */
+#panel{max-width:900px;margin:0 auto;padding:2.5rem 1.4rem 4rem}
+.panel-card{background:var(--white);border:1px solid var(--gold-light);border-radius:14px;
+  padding:1.9rem 1.6rem;box-shadow:0 14px 40px rgba(110,127,82,.10)}
+.panel-eyebrow{font-size:.55rem;letter-spacing:.42em;text-transform:uppercase;
+  color:var(--gold);text-align:center;display:block;margin-bottom:.5rem}
+.panel-title{font-family:var(--serif);font-size:clamp(1.6rem,5vw,2.2rem);font-weight:300;
+  text-align:center;line-height:1.2;margin-bottom:.4rem}
+.panel-title em{font-style:italic;color:var(--rose-ink)}
+.panel-hint{text-align:center;font-size:.8rem;color:var(--text-muted);
+  max-width:470px;margin:0 auto 1.6rem;line-height:1.7}
+.field{margin-bottom:1.1rem}
+.field label{display:block;font-size:.56rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--gold-dark);margin-bottom:.45rem}
+.field input,.field select{width:100%;padding:.8rem 1rem;border:1px solid rgba(138,154,98,.4);
+  border-radius:9px;font-family:var(--serif);font-size:1rem;color:var(--text);
+  background:var(--cream);outline:none;transition:border-color .25s}
+.field input:focus,.field select:focus{border-color:var(--gold)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:560px){.field-row{grid-template-columns:1fr;gap:0}}
+
+.opciones{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:1.2rem;margin-top:2.2rem}
+.opcion{background:var(--white);border:1px solid var(--gold-light);border-radius:14px;
+  overflow:hidden;display:flex;flex-direction:column;
+  transition:transform .3s,box-shadow .3s}
+.opcion:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(110,127,82,.16)}
+.op-mini{height:132px;position:relative;overflow:hidden}
+.op-body{padding:1.1rem 1.1rem 1.3rem;text-align:center;display:flex;
+  flex-direction:column;flex:1}
+.op-num{font-size:.5rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold)}
+.op-nombre{font-family:var(--serif);font-size:1.35rem;font-weight:300;
+  color:var(--text);margin:.25rem 0 .45rem}
+.op-desc{font-size:.74rem;color:var(--text-muted);line-height:1.65;flex:1}
+.op-btns{display:flex;gap:.5rem;justify-content:center;margin-top:1rem;flex-wrap:wrap}
+.op-btns .btn-pill{padding:.45rem 1rem;font-size:.52rem}
+
+/* miniaturas del panel */
+.mini-1{background:linear-gradient(160deg,#3d4a2e,#1c2415);display:flex;
+  align-items:center;justify-content:center}
+.mini-1 i{display:block;width:74px;height:52px;border-radius:4px;
+  background:linear-gradient(165deg,#5b6b45,#3a4630);
+  box-shadow:0 8px 18px rgba(0,0,0,.4);position:relative}
+.mini-1 i::before{content:'';position:absolute;left:-3px;right:-3px;top:-13px;height:16px;
+  border-radius:4px 4px 0 0;background:linear-gradient(165deg,#6b7c52,#46543a);
+  transform-origin:bottom center;transform:rotateX(38deg)}
+.mini-2{background:linear-gradient(155deg,#fdfbf7,#efe6da);display:flex;
+  align-items:center;justify-content:center}
+.mini-2 i{display:block;width:66px;height:82px;background:#fffdf9;border-radius:3px;
+  box-shadow:0 8px 18px rgba(110,127,82,.22);position:relative;
+  border:1px solid rgba(192,150,143,.4)}
+.mini-2 i::after{content:'';position:absolute;left:50%;top:50%;width:22px;height:22px;
+  margin:-11px 0 0 -11px;border-radius:50%;background:var(--olive)}
+.mini-3{background:linear-gradient(160deg,#1c2415,#46543a);display:flex;
+  align-items:center;justify-content:center;gap:5px}
+.mini-3 i{display:block;width:9px;height:9px;border-radius:50%;background:var(--gold-light);
+  opacity:.35}
+.mini-3 i:nth-child(2){opacity:.65;width:12px;height:12px}
+.mini-3 i:nth-child(3){opacity:1;width:16px;height:16px;background:var(--rose)}
+
+/* ============================== ESCENARIO ============================== */
+#stage{position:fixed;inset:0;z-index:900;display:none}
+#stage.on{display:block}
+.esc{position:absolute;inset:0;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:1.5rem}
+.cerrar{position:absolute;top:1rem;right:1.1rem;z-index:60;
+  width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.3);
+  background:rgba(0,0,0,.25);color:#fff;font-size:1.1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.cerrar.oscuro{border-color:rgba(90,80,70,.3);background:rgba(255,255,255,.6);color:var(--text)}
+
+.hint{position:absolute;bottom:2.2rem;left:0;right:0;z-index:20;
+  font-size:.54rem;letter-spacing:.44em;text-transform:uppercase;
+  animation:latir 2.6s ease-in-out infinite}
+@keyframes latir{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* follaje de fondo */
+.bg-leaf{position:absolute;width:230px;opacity:.14;pointer-events:none;z-index:1}
+.bg-leaf.claro{filter:brightness(1.4) saturate(.7)}
+.bg-leaf.tl{top:-40px;left:-60px;transform:rotate(14deg)}
+.bg-leaf.br{bottom:-50px;right:-60px;transform:scaleX(-1) rotate(14deg)}
+
+/* partículas que caen */
+.lluvia{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:30}
+.particula{position:absolute;top:-12vh;pointer-events:none;opacity:0}
+.particula.hoja{border-radius:0 100% 0 100%;background:var(--sage)}
+.particula.petalo{border-radius:60% 40% 55% 45%;background:var(--rose)}
+@keyframes caer{
+  0%{opacity:0;transform:translateY(-10vh) rotate(0deg)}
+  8%{opacity:.85}
+  100%{opacity:0;transform:translateY(112vh) rotate(var(--giro))}
+}
+
+/* ============ contenido final compartido ============ */
+.final{position:relative;z-index:40;max-width:400px;width:100%;
+  opacity:0;transform:translateY(22px);pointer-events:none;
+  transition:opacity .8s ease,transform .8s ease}
+.final.on{opacity:1;transform:translateY(0);pointer-events:auto}
+.f-to{font-size:.5rem;letter-spacing:.4em;text-transform:uppercase;margin-bottom:.2rem}
+.f-name{font-family:var(--script);font-size:clamp(1.7rem,6.5vw,2.3rem);
+  line-height:1.2;font-weight:400}
+.f-text{font-family:var(--serif);font-size:.95rem;line-height:1.85;margin:1rem 0}
+.f-rollbl{font-size:.5rem;letter-spacing:.4em;text-transform:uppercase;margin-top:1rem}
+.f-rol{font-family:var(--serif);font-size:clamp(1.5rem,6.5vw,2.1rem);font-weight:300;
+  font-style:italic;line-height:1.25}
+.f-ask{font-family:var(--script);font-size:clamp(1.4rem,5.5vw,1.9rem);margin:.9rem 0 1.2rem}
+.f-meta{font-size:.53rem;letter-spacing:.26em;text-transform:uppercase;line-height:2;
+  padding-top:1rem;margin-top:.6rem}
+.f-couple{font-family:var(--script);font-size:1.6rem;margin-top:.9rem;line-height:1}
+.f-reply{display:flex;gap:.65rem;justify-content:center;flex-wrap:wrap;margin-top:1.4rem}
+
+/* onda decorativa */
+.wave{width:150px;height:12px;margin:.9rem auto;position:relative;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 12'%3E%3Cpath d='M2 6 Q9 1.6 16 6 T30 6 T44 6 T58 6 T72 6' fill='none' stroke='%23c0968f' stroke-width='1.1' stroke-linecap='round'/%3E%3C/svg%3E") left center/58px 12px no-repeat,
+             url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 12'%3E%3Cpath d='M2 6 Q9 1.6 16 6 T30 6 T44 6 T58 6 T72 6' fill='none' stroke='%23c0968f' stroke-width='1.1' stroke-linecap='round'/%3E%3C/svg%3E") right center/58px 12px no-repeat}
+.wave::before{content:'\2766';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  font-size:.85rem;color:var(--rose-ink);line-height:1}
+.wave.claro{filter:brightness(1.5) saturate(.55);opacity:.85}
 
 /* ============================================================
-   ZONA DE PROPUESTAS
+   PROPUESTA 1 — EL COFRE
    ============================================================ */
-#propuestas{max-width:820px; margin:0 auto; padding:2.5rem 1.5rem 4rem}
-.prop-head{
-  display:flex; align-items:center; justify-content:space-between;
-  gap:1rem; flex-wrap:wrap; margin:2.6rem 0 .9rem;
-}
-.prop-name{
-  font-size:.58rem; letter-spacing:.34em; text-transform:uppercase;
-  color:var(--gold-dark);
-}
-.prop-name b{color:var(--rose-ink); font-weight:500}
-.prop-actions{display:flex; gap:.5rem; flex-wrap:wrap}
-.prop-actions .btn-pill{padding:.45rem 1rem; font-size:.52rem}
+.e1{background:radial-gradient(circle at 50% 44%,#3a4829 0%,#222c16 44%,#0c1007 100%)}
+.e1 .final{color:rgba(255,255,255,.82)}
+.e1 .f-to{color:rgba(220,199,194,.6)}
+.e1 .f-name{color:#fff}
+.e1 .f-rollbl{color:var(--gold-light)}
+.e1 .f-rol{color:#fff}
+.e1 .f-ask{color:var(--gold-light)}
+.e1 .f-meta{color:rgba(255,255,255,.45);border-top:1px solid rgba(220,199,194,.25)}
+.e1 .f-couple{color:var(--gold-light)}
+.e1 .hint{color:rgba(220,199,194,.8)}
 
-/* la tarjeta de cada propuesta */
-.prop{
-  border-radius:14px; overflow:hidden;
-  box-shadow:0 16px 46px rgba(47,58,36,.13);
-}
+.cofre-zona{position:absolute;left:50%;top:50%;z-index:20;
+  transform:translate(-50%,-50%);
+  transition:opacity .7s ease,transform .7s ease}
+.cofre-zona.fuera{opacity:0;transform:translate(-50%,-50%) scale(.88);pointer-events:none}
+/* sombra en el suelo */
+.cofre-zona::after{content:'';position:absolute;left:50%;bottom:-26px;
+  width:78%;height:26px;transform:translateX(-50%);pointer-events:none;
+  background:radial-gradient(ellipse,rgba(0,0,0,.55) 0%,transparent 70%)}
+.cofre{position:relative;width:min(74vw,290px);height:calc(min(74vw,290px)*.62);
+  perspective:900px;cursor:pointer}
+
+/* halo de luz que sale de la caja */
+.cofre-luz{position:absolute;left:50%;top:30%;width:460px;height:460px;
+  transform:translate(-50%,-50%) scale(.15);opacity:0;z-index:1;pointer-events:none;
+  background:radial-gradient(circle,rgba(255,247,224,.95) 0%,rgba(232,214,190,.45) 26%,rgba(220,199,194,.16) 46%,transparent 70%);
+  transition:opacity 1s ease,transform 1.2s cubic-bezier(.2,.8,.3,1)}
+.cofre.abierto .cofre-luz{opacity:1;transform:translate(-50%,-50%) scale(1.5)}
+
+/* la placa con el rol, sube desde adentro */
+.cofre-placa{position:absolute;left:50%;top:14%;z-index:2;
+  transform:translate(-50%,26px) scale(.55);opacity:0;
+  padding:.7rem 1.5rem;border-radius:6px;white-space:nowrap;
+  background:linear-gradient(160deg,#fffdf9,#f3ece0);
+  border:1px solid var(--rose-deep);
+  box-shadow:0 14px 34px rgba(0,0,0,.45);
+  transition:transform 1s cubic-bezier(.2,1.2,.4,1) .35s,opacity .7s ease .35s}
+.cofre.abierto .cofre-placa{transform:translate(-50%,-152%) scale(1);opacity:1}
+.placa-lbl{font-size:.48rem;letter-spacing:.36em;text-transform:uppercase;color:var(--gold-dark)}
+.placa-rol{font-family:var(--serif);font-size:clamp(1.3rem,5.5vw,1.8rem);
+  font-weight:300;color:var(--rose-ink);line-height:1.2}
+
+/* cuerpo de la caja */
+.cofre-cuerpo{position:absolute;inset:0;z-index:3;border-radius:6px;
+  background:linear-gradient(168deg,#7a8c5c 0%,#5a6a44 45%,#3c4a2e 100%);
+  box-shadow:0 30px 60px rgba(0,0,0,.65),
+             inset 0 2px 0 rgba(255,255,255,.22),
+             inset 0 -10px 22px rgba(0,0,0,.28)}
+.cofre-cuerpo::after{content:'';position:absolute;inset:9px;border-radius:3px;
+  border:1px solid rgba(220,199,194,.32)}
+/* tapa */
+.cofre-tapa{position:absolute;left:-3px;right:-3px;top:-13%;height:47%;z-index:5;
+  border-radius:8px 8px 3px 3px;
+  background:linear-gradient(168deg,#93a473 0%,#6d7e52 55%,#4c5b39 100%);
+  box-shadow:0 -6px 20px rgba(0,0,0,.45),inset 0 2px 0 rgba(255,255,255,.3);
+  transform-origin:center top;
+  transition:transform 1s cubic-bezier(.5,-.25,.3,1.2),box-shadow .6s}
+.cofre.abierto .cofre-tapa{transform:rotateX(-128deg);z-index:1}
+/* sello sobre la unión */
+.cofre-sello{position:absolute;left:50%;top:34%;width:74px;height:74px;z-index:6;
+  transform:translate(-50%,-50%);
+  transition:transform .5s cubic-bezier(.4,-.4,.5,1.5),opacity .5s}
+.cofre-sello img{width:100%;height:100%;object-fit:contain;display:block;
+  filter:drop-shadow(0 5px 14px rgba(0,0,0,.5))}
+.cofre.abierto .cofre-sello{transform:translate(-50%,60px) scale(.3) rotate(24deg);opacity:0}
 
 /* ============================================================
-   PROPUESTA 1 — SOBRE Y SELLO
+   PROPUESTA 2 — LA CARTA LACRADA
    ============================================================ */
-.p1{
-  position:relative; padding:4.6rem 1.5rem 3.2rem; text-align:center;
-  background:linear-gradient(160deg,#3d4a2e 0%,#2f3a24 48%,#1c2415 100%);
-}
-.p1::after{
-  content:''; position:absolute; inset:14px;
-  border:1px solid rgba(220,199,194,.22); pointer-events:none;
-}
-.p1 .leaf{
-  position:absolute; width:150px; opacity:.16; pointer-events:none;
-  filter:brightness(1.4) saturate(.7);
-}
-.p1 .leaf.a{top:-14px; left:-24px; transform:rotate(14deg)}
-.p1 .leaf.b{bottom:-18px; right:-26px; transform:scaleX(-1) rotate(14deg)}
-.p1-card{
-  position:relative; z-index:2;
-  max-width:390px; margin:0 auto;
-  background:#fffdf9; border-radius:8px;
-  padding:3.6rem 1.7rem 2.1rem;
-  box-shadow:0 26px 60px rgba(0,0,0,.42);
-}
-.p1-seal{
-  position:absolute; top:0; left:50%;
-  transform:translate(-50%,-52%);
-  width:88px; height:88px;
-}
-.p1-seal img{width:100%; height:100%; object-fit:contain; display:block;
-  filter:drop-shadow(0 5px 14px rgba(0,0,0,.32))}
-.p1-eyebrow{
-  font-size:.5rem; letter-spacing:.42em; text-transform:uppercase;
-  color:var(--gold); margin-bottom:.7rem;
-}
-.p1-to{
-  font-size:.5rem; letter-spacing:.38em; text-transform:uppercase;
-  color:var(--text-muted); margin-bottom:.15rem;
-}
-.p1-name{
-  font-family:var(--script); font-size:clamp(1.7rem,6vw,2.2rem);
-  color:var(--rose-ink); line-height:1.2; margin-bottom:.9rem;
-}
-.p1-text{
-  font-family:var(--serif); font-size:.95rem; color:var(--text-muted);
-  line-height:1.8; margin-bottom:1.1rem;
-}
-.p1-role{
-  display:inline-block; padding:.5rem 1.4rem; margin-bottom:1.1rem;
-  border:1px solid var(--rose-deep); border-radius:50px;
-  font-family:var(--serif); font-size:1.1rem; color:var(--rose-ink);
-  background:rgba(217,179,172,.10);
-}
-.p1-ask{
-  font-family:var(--script); font-size:clamp(1.35rem,5vw,1.7rem);
-  color:var(--gold-dark); line-height:1.3; margin-bottom:1.3rem;
-}
-.p1-meta{
-  font-size:.54rem; letter-spacing:.26em; text-transform:uppercase;
-  color:var(--text-muted); line-height:2;
-  border-top:1px solid var(--gold-light); padding-top:1rem; margin-top:.3rem;
-}
-.p1-couple{
-  font-family:var(--script); font-size:1.6rem;
-  color:var(--gold-dark); margin-top:1.2rem; line-height:1;
-}
+.e2{background:radial-gradient(circle at 50% 35%,#fffdf9 0%,#f6efe4 45%,#e9dfd0 100%)}
+.e2 .final{color:var(--text-muted)}
+.e2 .f-to{color:var(--text-muted)}
+.e2 .f-name{color:var(--rose-ink)}
+.e2 .f-rollbl{color:var(--gold-dark)}
+.e2 .f-rol{color:var(--rose-ink)}
+.e2 .f-ask{color:var(--gold-dark)}
+.e2 .f-meta{color:var(--text-muted);border-top:1px solid var(--gold-light)}
+.e2 .f-couple{color:var(--gold-dark)}
+.e2 .hint{color:var(--gold-dark)}
+.e2 .bg-leaf{opacity:.42}
+/* la carta abierta puede ser más alta que la pantalla */
+.e2{justify-content:flex-start;overflow-y:auto;padding:2.2rem 1.5rem}
+.e2 .carta-zona{margin:auto 0}
+
+.carta-zona{position:relative;z-index:20;width:min(86vw,380px);cursor:pointer;
+  perspective:1400px}
+.carta{position:relative;background:#fffdf9;border-radius:4px;
+  box-shadow:0 22px 50px rgba(90,80,60,.28);
+  border:1px solid rgba(192,150,143,.45);
+  transition:box-shadow .6s}
+.carta-inner{padding:1.6rem 1.4rem;overflow:hidden;
+  max-height:112px;transition:max-height 1.15s cubic-bezier(.4,0,.2,1)}
+.carta-zona.abierta .carta-inner{max-height:640px}
+/* solapa que se abre hacia arriba */
+.carta-solapa{position:absolute;left:-1px;right:-1px;top:0;height:112px;z-index:4;
+  background:linear-gradient(170deg,#fdf7ec,#f2e8d8);
+  border:1px solid rgba(192,150,143,.45);border-radius:4px 4px 0 0;
+  transform-origin:center top;
+  transition:transform 1s cubic-bezier(.5,-.2,.3,1.15)}
+.carta-zona.abierta .carta-solapa{transform:rotateX(-172deg)}
+.solapa-txt{position:absolute;left:0;right:0;top:26px;
+  font-size:.5rem;letter-spacing:.42em;text-transform:uppercase;color:var(--gold-dark);
+  transition:opacity .25s ease}
+.carta-zona.abierta .solapa-txt{opacity:0}
+/* sello partido en dos mitades */
+.lacre{position:absolute;left:50%;top:112px;width:76px;height:76px;z-index:6;
+  transform:translate(-50%,-50%);pointer-events:none}
+.lacre img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;
+  filter:drop-shadow(0 5px 12px rgba(0,0,0,.35));
+  transition:transform .85s cubic-bezier(.3,-.5,.4,1),opacity .85s}
+.lacre .izq{clip-path:inset(0 50% 0 0)}
+.lacre .der{clip-path:inset(0 0 0 50%)}
+.carta-zona.abierta .lacre .izq{transform:translate(-52px,74px) rotate(-58deg);opacity:0}
+.carta-zona.abierta .lacre .der{transform:translate(52px,80px) rotate(64deg);opacity:0}
+
+/* el rol aparece letra por letra */
+.rol-letras{font-family:var(--serif);font-size:clamp(1.6rem,7vw,2.3rem);
+  font-weight:300;font-style:italic;color:var(--rose-ink);line-height:1.25}
+.rol-letras span{display:inline-block;opacity:0;transform:translateY(14px);
+  animation:letra .5s ease forwards}
+@keyframes letra{to{opacity:1;transform:translateY(0)}}
 
 /* ============================================================
-   PROPUESTA 2 — MARFIL BOTÁNICO
+   PROPUESTA 3 — LA SECUENCIA
    ============================================================ */
-.p2{
-  position:relative; padding:3.6rem 1.6rem; text-align:center;
-  background:linear-gradient(155deg,#fdfbf7,#f4ece7);
-}
-.p2::after{
-  content:''; position:absolute; inset:18px;
-  border:1px solid rgba(192,150,143,.42); pointer-events:none;
-}
-.p2::before{
-  content:''; position:absolute; inset:24px;
-  border:1px solid rgba(138,154,98,.20); pointer-events:none;
-}
-.p2 .leaf{position:absolute; width:135px; opacity:.5; pointer-events:none}
-.p2 .leaf.a{top:-10px; left:-18px; transform:rotate(10deg)}
-.p2 .leaf.b{bottom:-12px; right:-20px; transform:scaleX(-1) rotate(10deg)}
-.p2-inner{position:relative; z-index:2; max-width:420px; margin:0 auto}
-.p2-eyebrow{
-  font-size:.53rem; letter-spacing:.44em; text-transform:uppercase;
-  color:var(--gold); margin-bottom:1.4rem;
-}
-.p2-to{
-  font-size:.5rem; letter-spacing:.38em; text-transform:uppercase;
-  color:var(--text-muted); margin-bottom:.2rem;
-}
-.p2-name{
-  font-family:var(--script); font-size:clamp(2rem,7.5vw,2.9rem);
-  color:var(--rose-ink); line-height:1.15; margin-bottom:1.5rem;
-}
-.p2-text{
-  font-family:var(--serif); font-size:1.02rem; color:var(--text-muted);
-  line-height:1.9; margin-bottom:1.5rem;
-}
-.p2-rolebox{margin:1.7rem auto}
-.p2-rolelbl{
-  font-size:.5rem; letter-spacing:.4em; text-transform:uppercase;
-  color:var(--gold-dark); margin-bottom:.4rem;
-}
-.p2-role{
-  font-family:var(--serif); font-size:clamp(1.7rem,6.5vw,2.4rem);
-  font-weight:300; font-style:italic; color:var(--rose-ink); line-height:1.2;
-}
-.p2-ask{
-  font-family:var(--script); font-size:clamp(1.5rem,5.5vw,2rem);
-  color:var(--gold-dark); margin:1.5rem 0 1.4rem;
-}
-.p2-meta{
-  font-size:.55rem; letter-spacing:.26em; text-transform:uppercase;
-  color:var(--text-muted); line-height:2.1; margin-top:1.4rem;
-}
-.p2-couple{
-  font-family:var(--script); font-size:1.75rem;
-  color:var(--gold-dark); margin-top:1rem; line-height:1;
-}
+.e3{background:#141a0f;padding:0}
+.e3 .final{color:rgba(255,255,255,.82)}
+.e3 .f-to{color:rgba(220,199,194,.6)}
+.e3 .f-name{color:#fff}
+.e3 .f-rollbl{color:var(--gold-light)}
+.e3 .f-rol{color:#fff}
+.e3 .f-ask{color:var(--gold-light)}
+.e3 .f-meta{color:rgba(255,255,255,.45);border-top:1px solid rgba(220,199,194,.25)}
+.e3 .f-couple{color:var(--gold-light)}
 
-/* onda decorativa reutilizable */
-.wave{
-  width:158px; height:12px; margin:1.2rem auto; position:relative;
-  background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 12'%3E%3Cpath d='M2 6 Q9 1.6 16 6 T30 6 T44 6 T58 6 T72 6' fill='none' stroke='%23c0968f' stroke-width='1.1' stroke-linecap='round'/%3E%3C/svg%3E") left center/62px 12px no-repeat,
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 12'%3E%3Cpath d='M2 6 Q9 1.6 16 6 T30 6 T44 6 T58 6 T72 6' fill='none' stroke='%23c0968f' stroke-width='1.1' stroke-linecap='round'/%3E%3C/svg%3E") right center/62px 12px no-repeat;
-}
-.wave::before{
-  content:'\2766'; position:absolute; left:50%; top:50%;
-  transform:translate(-50%,-50%); font-size:.9rem;
-  color:var(--rose-ink); line-height:1;
-}
-.wave.on-dark{filter:brightness(1.5) saturate(.55); opacity:.8}
+.barras{position:absolute;top:.9rem;left:1rem;right:1rem;z-index:60;
+  display:flex;gap:5px}
+.barra{flex:1;height:2px;background:rgba(255,255,255,.2);border-radius:2px;overflow:hidden}
+.barra i{display:block;height:100%;width:0;background:var(--gold-light);border-radius:2px}
+.barra.activa i{animation:llenar var(--dur) linear forwards}
+.barra.hecha i{width:100%}
+@keyframes llenar{to{width:100%}}
 
-/* ============================================================
-   PROPUESTA 3 — TARJETA OLIVO
-   ============================================================ */
-.p3{
-  position:relative; padding:3rem 1.5rem; text-align:center;
-  background:linear-gradient(150deg,#f6f2ea,#eee7dc);
-}
-.p3-card{
-  position:relative; max-width:380px; margin:0 auto;
-  background:linear-gradient(165deg,#46543a 0%,#33402a 55%,#25301c 100%);
-  border-radius:6px; padding:2.9rem 1.6rem 2.3rem;
-  box-shadow:0 22px 54px rgba(37,48,28,.4);
-  overflow:hidden;
-}
-.p3-card::after{
-  content:''; position:absolute; inset:11px;
-  border:1px solid rgba(220,199,194,.35); pointer-events:none;
-}
-.p3 .leaf{
-  position:absolute; width:120px; opacity:.17; pointer-events:none;
-  filter:brightness(1.5) saturate(.6);
-}
-.p3 .leaf.a{top:-16px; right:-20px; transform:scaleX(-1) rotate(-8deg)}
-.p3-in{position:relative; z-index:2}
-.p3-eyebrow{
-  font-size:.5rem; letter-spacing:.44em; text-transform:uppercase;
-  color:var(--gold-light); margin-bottom:1.1rem;
-}
-.p3-to{
-  font-size:.48rem; letter-spacing:.38em; text-transform:uppercase;
-  color:rgba(255,255,255,.5); margin-bottom:.2rem;
-}
-.p3-name{
-  font-family:var(--script); font-size:clamp(1.6rem,6vw,2.1rem);
-  color:#fff; line-height:1.2; margin-bottom:1.2rem;
-}
-.p3-rule{
-  width:100%; height:1px; margin:1.2rem 0;
-  background:linear-gradient(90deg,transparent,rgba(220,199,194,.45),transparent);
-}
-.p3-rolelbl{
-  font-size:.48rem; letter-spacing:.42em; text-transform:uppercase;
-  color:var(--gold-light); margin-bottom:.5rem;
-}
-.p3-role{
-  font-family:var(--serif); font-size:clamp(1.6rem,6vw,2.2rem);
-  font-weight:300; color:#fff; line-height:1.25;
-}
-.p3-text{
-  font-family:var(--serif); font-style:italic; font-size:.95rem;
-  color:rgba(255,255,255,.78); line-height:1.85; margin:1.2rem 0;
-}
-.p3-seal{width:62px; height:62px; margin:1.3rem auto .5rem; display:block}
-.p3-meta{
-  font-size:.52rem; letter-spacing:.26em; text-transform:uppercase;
-  color:rgba(255,255,255,.45); line-height:2;
-}
-.p3-couple{
-  font-family:var(--script); font-size:1.5rem;
-  color:var(--gold-light); margin-top:.7rem; line-height:1;
-}
+.escena{position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;padding:2.5rem 1.8rem;
+  opacity:0;pointer-events:none;transition:opacity .75s ease;z-index:20}
+.escena.on{opacity:1;pointer-events:auto}
+.escena.fondo{background:radial-gradient(circle at 50% 45%,#2c3720 0%,#141a0f 70%)}
+.esc-txt{font-family:var(--serif);font-size:clamp(1.25rem,5.6vw,1.75rem);
+  font-weight:300;color:rgba(255,255,255,.9);line-height:1.65;max-width:440px}
+.esc-txt em{font-style:italic;color:var(--gold-light)}
+.esc-nombre{font-family:var(--script);font-size:clamp(2.4rem,10vw,3.6rem);
+  color:#fff;line-height:1.15;margin-top:.6rem}
+.esc-sub{font-size:.55rem;letter-spacing:.4em;text-transform:uppercase;
+  color:rgba(220,199,194,.6);margin-bottom:.8rem}
 
-/* respuesta (botones al pie de cada propuesta) */
-.reply{
-  display:flex; gap:.7rem; justify-content:center; flex-wrap:wrap;
-  margin-top:1.5rem; position:relative; z-index:3;
+/* el gran reveal */
+.reveal-lbl{font-size:.58rem;letter-spacing:.5em;text-transform:uppercase;
+  color:var(--gold-light);margin-bottom:1rem}
+.reveal-rol{font-family:var(--serif);font-size:clamp(2.4rem,11vw,4.2rem);
+  font-weight:300;color:#fff;line-height:1.1;letter-spacing:.01em}
+.escena.on .reveal-rol{animation:golpe 1.1s cubic-bezier(.15,1.1,.3,1) both}
+@keyframes golpe{
+  0%{opacity:0;transform:scale(1.5);filter:blur(16px)}
+  60%{opacity:1;filter:blur(0)}
+  100%{opacity:1;transform:scale(1);filter:blur(0)}
 }
+.destello{position:absolute;left:50%;top:50%;width:150vmax;height:150vmax;
+  transform:translate(-50%,-50%) scale(.1);opacity:0;pointer-events:none;z-index:10;
+  background:radial-gradient(circle,rgba(255,248,225,.9) 0%,rgba(220,199,194,.25) 26%,transparent 60%)}
+.escena.on .destello{animation:brillo 1.5s ease-out both}
+@keyframes brillo{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.05)}
+  22%{opacity:.95}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1)}
+}
+.saltar{position:absolute;bottom:1.4rem;left:0;right:0;z-index:60;
+  font-size:.5rem;letter-spacing:.36em;text-transform:uppercase;
+  color:rgba(255,255,255,.35)}
 
-/* ============================================================
-   MODO INVITACIÓN (cuando se abre con ?d=)
-   ============================================================ */
-body.solo #panel{display:none}
-body.solo #propuestas{padding:0; max-width:none}
-body.solo .prop-head{display:none}
-body.solo .prop{border-radius:0; box-shadow:none; min-height:100vh;
-  display:flex; align-items:center; justify-content:center}
-body.solo .prop > *{width:100%}
-body.solo .p1, body.solo .p2, body.solo .p3{
-  min-height:100vh; display:flex; flex-direction:column; justify-content:center;
-}
+/* ============================== TOAST ============================== */
+#toast{position:fixed;left:50%;bottom:1.6rem;transform:translate(-50%,150%);
+  background:var(--dark);color:var(--gold-light);padding:.7rem 1.4rem;border-radius:50px;
+  font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;
+  box-shadow:0 10px 30px rgba(0,0,0,.3);z-index:999;opacity:0;visibility:hidden;
+  transition:transform .35s ease,opacity .35s ease,visibility .35s}
+#toast.show{transform:translate(-50%,0);opacity:1;visibility:visible}
 
-/* aviso de copiado */
-#toast{
-  position:fixed; left:50%; bottom:1.6rem; transform:translate(-50%,140%);
-  background:var(--dark); color:var(--gold-light);
-  padding:.7rem 1.4rem; border-radius:50px;
-  font-size:.6rem; letter-spacing:.22em; text-transform:uppercase;
-  box-shadow:0 10px 30px rgba(0,0,0,.3); z-index:99;
-  transition:transform .35s ease;
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
-#toast.show{transform:translate(-50%,0)}
 </style>
 </head>
 <body>
 
-<!-- ==================== PANEL DE LOS NOVIOS ==================== -->
+<!-- ==================== PANEL (solo lo ven los novios) ==================== -->
 <div id="panel">
   <div class="panel-card">
     <span class="panel-eyebrow">Sebastián &amp; Saraí · 28.11.2026</span>
     <h1 class="panel-title">Invitación de <em>padrinos</em></h1>
     <p class="panel-hint">
-      Llena los datos, elige la propuesta que más les guste y copia el link
-      para enviárselo por WhatsApp. Quien lo reciba solo verá la invitación.
+      Llena los datos, prueba las tres experiencias y copia el link de la que más
+      les guste. Quien lo abra verá la animación completa, sin este panel.
     </p>
 
     <div class="field-row">
@@ -376,7 +380,7 @@ body.solo .p1, body.solo .p2, body.solo .p3{
       </div>
       <div class="field">
         <label for="fNombre">Nombre(s)</label>
-        <input type="text" id="fNombre" placeholder="Ej: Juan y Ana" value="">
+        <input type="text" id="fNombre" placeholder="Ej: Juan y Ana">
       </div>
     </div>
 
@@ -384,17 +388,10 @@ body.solo .p1, body.solo .p2, body.solo .p3{
       <div class="field">
         <label for="fRol">Padrinos de…</label>
         <select id="fRol">
-          <option>Velación</option>
-          <option>Anillos</option>
-          <option>Arras</option>
-          <option>Lazo</option>
-          <option>Cojines</option>
-          <option>Biblia y Rosario</option>
-          <option>Ramo</option>
-          <option>Pastel</option>
-          <option>Brindis</option>
-          <option>Música</option>
-          <option>Honor</option>
+          <option>Velación</option><option>Anillos</option><option>Arras</option>
+          <option>Lazo</option><option>Cojines</option><option>Biblia y Rosario</option>
+          <option>Ramo</option><option>Pastel</option><option>Brindis</option>
+          <option>Música</option><option>Honor</option>
           <option value="__otro">Otro (escribir)…</option>
         </select>
       </div>
@@ -404,239 +401,406 @@ body.solo .p1, body.solo .p2, body.solo .p3{
       </div>
     </div>
   </div>
-</div>
 
-<!-- ==================== LAS TRES PROPUESTAS ==================== -->
-<div id="propuestas">
-
-  <!-- ---------- PROPUESTA 1 ---------- -->
-  <div class="prop-head" data-for="1">
-    <span class="prop-name">Propuesta 1 · <b>Sobre y sello</b></span>
-    <span class="prop-actions">
-      <button class="btn-pill" onclick="copiarLink(1)">Copiar link</button>
-      <button class="btn-pill rose" onclick="abrir(1)">Abrir ↗</button>
-    </span>
-  </div>
-  <section class="prop" id="prop1">
-    <div class="p1">
-      <img src="follaje.png" class="leaf a" alt="">
-      <img src="follaje.png" class="leaf b" alt="">
-      <div class="p1-card">
-        <div class="p1-seal"><img src="sello.png" alt="Sello Sebastián y Saraí"></div>
-        <p class="p1-eyebrow">✦&nbsp; Con todo cariño &nbsp;✦</p>
-        <p class="p1-to" data-to>Estimados</p>
-        <p class="p1-name" data-nombre>Familia</p>
-        <p class="p1-text" data-intro>
-          Queremos que este día esté rodeado de las personas que más queremos.
-        </p>
-        <div class="p1-role" data-rol>Padrinos de Velación</div>
-        <p class="p1-ask" data-ask>¿Nos harían el honor?</p>
-        <p class="p1-meta">
-          Sábado 28 de Noviembre de 2026<br>
-          Templo Expiatorio · 4:45 pm
-        </p>
-        <p class="p1-couple">Sebastián &amp; Saraí</p>
-        <div class="reply" data-reply></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ---------- PROPUESTA 2 ---------- -->
-  <div class="prop-head" data-for="2">
-    <span class="prop-name">Propuesta 2 · <b>Marfil botánico</b></span>
-    <span class="prop-actions">
-      <button class="btn-pill" onclick="copiarLink(2)">Copiar link</button>
-      <button class="btn-pill rose" onclick="abrir(2)">Abrir ↗</button>
-    </span>
-  </div>
-  <section class="prop" id="prop2">
-    <div class="p2">
-      <img src="follaje.png" class="leaf a" alt="">
-      <img src="follaje.png" class="leaf b" alt="">
-      <div class="p2-inner">
-        <p class="p2-eyebrow">Sebastián &amp; Saraí · 28.11.2026</p>
-        <p class="p2-to" data-to>Estimados</p>
-        <p class="p2-name" data-nombre>Familia</p>
-        <div class="wave"></div>
-        <p class="p2-text" data-intro>
-          Queremos que este día esté rodeado de las personas que más queremos.
-        </p>
-        <div class="p2-rolebox">
-          <p class="p2-rolelbl" data-rollbl>Padrinos de</p>
-          <p class="p2-role" data-rolsolo>Velación</p>
-        </div>
-        <p class="p2-ask" data-ask>¿Nos harían el honor?</p>
-        <div class="reply" data-reply></div>
-        <p class="p2-meta">
-          Sábado 28 de Noviembre de 2026<br>
-          Templo Expiatorio · 4:45 pm
-        </p>
-        <p class="p2-couple">Sebastián &amp; Saraí</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ---------- PROPUESTA 3 ---------- -->
-  <div class="prop-head" data-for="3">
-    <span class="prop-name">Propuesta 3 · <b>Tarjeta olivo</b></span>
-    <span class="prop-actions">
-      <button class="btn-pill" onclick="copiarLink(3)">Copiar link</button>
-      <button class="btn-pill rose" onclick="abrir(3)">Abrir ↗</button>
-    </span>
-  </div>
-  <section class="prop" id="prop3">
-    <div class="p3">
-      <div class="p3-card">
-        <img src="follaje.png" class="leaf a" alt="">
-        <div class="p3-in">
-          <p class="p3-eyebrow">Con todo cariño</p>
-          <p class="p3-to" data-to>Estimados</p>
-          <p class="p3-name" data-nombre>Familia</p>
-          <div class="p3-rule"></div>
-          <p class="p3-rolelbl" data-rollbl>Padrinos de</p>
-          <p class="p3-role" data-rolsolo>Velación</p>
-          <div class="p3-rule"></div>
-          <p class="p3-text" data-ask>¿Nos harían el honor?</p>
-          <img src="sello.png" class="p3-seal" alt="Sello Sebastián y Saraí">
-          <p class="p3-meta">
-            Sábado 28 de Noviembre de 2026<br>
-            Templo Expiatorio · 4:45 pm
-          </p>
-          <p class="p3-couple">Sebastián &amp; Saraí</p>
-          <div class="reply" data-reply></div>
+  <div class="opciones">
+    <div class="opcion">
+      <div class="op-mini mini-1"><i></i></div>
+      <div class="op-body">
+        <span class="op-num">Propuesta 1</span>
+        <h3 class="op-nombre">El cofre</h3>
+        <p class="op-desc">Un cofre lacrado en la oscuridad. Al tocarlo el sello se
+          rompe, la tapa se abre, sale un haz de luz y el rol emerge desde adentro
+          mientras caen hojas y pétalos.</p>
+        <div class="op-btns">
+          <button class="btn-pill rose" onclick="ver(1)">Probar ▸</button>
+          <button class="btn-pill" onclick="copiarLink(1)">Copiar link</button>
         </div>
       </div>
     </div>
-  </section>
 
+    <div class="opcion">
+      <div class="op-mini mini-2"><i></i></div>
+      <div class="op-body">
+        <span class="op-num">Propuesta 2</span>
+        <h3 class="op-nombre">La carta lacrada</h3>
+        <p class="op-desc">Una carta cerrada con lacre. Al tocarla el sello se parte
+          en dos y cae, la solapa se abre hacia atrás y la carta se despliega
+          escribiendo el rol letra por letra.</p>
+        <div class="op-btns">
+          <button class="btn-pill rose" onclick="ver(2)">Probar ▸</button>
+          <button class="btn-pill" onclick="copiarLink(2)">Copiar link</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="opcion">
+      <div class="op-mini mini-3"><i></i><i></i><i></i></div>
+      <div class="op-body">
+        <span class="op-num">Propuesta 3</span>
+        <h3 class="op-nombre">La secuencia</h3>
+        <p class="op-desc">Como una historia de Instagram: frases que aparecen una
+          tras otra creando expectativa, y al final un destello de luz revela el rol
+          en grande. Avanza sola o tocando.</p>
+        <div class="op-btns">
+          <button class="btn-pill rose" onclick="ver(3)">Probar ▸</button>
+          <button class="btn-pill" onclick="copiarLink(3)">Copiar link</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
+<div id="stage"></div>
 <div id="toast">Link copiado ✓</div>
 
 <script>
-/* ------------------------------------------------------------
+/* ============================================================
    Datos de la boda
-   ------------------------------------------------------------ */
-var WA = '524626059866';           // WhatsApp de Saraí (respuestas)
-var INVITACION = 'index.html';     // la invitación completa
+   ============================================================ */
+var WA = '524626059866';        /* WhatsApp que recibe las respuestas */
+var INVITACION = 'index.html';
+var FECHA = 'Sábado 28 de Noviembre de 2026';
+var LUGAR = 'Templo Expiatorio · 4:45 pm';
 
-/* ------------------------------------------------------------
-   Estado
-   ------------------------------------------------------------ */
+/* ============================================================
+   Estado y textos
+   ============================================================ */
 function params(){ return new URLSearchParams(location.search); }
 
 function estado(){
-  var p = params();
-  var trato  = (p.get('t') || document.getElementById('fTrato').value || 'padrinos').toLowerCase();
+  var p = params(), enPanel = document.getElementById('fTrato') && !p.get('d');
+  var trato  = p.get('t') || (enPanel ? document.getElementById('fTrato').value : 'padrinos');
   var nombre = p.get('n');
   var rol    = p.get('r');
-
-  if (nombre === null) nombre = document.getElementById('fNombre').value;
-  if (rol === null) {
+  if (nombre === null && enPanel) nombre = document.getElementById('fNombre').value;
+  if (rol === null && enPanel){
     var sel = document.getElementById('fRol').value;
     rol = (sel === '__otro') ? document.getElementById('fOtro').value : sel;
   }
+  trato = (trato || 'padrinos').toLowerCase();
   if (!nombre) nombre = (trato === 'padrinos') ? 'Estimados amigos' : 'Estimado amigo';
   if (!rol) rol = 'Velación';
   return { trato: trato, nombre: nombre, rol: rol };
 }
 
-/* textos según el tratamiento */
-function textos(e){
-  var plural = (e.trato === 'padrinos');
+function textos(){
+  var e = estado(), plural = (e.trato === 'padrinos');
   var titulo = plural ? 'Padrinos de' : (e.trato === 'madrina' ? 'Madrina de' : 'Padrino de');
-  var saludo = plural ? 'Estimados' : (e.trato === 'madrina' ? 'Estimada' : 'Estimado');
-  var intro  = plural
-    ? 'Queremos que este día esté rodeado de las personas que más queremos, y ustedes son parte importante de nuestra historia. Por eso nos encantaría pedirles que nos acompañen como'
-    : 'Queremos que este día esté rodeado de las personas que más queremos, y tú eres parte importante de nuestra historia. Por eso nos encantaría pedirte que nos acompañes como';
-  var ask = plural ? '¿Nos harían el honor?' : '¿Nos harías el honor?';
-  return { titulo: titulo, saludo: saludo, intro: intro, ask: ask,
-           rolCompleto: titulo + ' ' + e.rol };
+  return {
+    nombre: e.nombre,
+    rol: e.rol,
+    titulo: titulo,
+    completo: titulo + ' ' + e.rol,
+    saludo: plural ? 'Estimados' : (e.trato === 'madrina' ? 'Estimada' : 'Estimado'),
+    intro: plural
+      ? 'Queremos que este día esté rodeado de las personas que más queremos, y ustedes son parte importante de nuestra historia.'
+      : 'Queremos que este día esté rodeado de las personas que más queremos, y tú eres parte importante de nuestra historia.',
+    pedir: plural ? 'queremos pedirles algo muy especial' : 'queremos pedirte algo muy especial',
+    ask: plural ? '¿Nos harían el honor?' : '¿Nos harías el honor?',
+    eres: plural ? 'ustedes son de esas personas' : 'tú eres de esas personas'
+  };
 }
 
-/* ------------------------------------------------------------
-   Pintar las tres propuestas
-   ------------------------------------------------------------ */
-function pintar(){
-  var e = estado(), t = textos(e);
-
-  document.querySelectorAll('[data-to]').forEach(function(el){ el.textContent = t.saludo; });
-  document.querySelectorAll('[data-nombre]').forEach(function(el){ el.textContent = e.nombre; });
-  document.querySelectorAll('[data-intro]').forEach(function(el){ el.textContent = t.intro; });
-  document.querySelectorAll('[data-rol]').forEach(function(el){ el.textContent = t.rolCompleto; });
-  document.querySelectorAll('[data-rollbl]').forEach(function(el){ el.textContent = t.titulo; });
-  document.querySelectorAll('[data-rolsolo]').forEach(function(el){ el.textContent = e.rol; });
-  document.querySelectorAll('[data-ask]').forEach(function(el){ el.textContent = t.ask; });
-
-  var msg = encodeURIComponent('¡Hola! Con mucho gusto aceptamos ser ' + t.rolCompleto +
-                               ' en su boda. ¡Felicidades! 🤍');
-  document.querySelectorAll('[data-reply]').forEach(function(el){
-    var claro = el.closest('.p3') !== null;
-    el.innerHTML =
-      '<a class="btn-pill ' + (claro ? 'light' : 'solid') + '" target="_blank" rel="noopener" ' +
-      'href="https://wa.me/' + WA + '?text=' + msg + '">Sí, aceptamos 🤍</a>' +
-      '<a class="btn-pill ' + (claro ? 'light' : '') + '" href="' + INVITACION + '">Ver la invitación</a>';
+function esc(s){
+  return String(s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
   });
 }
 
-/* ------------------------------------------------------------
+/* bloque final, igual en las tres experiencias */
+function bloqueFinal(claro){
+  var t = textos();
+  var msg = encodeURIComponent('¡Hola! Con mucho gusto aceptamos ser ' + t.completo +
+                               ' en su boda. ¡Felicidades! 🤍');
+  var cls = claro ? '' : 'light';
+  return '' +
+    '<div class="final">' +
+      '<p class="f-to">' + esc(t.saludo) + '</p>' +
+      '<h2 class="f-name">' + esc(t.nombre) + '</h2>' +
+      '<div class="wave' + (claro ? '' : ' claro') + '"></div>' +
+      '<p class="f-text">' + esc(t.intro) + '</p>' +
+      '<p class="f-rollbl">' + esc(t.titulo) + '</p>' +
+      '<p class="f-rol">' + esc(t.rol) + '</p>' +
+      '<p class="f-ask">' + esc(t.ask) + '</p>' +
+      '<div class="f-reply">' +
+        '<a class="btn-pill ' + (claro ? 'solid' : cls) + '" target="_blank" rel="noopener" ' +
+          'href="https://wa.me/' + WA + '?text=' + msg + '">Sí, aceptamos 🤍</a>' +
+        '<a class="btn-pill ' + cls + '" href="' + INVITACION + '">Ver la invitación</a>' +
+      '</div>' +
+      '<p class="f-meta">' + FECHA + '<br>' + LUGAR + '</p>' +
+      '<p class="f-couple">Sebastián &amp; Saraí</p>' +
+    '</div>';
+}
+
+/* ============================================================
+   Partículas
+   ============================================================ */
+function capaLluvia(esc){
+  var c = esc.querySelector('.lluvia');
+  if (!c){ c = document.createElement('div'); c.className = 'lluvia'; esc.appendChild(c); }
+  return c;
+}
+function lluvia(esc, cuantas){
+  var cont = capaLluvia(esc);
+  for (var i = 0; i < cuantas; i++){
+    var d = document.createElement('div');
+    var hoja = Math.random() > .45;
+    d.className = 'particula ' + (hoja ? 'hoja' : 'petalo');
+    var tam = hoja ? (9 + Math.random() * 11) : (6 + Math.random() * 7);
+    d.style.width = tam + 'px';
+    d.style.height = (hoja ? tam * 1.7 : tam) + 'px';
+    d.style.left = (Math.random() * 100) + '%';
+    d.style.setProperty('--giro', (Math.random() * 900 - 450) + 'deg');
+    d.style.animation = 'caer ' + (4.5 + Math.random() * 4).toFixed(2) + 's linear ' +
+                        (Math.random() * 2.2).toFixed(2) + 's forwards';
+    d.style.opacity = (.45 + Math.random() * .45).toFixed(2);
+    cont.appendChild(d);
+    (function(el){ setTimeout(function(){ el.remove(); }, 12000); })(d);
+  }
+}
+
+function vibrar(ms){ try{ if (navigator.vibrate) navigator.vibrate(ms); }catch(e){} }
+
+/* ============================================================
+   PROPUESTA 1 — EL COFRE
+   ============================================================ */
+function expCofre(stage, preview){
+  var t = textos();
+  stage.innerHTML =
+    '<div class="esc e1">' +
+      (preview ? '<button class="cerrar" onclick="cerrar()">✕</button>' : '') +
+      '<img src="follaje.png" class="bg-leaf claro tl" alt="">' +
+      '<img src="follaje.png" class="bg-leaf claro br" alt="">' +
+      '<div class="cofre-zona" id="cofreZona">' +
+        '<div class="cofre" id="cofre">' +
+          '<div class="cofre-luz"></div>' +
+          '<div class="cofre-placa">' +
+            '<p class="placa-lbl">' + esc(t.titulo) + '</p>' +
+            '<p class="placa-rol">' + esc(t.rol) + '</p>' +
+          '</div>' +
+          '<div class="cofre-cuerpo"></div>' +
+          '<div class="cofre-tapa"></div>' +
+          '<div class="cofre-sello"><img src="sello.png" alt=""></div>' +
+        '</div>' +
+      '</div>' +
+      '<p class="hint" id="hint1">· Toca el cofre para abrirlo ·</p>' +
+      bloqueFinal(false) +
+    '</div>';
+
+  var esc_ = stage.querySelector('.esc');
+  var cofre = document.getElementById('cofre');
+  var abierto = false;
+
+  cofre.addEventListener('click', function(){
+    if (abierto) return;
+    abierto = true;
+    cofre.classList.add('abierto');
+    vibrar([12, 90, 26]);
+    var h1 = document.getElementById('hint1');
+    h1.style.animation = 'none'; h1.style.opacity = 0;
+    setTimeout(function(){ lluvia(esc_, 26); }, 700);
+    setTimeout(function(){
+      document.getElementById('cofreZona').classList.add('fuera');
+      stage.querySelector('.final').classList.add('on');
+    }, 2600);
+  });
+}
+
+/* ============================================================
+   PROPUESTA 2 — LA CARTA LACRADA
+   ============================================================ */
+function expCarta(stage, preview){
+  var t = textos();
+  var letras = t.rol.split('').map(function(c, i){
+    return '<span style="animation-delay:' + (1.35 + i * 0.055).toFixed(2) + 's">' +
+           (c === ' ' ? '&nbsp;' : esc(c)) + '</span>';
+  }).join('');
+
+  stage.innerHTML =
+    '<div class="esc e2">' +
+      (preview ? '<button class="cerrar oscuro" onclick="cerrar()">✕</button>' : '') +
+      '<img src="follaje.png" class="bg-leaf tl" alt="">' +
+      '<img src="follaje.png" class="bg-leaf br" alt="">' +
+      '<div class="carta-zona" id="cartaZona">' +
+        '<div class="carta">' +
+          '<div class="carta-inner">' +
+            '<p class="f-to" style="color:var(--text-muted)">' + esc(t.saludo) + '</p>' +
+            '<h2 class="f-name" style="color:var(--rose-ink)">' + esc(t.nombre) + '</h2>' +
+            '<div class="wave"></div>' +
+            '<p class="f-text" style="color:var(--text-muted)">' + esc(t.intro) +
+              ' Por eso ' + esc(t.pedir) + ':</p>' +
+            '<p class="f-to" style="color:var(--gold-dark);margin-top:.6rem">' + esc(t.titulo) + '</p>' +
+            '<p class="rol-letras" id="rolLetras"></p>' +
+            '<p class="f-ask" style="color:var(--gold-dark)">' + esc(t.ask) + '</p>' +
+            '<p class="f-meta" style="color:var(--text-muted);border-top:1px solid var(--gold-light)">' +
+              FECHA + '<br>' + LUGAR + '</p>' +
+            '<p class="f-couple" style="color:var(--gold-dark)">Sebastián &amp; Saraí</p>' +
+          '</div>' +
+          '<div class="carta-solapa"><p class="solapa-txt">· Toca para abrir ·</p></div>' +
+          '<div class="lacre"><img class="izq" src="sello.png" alt=""><img class="der" src="sello.png" alt=""></div>' +
+        '</div>' +
+        '<div class="f-reply" id="cartaBtns" style="opacity:0;transition:opacity .7s ease .4s"></div>' +
+      '</div>' +
+    '</div>';
+
+  var zona = document.getElementById('cartaZona');
+  var esc_ = stage.querySelector('.esc');
+  var abierta = false;
+
+  zona.addEventListener('click', function(){
+    if (abierta) return;
+    abierta = true;
+    zona.classList.add('abierta');
+    vibrar([10, 70, 20]);
+    document.getElementById('rolLetras').innerHTML = letras;
+    setTimeout(function(){ lluvia(esc_, 18); }, 500);
+    var msg = encodeURIComponent('¡Hola! Con mucho gusto aceptamos ser ' + t.completo +
+                                 ' en su boda. ¡Felicidades! 🤍');
+    var b = document.getElementById('cartaBtns');
+    b.innerHTML =
+      '<a class="btn-pill solid" target="_blank" rel="noopener" ' +
+        'href="https://wa.me/' + WA + '?text=' + msg + '">Sí, aceptamos 🤍</a>' +
+      '<a class="btn-pill" href="' + INVITACION + '">Ver la invitación</a>';
+    setTimeout(function(){ b.style.opacity = 1; }, 1400);
+  });
+}
+
+/* ============================================================
+   PROPUESTA 3 — LA SECUENCIA
+   ============================================================ */
+function expSecuencia(stage, preview){
+  var t = textos();
+  var escenas = [
+    { dur: 3400, html:
+      '<p class="esc-txt">Hay momentos en la vida que <em>solo tienen sentido</em><br>' +
+      'si están las personas correctas.</p>' },
+    { dur: 3600, html:
+      '<p class="esc-sub">' + esc(t.saludo) + '</p>' +
+      '<p class="esc-nombre">' + esc(t.nombre) + '</p>' +
+      '<p class="esc-txt" style="margin-top:1.2rem;font-size:clamp(1rem,4.4vw,1.35rem)">' +
+      'Y para nosotros, <em>' + esc(t.eres) + '</em>.</p>' },
+    { dur: 3000, html:
+      '<p class="esc-txt">Por eso, antes de decir «sí»<br>frente a Dios…<br><br>' +
+      '<em>' + esc(t.pedir) + '</em>.</p>' },
+    { dur: 4200, reveal: true, html:
+      '<div class="destello"></div>' +
+      '<p class="reveal-lbl">' + esc(t.titulo) + '</p>' +
+      '<p class="reveal-rol">' + esc(t.rol) + '</p>' },
+    { dur: 0, final: true, html: bloqueFinal(false) }
+  ];
+
+  var barras = escenas.map(function(_, i){
+    return '<div class="barra" id="b' + i + '"><i></i></div>';
+  }).join('');
+
+  stage.innerHTML =
+    '<div class="esc e3" id="secEsc">' +
+      (preview ? '<button class="cerrar" onclick="cerrar()">✕</button>' : '') +
+      '<div class="barras">' + barras + '</div>' +
+      escenas.map(function(s, i){
+        return '<div class="escena fondo" id="s' + i + '">' + s.html + '</div>';
+      }).join('') +
+      '<p class="saltar" id="saltar">Toca para continuar</p>' +
+    '</div>';
+
+  var i = -1, timer = null;
+  var cont = document.getElementById('secEsc');
+
+  function ir(n){
+    if (n >= escenas.length) return;
+    if (i >= 0) document.getElementById('s' + i).classList.remove('on');
+    for (var k = 0; k < n; k++){
+      var bp = document.getElementById('b' + k);
+      bp.classList.remove('activa'); bp.classList.add('hecha');
+    }
+    i = n;
+    var e = escenas[i];
+    var el = document.getElementById('s' + i);
+    el.classList.add('on');
+
+    var b = document.getElementById('b' + i);
+    b.classList.remove('hecha');
+    b.style.setProperty('--dur', (e.dur || 600) + 'ms');
+    b.classList.add('activa');
+
+    if (e.reveal){ vibrar([16, 60, 16, 60, 30]); lluvia(cont, 30); }
+    if (e.final){
+      el.querySelector('.final').classList.add('on');
+      document.getElementById('saltar').style.display = 'none';
+      b.classList.add('hecha');
+      return;
+    }
+    clearTimeout(timer);
+    timer = setTimeout(function(){ ir(i + 1); }, e.dur);
+  }
+
+  cont.addEventListener('click', function(ev){
+    if (ev.target.closest('a') || ev.target.closest('.cerrar')) return;
+    if (escenas[i] && escenas[i].final) return;
+    clearTimeout(timer); ir(i + 1);
+  });
+
+  setTimeout(function(){ ir(0); }, 250);
+}
+
+/* ============================================================
+   Escenario
+   ============================================================ */
+var EXP = { 1: expCofre, 2: expCarta, 3: expSecuencia };
+
+function ver(n, preview){
+  var stage = document.getElementById('stage');
+  stage.classList.add('on');
+  document.body.classList.add('locked');
+  EXP[n](stage, preview !== false);
+}
+function cerrar(){
+  var stage = document.getElementById('stage');
+  stage.classList.remove('on');
+  stage.innerHTML = '';
+  document.body.classList.remove('locked');
+}
+
+/* ============================================================
    Links
-   ------------------------------------------------------------ */
+   ============================================================ */
 function linkDe(n){
   var e = estado();
-  var u = location.href.split('?')[0].split('#')[0] +
-          '?d=' + n +
-          '&t=' + encodeURIComponent(e.trato) +
-          '&n=' + encodeURIComponent(e.nombre) +
-          '&r=' + encodeURIComponent(e.rol);
-  return u;
+  return location.href.split('?')[0].split('#')[0] +
+         '?d=' + n +
+         '&t=' + encodeURIComponent(e.trato) +
+         '&n=' + encodeURIComponent(e.nombre) +
+         '&r=' + encodeURIComponent(e.rol);
 }
 function copiarLink(n){
   var u = linkDe(n);
-  navigator.clipboard.writeText(u).then(mostrarToast, function(){ prompt('Copia el link:', u); });
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(u).then(toast, function(){ prompt('Copia el link:', u); });
+  } else { prompt('Copia el link:', u); }
 }
-function abrir(n){ window.open(linkDe(n), '_blank'); }
-
-var toastT;
-function mostrarToast(){
+var tt;
+function toast(){
   var t = document.getElementById('toast');
   t.classList.add('show');
-  clearTimeout(toastT);
-  toastT = setTimeout(function(){ t.classList.remove('show'); }, 2200);
+  clearTimeout(tt);
+  tt = setTimeout(function(){ t.classList.remove('show'); }, 2200);
 }
 
-/* ------------------------------------------------------------
+/* ============================================================
    Arranque
-   ------------------------------------------------------------ */
+   ============================================================ */
 (function(){
-  var p = params();
-  var d = p.get('d');
-
-  if (d === '1' || d === '2' || d === '3') {
-    /* modo invitación: solo se ve la propuesta elegida */
-    document.body.classList.add('solo');
-    [1,2,3].forEach(function(n){
-      if (String(n) !== d) document.getElementById('prop' + n).remove();
-    });
-    pintar();
+  var d = params().get('d');
+  if (d === '1' || d === '2' || d === '3'){
+    document.getElementById('panel').remove();
+    ver(Number(d), false);
     return;
   }
-
-  /* modo panel: los campos actualizan las tres propuestas en vivo */
   var rol = document.getElementById('fRol');
-  var otro = document.getElementById('fOtro');
   rol.addEventListener('change', function(){
     document.getElementById('wrapOtro').style.display =
       (rol.value === '__otro') ? 'block' : 'none';
-    pintar();
   });
-  ['fTrato','fNombre'].forEach(function(id){
-    document.getElementById(id).addEventListener('input', pintar);
-    document.getElementById(id).addEventListener('change', pintar);
-  });
-  otro.addEventListener('input', pintar);
-
-  pintar();
 })();
 </script>
 </body>
