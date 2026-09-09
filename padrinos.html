@@ -62,6 +62,20 @@ body.locked{overflow:hidden}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 @media(max-width:560px){.field-row{grid-template-columns:1fr;gap:0}}
 
+/* vista previa en vivo */
+.resumen{margin-top:.4rem;padding:1.1rem 1rem;border-radius:11px;text-align:center;
+  background:linear-gradient(155deg,#fffdf9,#f5eee3);
+  border:1px solid rgba(192,150,143,.45)}
+.res-lbl{font-size:.48rem;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--gold-dark);display:block;margin-bottom:.5rem}
+.res-linea{font-family:var(--serif);font-size:.95rem;color:var(--text-muted);line-height:1.5}
+.res-linea b{font-family:var(--script);font-size:1.5rem;font-weight:400;
+  color:var(--rose-ink);display:block;margin-top:.1rem}
+.res-rol{font-family:var(--serif);font-size:.9rem;color:var(--text-muted);margin-top:.5rem}
+.res-rol b{font-style:italic;font-weight:400;color:var(--rose-ink);font-size:1.15rem}
+.resumen.late{animation:latido .5s ease}
+@keyframes latido{0%,100%{transform:scale(1)}45%{transform:scale(1.035)}}
+
 .opciones{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
   gap:1.2rem;margin-top:2.2rem}
 .opcion{background:var(--white);border:1px solid var(--gold-light);border-radius:14px;
@@ -178,13 +192,16 @@ body.locked{overflow:hidden}
 .e1 .hint{color:var(--gold-dark)}
 .e1 .bg-leaf{opacity:.42}
 /* saludo que se ve desde el primer momento */
-.e1 .saludo{position:absolute;top:clamp(2.4rem,9vh,4.5rem);left:0;right:0;z-index:22;
+.e1 .saludo{position:absolute;top:clamp(1.8rem,6vh,3.4rem);left:0;right:0;z-index:22;
   transition:opacity .6s ease}
 .e1 .saludo.fuera{opacity:0}
 .saludo-to{font-size:.5rem;letter-spacing:.4em;text-transform:uppercase;
   color:var(--text-muted);margin-bottom:.15rem}
 .saludo-name{font-family:var(--script);font-size:clamp(1.8rem,7vw,2.5rem);
   color:var(--rose-ink);line-height:1.2}
+.saludo-intro{font-family:var(--serif);font-size:clamp(1rem,4.4vw,1.25rem);
+  font-style:italic;color:var(--text-muted);line-height:1.7;
+  max-width:330px;margin:0 auto;padding:0 1rem}
 
 .cofre-zona{position:absolute;left:50%;top:50%;z-index:20;
   transform:translate(-50%,-50%);
@@ -364,8 +381,9 @@ body.locked{overflow:hidden}
     <span class="panel-eyebrow">Sebastián &amp; Saraí · 28.11.2026</span>
     <h1 class="panel-title">Invitación de <em>padrinos</em></h1>
     <p class="panel-hint">
-      Llena los datos, prueba las tres experiencias y copia el link de la que más
-      les guste. Quien lo abra verá la animación completa, sin este panel.
+      Llena los datos de abajo. Con <b>Ver cómo queda</b> abres la experiencia
+      completa, tal cual la va a recibir esa persona y ya con su nombre puesto.
+      Cuando te decidas, copia el link de esa propuesta y envíaselo.
     </p>
 
     <div class="field-row">
@@ -399,6 +417,12 @@ body.locked{overflow:hidden}
         <input type="text" id="fOtro" placeholder="Ej: Recuerdos">
       </div>
     </div>
+
+    <div class="resumen" id="resumen">
+      <span class="res-lbl">Así se verá</span>
+      <p class="res-linea"><span id="resSaludo">Estimados</span> <b id="resNombre">Estimados amigos</b></p>
+      <p class="res-rol"><span id="resTitulo">Padrinos de</span> <b id="resRol">Velación</b></p>
+    </div>
   </div>
 
   <div class="opciones">
@@ -411,7 +435,7 @@ body.locked{overflow:hidden}
           rompe, la tapa se abre, sale un haz de luz y el rol emerge desde adentro
           mientras caen hojas y pétalos.</p>
         <div class="op-btns">
-          <button class="btn-pill rose" onclick="ver(1)">Probar ▸</button>
+          <button class="btn-pill rose" onclick="ver(1)">Ver cómo queda ▸</button>
           <button class="btn-pill" onclick="copiarLink(1)">Copiar link</button>
         </div>
       </div>
@@ -426,7 +450,7 @@ body.locked{overflow:hidden}
           con el dedo, como un boleto de lotería, para ir descubriendo poco a poco
           de qué los queremos como padrinos.</p>
         <div class="op-btns">
-          <button class="btn-pill rose" onclick="ver(2)">Probar ▸</button>
+          <button class="btn-pill rose" onclick="ver(2)">Ver cómo queda ▸</button>
           <button class="btn-pill" onclick="copiarLink(2)">Copiar link</button>
         </div>
       </div>
@@ -441,7 +465,7 @@ body.locked{overflow:hidden}
           tras otra creando expectativa, y al final un destello de luz revela el rol
           en grande. Avanza sola o tocando.</p>
         <div class="op-btns">
-          <button class="btn-pill rose" onclick="ver(3)">Probar ▸</button>
+          <button class="btn-pill rose" onclick="ver(3)">Ver cómo queda ▸</button>
           <button class="btn-pill" onclick="copiarLink(3)">Copiar link</button>
         </div>
       </div>
@@ -496,7 +520,10 @@ function textos(){
       : 'Queremos que este día esté rodeado de las personas que más queremos, y tú eres parte importante de nuestra historia.',
     pedir: plural ? 'queremos pedirles algo muy especial' : 'queremos pedirte algo muy especial',
     ask: plural ? '¿Nos harían el honor?' : '¿Nos harías el honor?',
-    eres: plural ? 'ustedes son de esas personas' : 'tú eres de esas personas'
+    eres: plural ? 'ustedes son de esas personas' : 'tú eres de esas personas',
+    importante: plural
+      ? 'Tenemos algo importante que pedirles…'
+      : 'Tenemos algo importante que pedirte…'
   };
 }
 
@@ -573,6 +600,8 @@ function expCofre(stage, preview){
       '<div class="saludo" id="saludo1">' +
         '<p class="saludo-to">' + esc(t.saludo) + '</p>' +
         '<p class="saludo-name">' + esc(t.nombre) + '</p>' +
+        '<div class="wave"></div>' +
+        '<p class="saludo-intro">' + esc(t.importante) + '</p>' +
       '</div>' +
       '<div class="cofre-zona" id="cofreZona">' +
         '<div class="cofre" id="cofre">' +
@@ -586,7 +615,7 @@ function expCofre(stage, preview){
           '<div class="cofre-sello"><img src="sello.png" alt=""></div>' +
         '</div>' +
       '</div>' +
-      '<p class="hint" id="hint1">· Toca el cofre para abrirlo ·</p>' +
+      '<p class="hint" id="hint1">· Toca el cofre para descubrirlo ·</p>' +
       bloqueFinal(true) +
     '</div>';
 
@@ -879,11 +908,45 @@ function toast(){
     ver(Number(d), false);
     return;
   }
-  var rol = document.getElementById('fRol');
+  var rol  = document.getElementById('fRol');
+  var otro = document.getElementById('fOtro');
+  var resumen = document.getElementById('resumen');
+
+  function refrescar(){
+    var t = textos();
+    document.getElementById('resSaludo').textContent = t.saludo;
+    document.getElementById('resNombre').textContent = t.nombre;
+    document.getElementById('resTitulo').textContent = t.titulo;
+    document.getElementById('resRol').textContent    = t.rol;
+  }
+
   rol.addEventListener('change', function(){
     document.getElementById('wrapOtro').style.display =
       (rol.value === '__otro') ? 'block' : 'none';
+    if (rol.value === '__otro') otro.focus();
+    refrescar();
   });
+
+  ['fTrato','fNombre','fOtro'].forEach(function(id){
+    var el = document.getElementById(id);
+    el.addEventListener('input', refrescar);
+    el.addEventListener('change', refrescar);
+  });
+
+  /* Enter confirma: no recarga nada, solo cierra el teclado y avisa */
+  ['fNombre','fOtro'].forEach(function(id){
+    document.getElementById(id).addEventListener('keydown', function(ev){
+      if (ev.key !== 'Enter') return;
+      ev.preventDefault();
+      this.blur();
+      refrescar();
+      resumen.classList.remove('late');
+      void resumen.offsetWidth;
+      resumen.classList.add('late');
+    });
+  });
+
+  refrescar();
 })();
 </script>
 </body>
