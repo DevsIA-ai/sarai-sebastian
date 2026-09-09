@@ -203,6 +203,18 @@ body.locked{overflow:hidden}
   font-style:italic;color:var(--text-muted);line-height:1.7;
   max-width:330px;margin:0 auto;padding:0 1rem}
 
+/* el letrero que se va difuminando hasta aparecer */
+.e1 .pregunta{position:absolute;top:clamp(3.2rem,11vh,6rem);left:0;right:0;z-index:23;
+  padding:0 1.2rem;pointer-events:none}
+.pregunta-txt{font-family:var(--script);
+  font-size:clamp(2rem,8.5vw,3rem);color:var(--rose-ink);line-height:1.25}
+.pregunta-txt span{display:inline-block;opacity:0;filter:blur(14px);
+  transform:translateY(10px) scale(1.12);
+  animation:difuminar .85s cubic-bezier(.2,.8,.3,1) forwards}
+@keyframes difuminar{
+  to{opacity:1;filter:blur(0);transform:translateY(0) scale(1)}
+}
+
 .cofre-zona{position:absolute;left:50%;top:50%;z-index:20;
   transform:translate(-50%,-50%);
   transition:opacity .7s ease,transform .7s ease}
@@ -228,7 +240,7 @@ body.locked{overflow:hidden}
   background:linear-gradient(160deg,#fffdf9,#f3ece0);
   border:1px solid var(--rose-deep);
   box-shadow:0 14px 30px rgba(90,80,60,.4);
-  transition:transform 1s cubic-bezier(.2,1.2,.4,1) .35s,opacity .7s ease .35s}
+  transition:transform 1s cubic-bezier(.2,1.2,.4,1) 1.55s,opacity .7s ease 1.55s}
 .cofre.abierto .cofre-placa{transform:translate(-50%,-152%) scale(1);opacity:1}
 .placa-lbl{font-size:.48rem;letter-spacing:.36em;text-transform:uppercase;color:var(--gold-dark)}
 .placa-rol{font-family:var(--serif);font-size:clamp(1.3rem,5.5vw,1.8rem);
@@ -523,7 +535,8 @@ function textos(){
     eres: plural ? 'ustedes son de esas personas' : 'tú eres de esas personas',
     importante: plural
       ? 'Tenemos algo importante que pedirles…'
-      : 'Tenemos algo importante que pedirte…'
+      : 'Tenemos algo importante que pedirte…',
+    gustaria: plural ? '¿Les gustaría ser…' : '¿Te gustaría ser…'
   };
 }
 
@@ -587,6 +600,15 @@ function lluvia(esc, cuantas){
 
 function vibrar(ms){ try{ if (navigator.vibrate) navigator.vibrate(ms); }catch(e){} }
 
+/* parte un texto en letras que aparecen difuminandose una tras otra */
+function letrasDifuminadas(texto, retraso, paso){
+  return texto.split('').map(function(c, i){
+    var d = (retraso + i * paso).toFixed(3) + 's';
+    return '<span style="animation-delay:' + d + '">' +
+           (c === ' ' ? '&nbsp;' : esc(c)) + '</span>';
+  }).join('');
+}
+
 /* ============================================================
    PROPUESTA 1 — EL COFRE
    ============================================================ */
@@ -603,6 +625,7 @@ function expCofre(stage, preview){
         '<div class="wave"></div>' +
         '<p class="saludo-intro">' + esc(t.importante) + '</p>' +
       '</div>' +
+      '<div class="pregunta" id="pregunta1"></div>' +
       '<div class="cofre-zona" id="cofreZona">' +
         '<div class="cofre" id="cofre">' +
           '<div class="cofre-luz"></div>' +
@@ -630,12 +653,21 @@ function expCofre(stage, preview){
     vibrar([12, 90, 26]);
     var h1 = document.getElementById('hint1');
     h1.style.animation = 'none'; h1.style.opacity = 0;
-    setTimeout(function(){ lluvia(esc_, 26); }, 700);
+
+    /* el saludo se retira y en su lugar se difumina la pregunta */
+    document.getElementById('saludo1').classList.add('fuera');
+    setTimeout(function(){
+      document.getElementById('pregunta1').innerHTML =
+        '<p class="pregunta-txt">' + letrasDifuminadas(t.gustaria, .32, .062) + '</p>';
+    }, 420);
+
+    setTimeout(function(){ lluvia(esc_, 26); }, 1900);
     setTimeout(function(){
       document.getElementById('cofreZona').classList.add('fuera');
-      document.getElementById('saludo1').classList.add('fuera');
+      document.getElementById('pregunta1').style.transition = 'opacity .6s ease';
+      document.getElementById('pregunta1').style.opacity = 0;
       stage.querySelector('.final').classList.add('on');
-    }, 2600);
+    }, 4300);
   });
 }
 
@@ -762,16 +794,21 @@ function expRaspa(stage, preview){
     rascar(ultimo, ultimo);
     try { cv.setPointerCapture(ev.pointerId); } catch(e){}
   });
+  var medidas = 0;
   cv.addEventListener('pointermove', function(ev){
     if (!pintando || listo) return;
     ev.preventDefault();
     var q = punto(ev);
     rascar(ultimo, q);
     ultimo = q;
-    if (avance() > .46) terminar();
+    /* medir la lamina es caro: se revisa cada varios movimientos */
+    if (++medidas % 6 === 0 && avance() > .85) terminar();
   });
   ['pointerup','pointercancel','pointerleave'].forEach(function(n){
-    cv.addEventListener(n, function(){ pintando = false; });
+    cv.addEventListener(n, function(){
+      pintando = false;
+      if (!listo && avance() > .85) terminar();
+    });
   });
 
   requestAnimationFrame(function(){ requestAnimationFrame(laminar); });
