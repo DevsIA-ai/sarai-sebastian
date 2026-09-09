@@ -142,13 +142,15 @@ body.locked{overflow:hidden}
 
 /* partículas que caen */
 .lluvia{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:30}
-.particula{position:absolute;top:-12vh;pointer-events:none;opacity:0}
-.particula.hoja{border-radius:0 100% 0 100%;background:var(--sage)}
-.particula.petalo{border-radius:60% 40% 55% 45%;background:var(--rose)}
+.particula{position:absolute;top:-14vh;pointer-events:none;opacity:0;
+  background-repeat:no-repeat;background-size:100% 100%}
+.particula.confeti{border-radius:1.5px}
+.particula.cinta{border-radius:6px}
 @keyframes caer{
-  0%{opacity:0;transform:translateY(-10vh) rotate(0deg)}
-  8%{opacity:.85}
-  100%{opacity:0;transform:translateY(112vh) rotate(var(--giro))}
+  0%{opacity:0;transform:translate(0,-12vh) rotate(0deg)}
+  9%{opacity:1}
+  90%{opacity:1}
+  100%{opacity:0;transform:translate(var(--dx),114vh) rotate(var(--giro))}
 }
 
 /* ============ contenido final compartido ============ */
@@ -579,26 +581,100 @@ function capaLluvia(esc){
   if (!c){ c = document.createElement('div'); c.className = 'lluvia'; esc.appendChild(c); }
   return c;
 }
+/* colores de la boda para el confeti, los globos y los regalos */
+var PALETA = ['#6e7f52','#8a9a62','#a8b78c','#d9b3ac','#c0968f','#e0d3bd'];
+function color(){ return PALETA[Math.floor(Math.random() * PALETA.length)]; }
+
+function svgURL(svg){
+  return 'url("data:image/svg+xml,' + encodeURIComponent(svg).replace(/'/g, '%27') + '")';
+}
+function globoSVG(c){
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 40">' +
+    '<ellipse cx="13" cy="13" rx="10" ry="12.6" fill="' + c + '"/>' +
+    '<ellipse cx="9.2" cy="8.6" rx="2.5" ry="3.5" fill="#ffffff" opacity=".38"/>' +
+    '<path d="M13 25.4 l-2.5 3.3 h5z" fill="' + c + '"/>' +
+    '<path d="M13 28.7 q3.6 3.2 0 6.2 q-3.2 2.6 0 4.6" stroke="' + c +
+      '" stroke-width="1.1" fill="none" opacity=".75" stroke-linecap="round"/>' +
+    '</svg>';
+}
+function regaloSVG(c, d){
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">' +
+    '<rect x="2.5" y="10" width="21" height="14" rx="1.6" fill="' + c + '"/>' +
+    '<rect x="1.2" y="7.6" width="23.6" height="4.2" rx="1.3" fill="' + c + '"/>' +
+    '<rect x="10.9" y="7.6" width="4.2" height="16.4" fill="' + d + '"/>' +
+    '<path d="M13 8 q-5.2-6.2-7.6-2 q-1.6 2.9 7.6 2z" fill="' + d + '"/>' +
+    '<path d="M13 8 q5.2-6.2 7.6-2 q1.6 2.9-7.6 2z" fill="' + d + '"/>' +
+    '</svg>';
+}
+
 function lluvia(esc, cuantas){
   var cont = capaLluvia(esc);
   for (var i = 0; i < cuantas; i++){
     var d = document.createElement('div');
-    var hoja = Math.random() > .45;
-    d.className = 'particula ' + (hoja ? 'hoja' : 'petalo');
-    var tam = hoja ? (9 + Math.random() * 11) : (6 + Math.random() * 7);
-    d.style.width = tam + 'px';
-    d.style.height = (hoja ? tam * 1.7 : tam) + 'px';
+    var r = Math.random();
+    var tam, dur;
+
+    if (r < .18){                       /* globo */
+      tam = 17 + Math.random() * 11;
+      d.className = 'particula';
+      d.style.width = tam + 'px';
+      d.style.height = (tam * 1.54) + 'px';
+      d.style.backgroundImage = svgURL(globoSVG(color()));
+      dur = 8 + Math.random() * 5;      /* flotan mas despacio */
+    } else if (r < .34){                /* regalo */
+      tam = 15 + Math.random() * 9;
+      d.className = 'particula';
+      d.style.width = tam + 'px';
+      d.style.height = tam + 'px';
+      d.style.backgroundImage = svgURL(regaloSVG(color(), color()));
+      dur = 6.5 + Math.random() * 4;
+    } else if (r < .46){                /* cinta de confeti */
+      d.className = 'particula cinta';
+      d.style.width = (3 + Math.random() * 2) + 'px';
+      d.style.height = (11 + Math.random() * 9) + 'px';
+      d.style.background = color();
+      dur = 5 + Math.random() * 4;
+    } else {                            /* confeti */
+      tam = 6 + Math.random() * 6;
+      d.className = 'particula confeti';
+      d.style.width = tam + 'px';
+      d.style.height = (tam * (.55 + Math.random() * .7)) + 'px';
+      d.style.background = color();
+      dur = 4.5 + Math.random() * 4;
+    }
+
     d.style.left = (Math.random() * 100) + '%';
     d.style.setProperty('--giro', (Math.random() * 900 - 450) + 'deg');
-    d.style.animation = 'caer ' + (4.5 + Math.random() * 4).toFixed(2) + 's linear ' +
+    d.style.setProperty('--dx', (Math.random() * 90 - 45).toFixed(0) + 'px');
+    d.style.animation = 'caer ' + dur.toFixed(2) + 's linear ' +
                         (Math.random() * 2.2).toFixed(2) + 's forwards';
-    d.style.opacity = (.45 + Math.random() * .45).toFixed(2);
     cont.appendChild(d);
-    (function(el){ setTimeout(function(){ el.remove(); }, 12000); })(d);
+    (function(el){ setTimeout(function(){ el.remove(); }, (dur + 3) * 1000); })(d);
   }
 }
 
+/* una vez que empieza a caer, ya no para */
+var lluviaTimer = null;
+function lluviaSinFin(esc, cada, cuantas){
+  clearInterval(lluviaTimer);
+  lluvia(esc, cuantas * 4);
+  lluviaTimer = setInterval(function(){
+    if (!document.body.contains(esc)){ clearInterval(lluviaTimer); lluviaTimer = null; return; }
+    lluvia(esc, cuantas);
+  }, cada);
+}
+function pararLluvia(){ clearInterval(lluviaTimer); lluviaTimer = null; }
+
 function vibrar(ms){ try{ if (navigator.vibrate) navigator.vibrate(ms); }catch(e){} }
+
+/* cuanto debe durar una escena segun lo que hay que leer */
+function duracion(html){
+  var txt = String(html).replace(/<[^>]*>/g, ' ')
+                        .replace(/&nbsp;/g, ' ')
+                        .replace(/\s+/g, ' ').trim();
+  var d = 1500 + txt.length * 62;
+  return Math.max(3000, Math.min(11000, d));
+}
 
 /* parte un texto en letras que aparecen difuminandose una tras otra */
 function letrasDifuminadas(texto, retraso, paso){
@@ -661,7 +737,7 @@ function expCofre(stage, preview){
         '<p class="pregunta-txt">' + letrasDifuminadas(t.gustaria, .32, .062) + '</p>';
     }, 420);
 
-    setTimeout(function(){ lluvia(esc_, 26); }, 1900);
+    setTimeout(function(){ lluviaSinFin(esc_, 1500, 6); }, 1900);
     setTimeout(function(){
       document.getElementById('cofreZona').classList.add('fuera');
       document.getElementById('pregunta1').style.transition = 'opacity .6s ease';
@@ -782,7 +858,7 @@ function expRaspa(stage, preview){
     cv.classList.add('listo');
     document.getElementById('hint2').classList.add('fuera');
     vibrar([12, 80, 24]);
-    lluvia(escena, 24);
+    lluviaSinFin(escena, 1500, 6);
     setTimeout(function(){
       document.getElementById('raspaFinal').classList.add('on');
     }, 500);
@@ -821,22 +897,27 @@ function expRaspa(stage, preview){
 function expSecuencia(stage, preview){
   var t = textos();
   var escenas = [
-    { dur: 3400, html:
+    { html:
       '<p class="esc-sub">' + esc(t.saludo) + '</p>' +
       '<p class="esc-nombre">' + esc(t.nombre) + '</p>' },
-    { dur: 3600, html:
+    { html:
       '<p class="esc-txt">Hay momentos en la vida que <em>solo tienen sentido</em><br>' +
       'si están las personas correctas.<br><br>' +
       'Y para nosotros, <em>' + esc(t.eres) + '</em>.</p>' },
-    { dur: 3000, html:
+    { html:
       '<p class="esc-txt">Por eso, antes de decir «sí»<br>frente a Dios…<br><br>' +
       '<em>' + esc(t.pedir) + '</em>.</p>' },
-    { dur: 4200, reveal: true, html:
+    { dur: 3600, pregunta: true, html:
+      '<p class="pregunta-txt" id="preg3"></p>' },
+    { dur: 4600, reveal: true, html:
       '<div class="destello"></div>' +
       '<p class="reveal-lbl">' + esc(t.titulo) + '</p>' +
       '<p class="reveal-rol">' + esc(t.rol) + '</p>' },
     { dur: 0, final: true, html: bloqueFinal(true) }
   ];
+
+  /* las escenas de puro texto duran segun lo que haya que leer */
+  escenas.forEach(function(e){ if (e.dur === undefined) e.dur = duracion(e.html); });
 
   var barras = escenas.map(function(_, i){
     return '<div class="barra" id="b' + i + '"><i></i></div>';
@@ -872,7 +953,11 @@ function expSecuencia(stage, preview){
     b.style.setProperty('--dur', (e.dur || 600) + 'ms');
     b.classList.add('activa');
 
-    if (e.reveal){ vibrar([16, 60, 16, 60, 30]); lluvia(cont, 30); }
+    if (e.pregunta){
+      document.getElementById('preg3').innerHTML =
+        letrasDifuminadas(t.gustaria, .2, .062);
+    }
+    if (e.reveal){ vibrar([16, 60, 16, 60, 30]); lluviaSinFin(cont, 1500, 7); }
     if (e.final){
       el.querySelector('.final').classList.add('on');
       document.getElementById('saltar').style.display = 'none';
@@ -904,6 +989,7 @@ function ver(n, preview){
   EXP[n](stage, preview !== false);
 }
 function cerrar(){
+  pararLluvia();
   var stage = document.getElementById('stage');
   stage.classList.remove('on');
   stage.innerHTML = '';
