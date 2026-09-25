@@ -275,6 +275,76 @@ body.locked{overflow:hidden}
   font-size:.5rem;letter-spacing:.36em;text-transform:uppercase;
   color:var(--text-muted);opacity:.7}
 
+/* ============================== PORTADA DE ENTRADA ============================== */
+#portada{
+  position:fixed; inset:0; z-index:970;
+  display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:2rem; cursor:pointer; overflow:hidden;
+  background:radial-gradient(circle at 50% 36%,#fffdf9 0%,#f6efe4 46%,#e9dfd0 100%);
+  transition:opacity 1s ease, transform 1.1s ease;
+}
+#portada.sale{opacity:0; pointer-events:none; transform:scale(1.05)}
+#portada::after{
+  content:''; position:absolute; inset:clamp(11px,2.6vw,24px);
+  border:1px solid rgba(192,150,143,.4); pointer-events:none; z-index:2;
+}
+#portada .bg-leaf{opacity:.42}
+.p-cont{position:relative; z-index:5; max-width:360px; width:100%}
+.p-cont > *{
+  opacity:0; animation:pEntra .95s cubic-bezier(.2,.8,.3,1) forwards;
+  animation-delay:calc(var(--i) * .16s + .15s);
+}
+@keyframes pEntra{
+  from{opacity:0; transform:translateY(16px)}
+  to{opacity:1; transform:translateY(0)}
+}
+.p-eyebrow{font-size:.52rem; letter-spacing:.44em; text-transform:uppercase; color:var(--gold)}
+
+.p-sello{position:relative; width:clamp(108px,32vw,136px); height:clamp(108px,32vw,136px);
+  margin:1.6rem auto 1.3rem}
+.p-sello::before{
+  content:''; position:absolute; inset:-30%; border-radius:50%;
+  background:radial-gradient(circle,rgba(217,179,172,.6) 0%,rgba(217,179,172,.16) 46%,transparent 68%);
+  animation:pHalo 3s ease-in-out infinite;
+}
+.p-sello img{
+  position:relative; z-index:1; width:100%; height:100%; object-fit:contain; display:block;
+  filter:drop-shadow(0 8px 18px rgba(80,90,50,.4));
+  animation:pFlota 4.6s ease-in-out infinite;
+}
+@keyframes pHalo{0%,100%{transform:scale(.92); opacity:.65} 50%{transform:scale(1.1); opacity:1}}
+@keyframes pFlota{0%,100%{transform:translateY(0) rotate(-1.5deg)} 50%{transform:translateY(-7px) rotate(1.5deg)}}
+
+.p-nombres{font-family:var(--script); font-weight:400; color:var(--rose-ink);
+  font-size:clamp(2.2rem,9.5vw,3.1rem); line-height:1.2}
+.p-texto{font-family:var(--serif); font-style:italic; color:var(--text-muted);
+  font-size:clamp(1.05rem,4.6vw,1.3rem); line-height:1.6; margin-top:.1rem}
+
+.p-btn{
+  position:relative; display:inline-flex; align-items:center; gap:.75rem;
+  margin-top:1.9rem; padding:.95rem 2.2rem .95rem 1.1rem;
+  border:none; border-radius:50px; cursor:pointer;
+  background:var(--gold); color:#fff;
+  font-family:var(--sans); font-size:.68rem; letter-spacing:.34em; text-transform:uppercase;
+  box-shadow:0 10px 26px rgba(110,127,82,.38);
+  transition:background .3s, transform .15s;
+}
+.p-btn:hover{background:var(--gold-dark)}
+.p-btn:active{transform:scale(.96)}
+.p-btn::after{
+  content:''; position:absolute; inset:0; border-radius:50px;
+  border:1px solid rgba(138,154,98,.75); pointer-events:none;
+  animation:pOnda 2.5s ease-out 1.6s infinite;
+}
+@keyframes pOnda{0%{transform:scale(1); opacity:.8} 100%{transform:scale(1.26,1.75); opacity:0}}
+.p-nota{
+  width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,.24);
+  display:flex; align-items:center; justify-content:center;
+  font-size:.95rem; letter-spacing:0;
+}
+.p-vol{font-size:.5rem; letter-spacing:.4em; text-transform:uppercase;
+  color:var(--text-muted); margin-top:1.1rem; opacity:.85}
+
 /* ============================== MÚSICA ============================== */
 #music-bar{
   position:fixed; top:1rem; left:1.1rem; z-index:950;
@@ -380,7 +450,7 @@ body.locked{overflow:hidden}
           expectativa, hasta que un destello de luz revela el rol en grande. Avanza sola
           o tocando la pantalla.</p>
         <div class="op-btns">
-          <button class="btn-pill rose" onclick="ver()">Ver cómo queda ▸</button>
+          <button class="btn-pill rose" onclick="abrir()">Ver cómo queda ▸</button>
           <button class="btn-pill" onclick="copiarLink()">Copiar link</button>
         </div>
       </div>
@@ -444,6 +514,7 @@ function textos(){
     pedir: plural ? 'queremos pedirles algo muy especial' : 'queremos pedirte algo muy especial',
     ask: plural ? '¿Nos harían el honor?' : '¿Nos harías el honor?',
     eres: plural ? 'ustedes son de esas personas' : 'tú eres de esas personas',
+    contigo: plural ? 'con ustedes' : 'contigo',
     importante: plural
       ? 'Tenemos algo importante que pedirles…'
       : 'Tenemos algo importante que pedirte…',
@@ -728,14 +799,62 @@ function arrancarMusica(){
    ============================================================ */
 function ver(preview){
   var stage = document.getElementById('stage');
-  stage.classList.add('on');
-  document.body.classList.add('locked');
-  expSecuencia(stage, preview !== false);
 
+  /* la música se pide PRIMERO: sigue dentro del toque del usuario, que es lo
+     único que el navegador acepta para dejar sonar audio */
   audio = document.getElementById('bg-audio');
   document.getElementById('music-bar').classList.add('visible');
   arrancarMusica();
+
+  stage.classList.add('on');
+  document.body.classList.add('locked');
+  expSecuencia(stage, preview !== false);
 }
+
+/* ============================================================
+   Portada de entrada: el toque que hace sonar la música
+   ============================================================ */
+function portadaEntrada(preview){
+  if (document.getElementById('portada')) return;
+  var t = textos();
+
+  /* mientras se lee la portada, la canción ya se va descargando */
+  var a = document.getElementById('bg-audio');
+  a.preload = 'auto'; try { a.load(); } catch(e){}
+
+  var d = document.createElement('div');
+  d.id = 'portada';
+  d.innerHTML =
+    (preview ? '<button class="cerrar oscuro" id="portadaX" aria-label="Cerrar">✕</button>' : '') +
+    '<img src="follaje.png" class="bg-leaf tl" alt="">' +
+    '<img src="follaje.png" class="bg-leaf br" alt="">' +
+    '<div class="p-cont">' +
+      '<p class="p-eyebrow" style="--i:0">Un mensaje muy especial</p>' +
+      '<div class="p-sello" style="--i:1"><img src="sello.png" alt=""></div>' +
+      '<h1 class="p-nombres" style="--i:2">Sebastián &amp; Saraí</h1>' +
+      '<div class="wave" style="--i:3"></div>' +
+      '<p class="p-texto" style="--i:4">quieren compartir algo ' + esc(t.contigo) + '</p>' +
+      '<button class="p-btn" type="button" style="--i:5"><span class="p-nota">♪</span>Comenzar</button>' +
+      '<p class="p-vol" style="--i:6">· Sube el volumen ·</p>' +
+    '</div>';
+  document.body.appendChild(d);
+  document.body.classList.add('locked');
+
+  var empezo = false;
+  d.addEventListener('click', function(ev){
+    if (ev.target.closest('#portadaX')){
+      d.remove();
+      document.body.classList.remove('locked');
+      return;
+    }
+    if (empezo) return;
+    empezo = true;
+    ver(preview);                 /* dentro del toque: arranca la música */
+    d.classList.add('sale');
+    setTimeout(function(){ d.remove(); }, 1200);
+  });
+}
+function abrir(){ portadaEntrada(true); }
 function cerrar(){
   pararLluvia();
   if (audio){ audio.pause(); sonando = false; pintarMusica(); }
@@ -778,7 +897,7 @@ function toast(){
   /* con cualquier ?d= se abre la experiencia; sirve para links ya enviados */
   if (params().get('d')){
     document.getElementById('panel').remove();
-    ver(false);
+    portadaEntrada(false);
     return;
   }
   var rol  = document.getElementById('fRol');
