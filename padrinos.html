@@ -342,6 +342,48 @@ body.locked{overflow:hidden}
   opacity:0;pointer-events:none;transition:opacity .75s ease;z-index:20}
 .escena.on{opacity:1;pointer-events:auto}
 .escena.fondo{background:radial-gradient(circle at 50% 42%,#fffdf9 0%,#f6efe4 48%,#e7dccd 100%)}
+
+/* fotografia de fondo, con acercamiento lento */
+.escena-foto{position:absolute;inset:0;z-index:0;
+  background-size:cover;background-position:center;
+  filter:saturate(.82) brightness(1.04);
+  transform:scale(1.04);opacity:0;transition:opacity 1.1s ease}
+.escena.on .escena-foto{opacity:1;
+  animation:acercar var(--kb,10s) linear forwards}
+@keyframes acercar{from{transform:scale(1.04)}to{transform:scale(1.2)}}
+
+/* velo marfil para que el texto siempre se lea */
+.escena-velo{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(ellipse 88% 42% at 50% 52%,rgba(253,250,245,.86) 0%,rgba(252,248,242,.6) 55%,rgba(250,245,237,.34) 100%),
+    linear-gradient(180deg,rgba(251,248,244,.42),rgba(249,244,236,.2) 42%,rgba(251,248,244,.5))}
+/* viñeta suave en las orillas */
+.escena-vin{position:absolute;inset:0;z-index:2;pointer-events:none;
+  box-shadow:inset 0 0 90px 26px rgba(232,221,205,.75)}
+
+/* el texto siempre por encima de la foto */
+.escena > p, .escena > .final{position:relative;z-index:4}
+.escena-foto ~ .esc-txt, .escena-foto ~ .esc-nombre, .escena-foto ~ .esc-sub{
+  text-shadow:0 1px 16px rgba(255,253,249,.95), 0 0 34px rgba(255,253,249,.8)}
+
+/* sobre una foto, el cierre va en tarjeta para que se lea limpio */
+.escena-foto ~ .final{
+  background:rgba(253,250,245,.93);
+  border:1px solid rgba(192,150,143,.45);
+  border-radius:14px;
+  padding:1.7rem 1.3rem 1.5rem;
+  box-shadow:0 18px 46px rgba(120,105,85,.22);
+  max-width:370px}
+.destello{z-index:3}
+
+/* el sello acompaña al momento del rol */
+.reveal-sello{position:relative;z-index:4;width:64px;height:64px;
+  margin:0 auto 1rem;display:block;opacity:0;
+  animation:selloEntra .9s cubic-bezier(.2,1.1,.3,1) .15s both}
+@keyframes selloEntra{
+  from{opacity:0;transform:scale(.4) rotate(-22deg)}
+  to{opacity:1;transform:scale(1) rotate(0)}
+}
 .esc-txt{font-family:var(--serif);font-size:clamp(1.25rem,5.6vw,1.75rem);
   font-weight:300;color:var(--text);line-height:1.65;max-width:440px}
 .esc-txt em{font-style:italic;color:var(--rose-ink)}
@@ -949,24 +991,28 @@ function expRaspa(stage, preview){
 function expSecuencia(stage, preview){
   var t = textos();
   var escenas = [
-    { html:
+    { foto: 'beso.jpeg', html:
       '<p class="esc-sub">' + esc(t.saludo) + '</p>' +
       '<p class="esc-nombre">' + esc(t.nombre) + '</p>' },
-    { html:
+    { foto: 'hero1.jpeg', html:
       '<p class="esc-txt">Hay momentos en la vida que <em>solo tienen sentido</em><br>' +
       'si están las personas correctas.<br><br>' +
       'Y para nosotros, <em>' + esc(t.eres) + '</em>.</p>' },
-    { html:
+    { foto: 'iglesia.jpeg', html:
       '<p class="esc-txt">Por eso, antes de decir «sí»<br>frente a Dios…<br><br>' +
       '<em>' + esc(t.pedir) + '</em>.</p>' },
     { dur: 3600, pregunta: true, html:
       '<p class="pregunta-txt" id="preg3"></p>' },
     { dur: 4600, reveal: true, html:
       '<div class="destello"></div>' +
+      '<img src="sello.png" class="reveal-sello" alt="">' +
       '<p class="reveal-lbl">' + esc(t.titulo) + '</p>' +
       '<p class="reveal-rol">' + esc(t.rol) + '</p>' },
-    { dur: 0, final: true, html: bloqueFinal(true) }
+    { dur: 0, final: true, foto: 'playa2.jpeg', html: bloqueFinal(true) }
   ];
+
+  /* las fotos se precargan para que no parpadeen al cambiar de escena */
+  escenas.forEach(function(e){ if (e.foto){ var im = new Image(); im.src = e.foto; } });
 
   /* las escenas de puro texto duran segun lo que haya que leer */
   escenas.forEach(function(e){ if (e.dur === undefined) e.dur = duracion(e.html); });
@@ -980,7 +1026,11 @@ function expSecuencia(stage, preview){
       (preview ? '<button class="cerrar oscuro" onclick="cerrar()">✕</button>' : '') +
       '<div class="barras">' + barras + '</div>' +
       escenas.map(function(s, i){
-        return '<div class="escena fondo" id="s' + i + '">' + s.html + '</div>';
+        var fondo = s.foto
+          ? '<div class="escena-foto" style="background-image:url(' + s.foto + ')"></div>' +
+            '<div class="escena-velo"></div><div class="escena-vin"></div>'
+          : '';
+        return '<div class="escena fondo" id="s' + i + '">' + fondo + s.html + '</div>';
       }).join('') +
       '<p class="saltar" id="saltar">Toca para continuar</p>' +
     '</div>';
@@ -1004,6 +1054,10 @@ function expSecuencia(stage, preview){
     b.classList.remove('hecha');
     b.style.setProperty('--dur', (e.dur || 600) + 'ms');
     b.classList.add('activa');
+
+    /* el acercamiento de la foto dura lo mismo que la escena */
+    var foto = el.querySelector('.escena-foto');
+    if (foto) foto.style.setProperty('--kb', ((e.dur || 9000) + 2500) + 'ms');
 
     if (e.pregunta){
       document.getElementById('preg3').innerHTML =
