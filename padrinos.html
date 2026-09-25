@@ -78,6 +78,7 @@ body.locked{overflow:hidden}
 
 .opciones{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
   gap:1.2rem;margin-top:2.2rem}
+.opciones.una{max-width:420px;margin-left:auto;margin-right:auto}
 .opcion{background:var(--white);border:1px solid var(--gold-light);border-radius:14px;
   overflow:hidden;display:flex;flex-direction:column;
   transition:transform .3s,box-shadow .3s}
@@ -92,26 +93,9 @@ body.locked{overflow:hidden}
 .op-btns{display:flex;gap:.5rem;justify-content:center;margin-top:1rem;flex-wrap:wrap}
 .op-btns .btn-pill{padding:.45rem 1rem;font-size:.52rem}
 
-/* miniaturas del panel */
-.mini-1{background:linear-gradient(155deg,#fffdf9,#efe6da);display:flex;
-  align-items:center;justify-content:center}
-.mini-1 i{display:block;width:74px;height:52px;border-radius:4px;
-  background:linear-gradient(165deg,#5b6b45,#3a4630);
-  box-shadow:0 8px 18px rgba(110,127,82,.3);position:relative}
-.mini-1 i::before{content:'';position:absolute;left:-3px;right:-3px;top:-13px;height:16px;
-  border-radius:4px 4px 0 0;background:linear-gradient(165deg,#6b7c52,#46543a);
-  transform-origin:bottom center;transform:rotateX(38deg)}
-.mini-2{background:linear-gradient(155deg,#fdfbf7,#efe6da);display:flex;
-  align-items:center;justify-content:center}
-.mini-2 i{display:block;width:92px;height:54px;border-radius:7px;position:relative;
-  overflow:hidden;background:linear-gradient(150deg,#a8b78c,#6e7f52);
-  box-shadow:0 8px 18px rgba(110,127,82,.3)}
-.mini-2 i::before{content:'';position:absolute;left:-10%;top:14%;width:66%;height:26%;
-  border-radius:20px;background:#fffdf9;transform:rotate(-13deg)}
-.mini-2 i::after{content:'';position:absolute;right:-6%;bottom:16%;width:52%;height:22%;
-  border-radius:20px;background:#fffdf9;transform:rotate(-13deg);opacity:.85}
+/* miniatura del panel */
 .mini-3{background:linear-gradient(155deg,#fffdf9,#efe6da);display:flex;
-  align-items:center;justify-content:center;gap:5px}
+  align-items:center;justify-content:center;gap:7px}
 .mini-3 i{display:block;width:9px;height:9px;border-radius:50%;background:var(--sage);
   opacity:.45}
 .mini-3 i:nth-child(2){opacity:.65;width:12px;height:12px}
@@ -180,34 +164,8 @@ body.locked{overflow:hidden}
 .wave.claro{filter:brightness(1.5) saturate(.55);opacity:.85}
 
 /* ============================================================
-   PROPUESTA 1 — EL COFRE
+   EL LETRERO QUE SE DIFUMINA
    ============================================================ */
-.e1{background:radial-gradient(circle at 50% 35%,#fffdf9 0%,#f6efe4 45%,#e9dfd0 100%)}
-.e1 .final{color:var(--text-muted)}
-.e1 .f-to{color:var(--text-muted)}
-.e1 .f-name{color:var(--rose-ink)}
-.e1 .f-rollbl{color:var(--gold-dark)}
-.e1 .f-rol{color:var(--rose-ink)}
-.e1 .f-ask{color:var(--gold-dark)}
-.e1 .f-meta{color:var(--text-muted);border-top:1px solid var(--gold-light)}
-.e1 .f-couple{color:var(--gold-dark)}
-.e1 .hint{color:var(--gold-dark)}
-.e1 .bg-leaf{opacity:.42}
-/* saludo que se ve desde el primer momento */
-.e1 .saludo{position:absolute;top:clamp(1.8rem,6vh,3.4rem);left:0;right:0;z-index:22;
-  transition:opacity .6s ease}
-.e1 .saludo.fuera{opacity:0}
-.saludo-to{font-size:.5rem;letter-spacing:.4em;text-transform:uppercase;
-  color:var(--text-muted);margin-bottom:.15rem}
-.saludo-name{font-family:var(--script);font-size:clamp(1.8rem,7vw,2.5rem);
-  color:var(--rose-ink);line-height:1.2}
-.saludo-intro{font-family:var(--serif);font-size:clamp(1rem,4.4vw,1.25rem);
-  font-style:italic;color:var(--text-muted);line-height:1.7;
-  max-width:330px;margin:0 auto;padding:0 1rem}
-
-/* el letrero que se va difuminando hasta aparecer */
-.e1 .pregunta{position:absolute;top:clamp(3.2rem,11vh,6rem);left:0;right:0;z-index:23;
-  padding:0 1.2rem;pointer-events:none}
 .pregunta-txt{font-family:var(--script);
   font-size:clamp(2rem,8.5vw,3rem);color:var(--rose-ink);line-height:1.25}
 .pregunta-txt span{display:inline-block;opacity:0;filter:blur(14px);
@@ -216,105 +174,6 @@ body.locked{overflow:hidden}
 @keyframes difuminar{
   to{opacity:1;filter:blur(0);transform:translateY(0) scale(1)}
 }
-
-.cofre-zona{position:absolute;left:50%;top:50%;z-index:20;
-  transform:translate(-50%,-50%);
-  transition:opacity .7s ease,transform .7s ease}
-.cofre-zona.fuera{opacity:0;transform:translate(-50%,-50%) scale(.88);pointer-events:none}
-/* sombra en el suelo */
-.cofre-zona::after{content:'';position:absolute;left:50%;bottom:-24px;
-  width:78%;height:24px;transform:translateX(-50%);pointer-events:none;
-  background:radial-gradient(ellipse,rgba(90,80,60,.32) 0%,transparent 70%)}
-.cofre{position:relative;width:min(74vw,290px);height:calc(min(74vw,290px)*.62);
-  perspective:900px;cursor:pointer}
-
-/* halo de luz que sale de la caja */
-.cofre-luz{position:absolute;left:50%;top:30%;width:460px;height:460px;
-  transform:translate(-50%,-50%) scale(.15);opacity:0;z-index:1;pointer-events:none;
-  background:radial-gradient(circle,rgba(255,250,232,1) 0%,rgba(240,214,170,.55) 24%,rgba(217,179,172,.22) 46%,transparent 70%);
-  transition:opacity 1s ease,transform 1.2s cubic-bezier(.2,.8,.3,1)}
-.cofre.abierto .cofre-luz{opacity:1;transform:translate(-50%,-50%) scale(1.5)}
-
-/* la placa con el rol, sube desde adentro */
-.cofre-placa{position:absolute;left:50%;top:14%;z-index:2;
-  transform:translate(-50%,26px) scale(.55);opacity:0;
-  padding:.7rem 1.5rem;border-radius:6px;white-space:nowrap;
-  background:linear-gradient(160deg,#fffdf9,#f3ece0);
-  border:1px solid var(--rose-deep);
-  box-shadow:0 14px 30px rgba(90,80,60,.4);
-  transition:transform 1s cubic-bezier(.2,1.2,.4,1),opacity .7s ease}
-.cofre.revela .cofre-placa{transform:translate(-50%,-152%) scale(1);opacity:1}
-.placa-lbl{font-size:.48rem;letter-spacing:.36em;text-transform:uppercase;color:var(--gold-dark)}
-.placa-rol{font-family:var(--serif);font-size:clamp(1.3rem,5.5vw,1.8rem);
-  font-weight:300;color:var(--rose-ink);line-height:1.2}
-
-/* cuerpo de la caja */
-.cofre-cuerpo{position:absolute;inset:0;z-index:3;border-radius:6px;
-  background:linear-gradient(168deg,#7a8c5c 0%,#5a6a44 45%,#3c4a2e 100%);
-  box-shadow:0 26px 50px rgba(90,80,60,.35),
-             inset 0 2px 0 rgba(255,255,255,.22),
-             inset 0 -10px 22px rgba(0,0,0,.28)}
-.cofre-cuerpo::after{content:'';position:absolute;inset:9px;border-radius:3px;
-  border:1px solid rgba(220,199,194,.32)}
-/* tapa */
-.cofre-tapa{position:absolute;left:-3px;right:-3px;top:-13%;height:47%;z-index:5;
-  border-radius:8px 8px 3px 3px;
-  background:linear-gradient(168deg,#93a473 0%,#6d7e52 55%,#4c5b39 100%);
-  box-shadow:0 -6px 18px rgba(90,80,60,.3),inset 0 2px 0 rgba(255,255,255,.3);
-  transform-origin:center top;
-  transition:transform 1s cubic-bezier(.5,-.25,.3,1.2),box-shadow .6s}
-.cofre.abierto .cofre-tapa{transform:rotateX(-128deg);z-index:1}
-/* sello sobre la unión */
-.cofre-sello{position:absolute;left:50%;top:34%;width:74px;height:74px;z-index:6;
-  transform:translate(-50%,-50%);
-  transition:transform .5s cubic-bezier(.4,-.4,.5,1.5),opacity .5s}
-.cofre-sello img{width:100%;height:100%;object-fit:contain;display:block;
-  filter:drop-shadow(0 5px 14px rgba(0,0,0,.5))}
-.cofre.abierto .cofre-sello{transform:translate(-50%,60px) scale(.3) rotate(24deg);opacity:0}
-
-/* ============================================================
-   PROPUESTA 2 — RASPA Y DESCUBRE
-   ============================================================ */
-.e2{background:radial-gradient(circle at 50% 35%,#fffdf9 0%,#f6efe4 45%,#e9dfd0 100%);
-  justify-content:flex-start;overflow-y:auto;padding:2.2rem 1.5rem}
-.e2 .final{color:var(--text-muted)}
-.e2 .f-to{color:var(--text-muted)}
-.e2 .f-name{color:var(--rose-ink)}
-.e2 .f-rollbl{color:var(--gold-dark)}
-.e2 .f-rol{color:var(--rose-ink)}
-.e2 .f-ask{color:var(--gold-dark)}
-.e2 .f-meta{color:var(--text-muted);border-top:1px solid var(--gold-light)}
-.e2 .f-couple{color:var(--gold-dark)}
-.e2 .bg-leaf{opacity:.42}
-
-.raspa-wrap{position:relative;z-index:20;margin:auto 0;width:100%;max-width:400px}
-.raspa-intro{font-family:var(--serif);font-size:1rem;color:var(--text-muted);
-  line-height:1.85;margin:.4rem 0 1.3rem}
-
-/* la zona raspable */
-.rasca-zona{position:relative;width:100%;height:172px;margin:0 auto;
-  border-radius:12px;overflow:hidden;
-  border:1px solid var(--rose-deep);
-  background:linear-gradient(160deg,#fffdf9,#f7f0e5);
-  box-shadow:0 12px 30px rgba(110,127,82,.18)}
-.rasca-abajo{position:absolute;inset:0;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;padding:1rem;text-align:center}
-.rasca-lbl{font-size:.5rem;letter-spacing:.4em;text-transform:uppercase;
-  color:var(--gold-dark);margin-bottom:.3rem}
-.rasca-rol{font-family:var(--serif);font-size:clamp(1.55rem,7vw,2.2rem);
-  font-weight:300;font-style:italic;color:var(--rose-ink);line-height:1.2}
-#rasca{position:absolute;inset:0;width:100%;height:100%;display:block;
-  touch-action:none;cursor:crosshair;transition:opacity .8s ease}
-#rasca.listo{opacity:0;pointer-events:none}
-
-.rasca-hint{font-size:.54rem;letter-spacing:.4em;text-transform:uppercase;
-  color:var(--gold-dark);margin-top:1rem;transition:opacity .5s ease;
-  animation:latir 2.6s ease-in-out infinite}
-.rasca-hint.fuera{opacity:0;animation:none}
-
-.raspa-final{opacity:0;max-height:0;overflow:hidden;
-  transition:opacity .8s ease .2s,max-height 1s ease}
-.raspa-final.on{opacity:1;max-height:640px}
 
 /* ============================================================
    PROPUESTA 3 — LA SECUENCIA
@@ -469,7 +328,7 @@ body.locked{overflow:hidden}
     <p class="panel-hint">
       Llena los datos de abajo. Con <b>Ver cómo queda</b> abres la experiencia
       completa, tal cual la va a recibir esa persona y ya con su nombre puesto.
-      Cuando te decidas, copia el link de esa propuesta y envíaselo.
+      Después copia el link y envíaselo por WhatsApp.
     </p>
 
     <div class="field-row">
@@ -511,48 +370,18 @@ body.locked{overflow:hidden}
     </div>
   </div>
 
-  <div class="opciones">
-    <div class="opcion">
-      <div class="op-mini mini-1"><i></i></div>
-      <div class="op-body">
-        <span class="op-num">Propuesta 1</span>
-        <h3 class="op-nombre">El cofre</h3>
-        <p class="op-desc">Un cofre lacrado sobre fondo marfil. Al tocarlo el sello se
-          rompe, la tapa se abre, sale un haz de luz y el rol emerge desde adentro
-          mientras caen hojas y pétalos.</p>
-        <div class="op-btns">
-          <button class="btn-pill rose" onclick="ver(1)">Ver cómo queda ▸</button>
-          <button class="btn-pill" onclick="copiarLink(1)">Copiar link</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="opcion">
-      <div class="op-mini mini-2"><i></i></div>
-      <div class="op-body">
-        <span class="op-num">Propuesta 2</span>
-        <h3 class="op-nombre">Raspa y descubre</h3>
-        <p class="op-desc">Una lámina verde olivo tapa el mensaje. Hay que raspar
-          con el dedo, como un boleto de lotería, para ir descubriendo poco a poco
-          de qué los queremos como padrinos.</p>
-        <div class="op-btns">
-          <button class="btn-pill rose" onclick="ver(2)">Ver cómo queda ▸</button>
-          <button class="btn-pill" onclick="copiarLink(2)">Copiar link</button>
-        </div>
-      </div>
-    </div>
-
+  <div class="opciones una">
     <div class="opcion">
       <div class="op-mini mini-3"><i></i><i></i><i></i></div>
       <div class="op-body">
-        <span class="op-num">Propuesta 3</span>
+        <span class="op-num">La experiencia</span>
         <h3 class="op-nombre">La secuencia</h3>
-        <p class="op-desc">Como una historia de Instagram: frases que aparecen una
-          tras otra creando expectativa, y al final un destello de luz revela el rol
-          en grande. Avanza sola o tocando.</p>
+        <p class="op-desc">Frases que aparecen una tras otra sobre sus fotos, creando
+          expectativa, hasta que un destello de luz revela el rol en grande. Avanza sola
+          o tocando la pantalla.</p>
         <div class="op-btns">
-          <button class="btn-pill rose" onclick="ver(3)">Ver cómo queda ▸</button>
-          <button class="btn-pill" onclick="copiarLink(3)">Copiar link</button>
+          <button class="btn-pill rose" onclick="ver()">Ver cómo queda ▸</button>
+          <button class="btn-pill" onclick="copiarLink()">Copiar link</button>
         </div>
       </div>
     </div>
@@ -765,227 +594,6 @@ function letrasDifuminadas(texto, retraso, paso){
 }
 
 /* ============================================================
-   PROPUESTA 1 — EL COFRE
-   ============================================================ */
-function expCofre(stage, preview){
-  var t = textos();
-  stage.innerHTML =
-    '<div class="esc e1">' +
-      (preview ? '<button class="cerrar oscuro" onclick="cerrar()">✕</button>' : '') +
-      '<img src="follaje.png" class="bg-leaf tl" alt="">' +
-      '<img src="follaje.png" class="bg-leaf br" alt="">' +
-      '<div class="saludo" id="saludo1">' +
-        '<p class="saludo-to">' + esc(t.saludo) + '</p>' +
-        '<p class="saludo-name">' + esc(t.nombre) + '</p>' +
-        '<div class="wave"></div>' +
-        '<p class="saludo-intro">' + esc(t.importante) + '</p>' +
-      '</div>' +
-      '<div class="pregunta" id="pregunta1"></div>' +
-      '<div class="cofre-zona" id="cofreZona">' +
-        '<div class="cofre" id="cofre">' +
-          '<div class="cofre-luz"></div>' +
-          '<div class="cofre-placa">' +
-            '<p class="placa-lbl">' + esc(t.titulo) + '</p>' +
-            '<p class="placa-rol">' + esc(t.rol) + '</p>' +
-          '</div>' +
-          '<div class="cofre-cuerpo"></div>' +
-          '<div class="cofre-tapa"></div>' +
-          '<div class="cofre-sello"><img src="sello.png" alt=""></div>' +
-        '</div>' +
-      '</div>' +
-      '<p class="hint" id="hint1">· Toca el cofre para descubrirlo ·</p>' +
-      bloqueFinal(true) +
-    '</div>';
-
-  var esc_ = stage.querySelector('.esc');
-  var cofre = document.getElementById('cofre');
-  var abierto = false;
-
-  cofre.addEventListener('click', function(){
-    if (abierto) return;
-    abierto = true;
-    cofre.classList.add('abierto');
-    vibrar([12, 90, 26]);
-    var h1 = document.getElementById('hint1');
-    h1.style.animation = 'none'; h1.style.opacity = 0;
-
-    /* el saludo se retira y en su lugar se difumina la pregunta */
-    document.getElementById('saludo1').classList.add('fuera');
-
-    var ARRANQUE = 420, INICIO = .32, PASO = .062, DURA = .85;
-    setTimeout(function(){
-      document.getElementById('pregunta1').innerHTML =
-        '<p class="pregunta-txt">' + letrasDifuminadas(t.gustaria, INICIO, PASO) + '</p>';
-    }, ARRANQUE);
-
-    /* la placa espera a que se acabe de escribir la pregunta */
-    var finPregunta = ARRANQUE +
-      (INICIO + Math.max(0, t.gustaria.length - 1) * PASO + DURA) * 1000;
-
-    setTimeout(function(){ cofre.classList.add('revela'); }, finPregunta + 260);
-    setTimeout(function(){ lluviaSinFin(esc_, 1500, 6); }, finPregunta + 900);
-    setTimeout(function(){
-      document.getElementById('cofreZona').classList.add('fuera');
-      document.getElementById('pregunta1').style.transition = 'opacity .6s ease';
-      document.getElementById('pregunta1').style.opacity = 0;
-      stage.querySelector('.final').classList.add('on');
-    }, finPregunta + 3000);
-  });
-}
-
-/* ============================================================
-   PROPUESTA 2 — RASPA Y DESCUBRE
-   ============================================================ */
-function expRaspa(stage, preview){
-  var t = textos();
-  var msg = encodeURIComponent('\u00a1Hola! Con mucho gusto aceptamos ser ' + t.completo +
-                               ' en su boda. \u00a1Felicidades! \ud83e\udd0d');
-
-  stage.innerHTML =
-    '<div class="esc e2">' +
-      (preview ? '<button class="cerrar oscuro" onclick="cerrar()">\u2715</button>' : '') +
-      '<img src="follaje.png" class="bg-leaf tl" alt="">' +
-      '<img src="follaje.png" class="bg-leaf br" alt="">' +
-      '<div class="raspa-wrap">' +
-        '<p class="saludo-to">' + esc(t.saludo) + '</p>' +
-        '<p class="saludo-name">' + esc(t.nombre) + '</p>' +
-        '<div class="wave"></div>' +
-        '<p class="raspa-intro">' + esc(t.intro) + '<br>' + esc(t.importante) + '</p>' +
-        '<div class="rasca-zona">' +
-          '<div class="rasca-abajo">' +
-            '<p class="rasca-lbl">' + esc(t.titulo) + '</p>' +
-            '<p class="rasca-rol">' + esc(t.rol) + '</p>' +
-          '</div>' +
-          '<canvas id="rasca"></canvas>' +
-        '</div>' +
-        '<p class="rasca-hint" id="hint2">\u00b7 Raspa con el dedo \u00b7</p>' +
-        '<div class="raspa-final" id="raspaFinal">' +
-          '<p class="f-ask" style="color:var(--gold-dark)">' + esc(t.ask) + '</p>' +
-          '<div class="f-reply">' +
-            '<a class="btn-pill solid" target="_blank" rel="noopener" ' +
-              'href="https://wa.me/' + WA + '?text=' + msg + '">S\u00ed, aceptamos \ud83e\udd0d</a>' +
-          '</div>' +
-          '<p class="f-meta" style="color:var(--text-muted);border-top:1px solid var(--gold-light)">' +
-            FECHA + '<br>' + LUGAR + '</p>' +
-          '<p class="f-couple" style="color:var(--gold-dark)">Sebasti\u00e1n &amp; Sara\u00ed</p>' +
-        '</div>' +
-      '</div>' +
-    '</div>';
-
-  var escena = stage.querySelector('.esc');
-  var cv = document.getElementById('rasca');
-  var ctx = cv.getContext('2d', { willReadFrequently: true });
-  var dpr = Math.min(window.devicePixelRatio || 1, 2);
-  var ancho = 0, alto = 0, listo = false, pintando = false, ultimo = null;
-
-  function laminar(){
-    var r = cv.getBoundingClientRect();
-    if (!r.width) return;
-    ancho = r.width; alto = r.height;
-    cv.width = Math.round(ancho * dpr);
-    cv.height = Math.round(alto * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.globalCompositeOperation = 'source-over';
-
-    var g = ctx.createLinearGradient(0, 0, ancho, alto);
-    g.addColorStop(0,   '#a8b78c');
-    g.addColorStop(.45, '#8a9a62');
-    g.addColorStop(1,   '#6e7f52');
-    ctx.fillStyle = g;
-    ctx.fillRect(0, 0, ancho, alto);
-
-    /* brillos diagonales, como una lamina metalica */
-    ctx.save();
-    ctx.globalAlpha = .16;
-    ctx.fillStyle = '#ffffff';
-    for (var x = -alto; x < ancho + alto; x += 46){
-      ctx.beginPath();
-      ctx.moveTo(x, 0); ctx.lineTo(x + 16, 0);
-      ctx.lineTo(x + 16 + alto, alto); ctx.lineTo(x + alto, alto);
-      ctx.closePath(); ctx.fill();
-    }
-    ctx.restore();
-
-    /* la pregunta va escrita encima: al raspar se borra y aparece el rol */
-    ctx.fillStyle = 'rgba(255,253,249,.96)';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    var tam = 30;
-    do {
-      ctx.font = 'italic 300 ' + tam + 'px "Cormorant Garamond", Georgia, serif';
-      tam -= 1;
-    } while (tam > 14 && ctx.measureText(t.gustaria).width > ancho - 44);
-    ctx.fillText(t.gustaria, ancho / 2, alto / 2 - 7);
-    ctx.font = '400 17px Georgia, serif';
-    ctx.fillText('\u2726', ancho / 2, alto / 2 + 24);
-
-    ctx.globalCompositeOperation = 'destination-out';
-  }
-
-  function punto(ev){
-    var r = cv.getBoundingClientRect();
-    return { x: ev.clientX - r.left, y: ev.clientY - r.top };
-  }
-  function rascar(a, b){
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    ctx.lineWidth = 42;
-    ctx.beginPath();
-    ctx.moveTo(a.x, a.y);
-    ctx.lineTo(b.x, b.y);
-    ctx.stroke();
-  }
-  function avance(){
-    if (!cv.width) return 0;
-    var d = ctx.getImageData(0, 0, cv.width, cv.height).data;
-    var vacios = 0, total = 0;
-    for (var k = 3; k < d.length; k += 4 * 37){ total++; if (d[k] < 40) vacios++; }
-    return total ? vacios / total : 0;
-  }
-  function terminar(){
-    if (listo) return;
-    listo = true;
-    cv.classList.add('listo');
-    document.getElementById('hint2').classList.add('fuera');
-    vibrar([12, 80, 24]);
-    lluviaSinFin(escena, 1500, 6);
-    setTimeout(function(){
-      document.getElementById('raspaFinal').classList.add('on');
-    }, 500);
-  }
-
-  cv.addEventListener('pointerdown', function(ev){
-    if (listo) return;
-    pintando = true; ultimo = punto(ev);
-    rascar(ultimo, ultimo);
-    try { cv.setPointerCapture(ev.pointerId); } catch(e){}
-  });
-  var medidas = 0;
-  cv.addEventListener('pointermove', function(ev){
-    if (!pintando || listo) return;
-    ev.preventDefault();
-    var q = punto(ev);
-    rascar(ultimo, q);
-    ultimo = q;
-    /* medir la lamina es caro: se revisa cada varios movimientos */
-    if (++medidas % 6 === 0 && avance() > .85) terminar();
-  });
-  ['pointerup','pointercancel','pointerleave'].forEach(function(n){
-    cv.addEventListener(n, function(){
-      pintando = false;
-      if (!listo && avance() > .85) terminar();
-    });
-  });
-
-  requestAnimationFrame(function(){ requestAnimationFrame(laminar); });
-  /* las tipografias tardan en llegar: se repinta cuando esten listas */
-  if (document.fonts && document.fonts.ready){
-    document.fonts.ready.then(function(){ if (!listo) laminar(); });
-  }
-  window.addEventListener('resize', function(){ if (!listo) laminar(); });
-}
-
-/* ============================================================
    PROPUESTA 3 — LA SECUENCIA
    ============================================================ */
 function expSecuencia(stage, preview){
@@ -1118,13 +726,11 @@ function arrancarMusica(){
 /* ============================================================
    Escenario
    ============================================================ */
-var EXP = { 1: expCofre, 2: expRaspa, 3: expSecuencia };
-
-function ver(n, preview){
+function ver(preview){
   var stage = document.getElementById('stage');
   stage.classList.add('on');
   document.body.classList.add('locked');
-  EXP[n](stage, preview !== false);
+  expSecuencia(stage, preview !== false);
 
   audio = document.getElementById('bg-audio');
   document.getElementById('music-bar').classList.add('visible');
@@ -1143,16 +749,16 @@ function cerrar(){
 /* ============================================================
    Links
    ============================================================ */
-function linkDe(n){
+function linkDe(){
   var e = estado();
   return location.href.split('?')[0].split('#')[0] +
-         '?d=' + n +
+         '?d=1' +
          '&t=' + encodeURIComponent(e.trato) +
          '&n=' + encodeURIComponent(e.nombre) +
          '&r=' + encodeURIComponent(e.rol);
 }
-function copiarLink(n){
-  var u = linkDe(n);
+function copiarLink(){
+  var u = linkDe();
   if (navigator.clipboard && navigator.clipboard.writeText){
     navigator.clipboard.writeText(u).then(toast, function(){ prompt('Copia el link:', u); });
   } else { prompt('Copia el link:', u); }
@@ -1169,10 +775,10 @@ function toast(){
    Arranque
    ============================================================ */
 (function(){
-  var d = params().get('d');
-  if (d === '1' || d === '2' || d === '3'){
+  /* con cualquier ?d= se abre la experiencia; sirve para links ya enviados */
+  if (params().get('d')){
     document.getElementById('panel').remove();
-    ver(Number(d), false);
+    ver(false);
     return;
   }
   var rol  = document.getElementById('fRol');
