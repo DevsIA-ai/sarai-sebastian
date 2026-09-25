@@ -13,3 +13,6 @@ Thumbs.db
 
 # Canción anterior (ya no se usa en el sitio, se reemplazó por Zoé - Luna)
 Vamos bien - Majo y Dan (Letra).mp3
+
+# Caché local de Cloudflare (wrangler): no debe subirse
+.wrangler/
